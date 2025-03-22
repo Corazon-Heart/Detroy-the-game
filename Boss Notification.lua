@@ -2,17 +2,37 @@ local RunService = game:GetService("RunService")
 local Workspace = game:GetService("Workspace")
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
+local StarterGui = game:GetService("StarterGui")
 
--- Boss names to track (ต้องตรงกับ UI Script)
-local bossNamesToTrack = {"Rune Golem", "Slime King", "Elder Treant"}
+-- **สมมติว่าคุณได้ require หรือ loadstring Library Leny ไว้แล้ว**
+-- แทนที่ ... ด้วย path หรือ code ของ Library Leny ของคุณ
+local Library = require(...) -- หรือ local Library = loadstring(...)()
 
--- Get the BossStatus UI elements from the UI Script
-local BossUI = require(game:GetService("StarterGui"):WaitForChild("YourUIScriptName")).BossStatus
--- **สำคัญ:** เปลี่ยน "YourUIScriptName" เป็นชื่อ LocalScript ที่คุณวางโค้ด UI Leny ไว้
+-- Boss names to track
+local bossNamesToTrack = {"Rune Golem", "Slime King", "Elder Treant", "Dire Bear"}
 
--- Get the Leny Library
-local shared = shared or {}
-local Library = shared.LenyLibrary
+-- Notification title (อาจจะไม่จำเป็นถ้า Leny กำหนดได้)
+local notificationTitle = "Boss Alert!"
+
+-- Table to store the notification status of each boss type
+local bossNotified = {}
+
+-- Key for the toggle setting in UserSettings
+local notifyToggleKey = "BossNotifyEnabled"
+
+-- Variable to store the notification toggle state
+local notifyEnabled = UserSettings():GetSetting(notifyToggleKey) ~= false -- Default to true
+
+-- Function to send notification using Leny Library
+local function sendLenyNotification(bossName)
+    if notifyEnabled and Library and Library.Notification then
+        Library.Notification({
+            Title = notificationTitle,
+            Text = "พบ: " .. bossName .. " เกิดแล้ว!",
+            Duration = 5 -- ระยะเวลาแสดงผล (วินาที)
+        })
+    end
+end
 
 local function isBossPresent(bossName)
     local aliveFolder = Workspace:FindFirstChild("Alive")
@@ -26,30 +46,34 @@ local function isBossPresent(bossName)
     return false
 end
 
--- Check for bosses periodically and update UI
-RunService.Heartbeat:Connect(function()
-    for _, bossName in ipairs(bossNamesToTrack) do
-        local isPresent = isBossPresent(bossName)
+-- Function to toggle the notification system
+local function toggleNotify()
+    notifyEnabled = not notifyEnabled
+    UserSettings():SetSetting(notifyToggleKey, notifyEnabled)
+    -- คุณอาจจะเพิ่ม Feedback UI ตรงนี้ เช่น แสดงข้อความว่าเปิด/ปิด Notify แล้ว
+end
 
-        if BossUI and BossUI[bossName] then
+-- Bind a key to toggle the notification (example: N key)
+local UserInputService = game:GetService("UserInputService")
+UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+    if not gameProcessedEvent and input.KeyCode == Enum.KeyCode.N then
+        toggleNotify()
+    end
+end)
+
+-- Check for bosses periodically
+RunService.Heartbeat:Connect(function()
+    if notifyEnabled then
+        for _, bossName in ipairs(bossNamesToTrack) do
+            local isPresent = isBossPresent(bossName)
+
             if isPresent then
-                BossUI[bossName]:updateText({ text = "✔" })
-                -- Send Leny Notification when boss spawns
-                if Library and Library.notify and not bossNotified[bossName] then
-                    Library:notify({
-                        title = "Boss Spawned!",
-                        text = bossName .. " has appeared!",
-                        duration = 10, -- Show for 10 seconds
-                        position = "topLeft", -- Try to position at top-left (may depend on Leny implementation)
-                        sizeX = 200, -- Adjust size if needed
-                        sizeY = 50,
-                    })
+                if not bossNotified[bossName] then
+                    sendLenyNotification(bossName)
                     bossNotified[bossName] = true
                 end
             else
-                BossUI[bossName]:updateText({ text = "" })
-                bossNotified[bossName] = nil -- Reset notification status when boss is gone
+                bossNotified[bossName] = nil
             end
         end
     end
-end)
