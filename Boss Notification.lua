@@ -4,34 +4,24 @@ local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local StarterGui = game:GetService("StarterGui")
 
--- Boss names to track (no need for random numbers)
+-- Boss names to track
 local bossNamesToTrack = {"Rune Golem", "Slime King", "Elder Treant","Dire Bear"}
 
--- Notification title
-local notificationTitle = "Boss Alert!"
-
--- Table to store the notification status of each boss type
-local bossNotified = {}
+-- Table to store the presence status of each boss
+local bossPresentStatus = {}
 
 local function isBossPresent(bossName)
     local aliveFolder = Workspace:FindFirstChild("Alive")
     if aliveFolder then
         for _, instance in pairs(aliveFolder:GetChildren()) do
             -- Check if the instance name starts with the specified boss name
-            if string.find(instance.Name, "^" .. bossName .. "%.") then
+            -- and has a dot followed by 4 digits at the end
+            if string.match(instance.Name, "^" .. bossName .. "%.%d%d%d%d$") then
                 return true
             end
         end
     end
     return false
-end
-
-local function sendNotification(bossName)
-    game.StarterGui:SetCore("SendNotification", {
-        Title = notificationTitle;
-        Text = "Found " .. bossName .. "!",
-        Duration = 9999; -- Set a high duration to keep it displayed
-    })
 end
 
 -- Check for bosses periodically
@@ -40,13 +30,23 @@ RunService.Heartbeat:Connect(function()
         local isPresent = isBossPresent(bossName)
 
         if isPresent then
-            if not bossNotified[bossName] then
-                sendNotification(bossName)
-                bossNotified[bossName] = true
+            if not bossPresentStatus[bossName] then
+                print("Boss found: " .. bossName) -- Optional: Print to console when boss is found
+                bossPresentStatus[bossName] = true
+                -- You can add your callback function here if needed
+                if shared.BossFoundCallback then
+                    shared.BossFoundCallback(bossName)
+                end
             end
         else
-            -- If the boss is gone, clear the notification status to allow for future alerts
-            bossNotified[bossName] = nil
+            if bossPresentStatus[bossName] then
+                print("Boss lost: " .. bossName) -- Optional: Print to console when boss is lost
+                bossPresentStatus[bossName] = nil
+                -- You can add your callback function here if needed
+                if shared.BossLostCallback then
+                    shared.BossLostCallback(bossName)
+                end
+            end
         end
     end
 end)
