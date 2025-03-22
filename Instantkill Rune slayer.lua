@@ -57,9 +57,7 @@ local function ToggleInstantKill(state)
                 performInstantKill()
                 task.wait(CHECK_FREQUENCY)
             end
-            if not isInstantKillEnabled then
-                print("Turn on Instant Kill")
-            end
+            print("Turn off Instant Kill") -- พิมพ์เมื่อ Loop จบ (ปิดใช้งานแล้ว)
         end)()
     else
         print("Turn off Instant Kill")
