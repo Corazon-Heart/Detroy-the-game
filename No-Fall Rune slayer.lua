@@ -6,7 +6,7 @@
     local isNoFallEnabled = false
     local isJumping = false
     local freefallStartTime = nil
-    local noFallDelay = 1 -- ระยะเวลา (วินาที) ที่ต้องอยู่ในสถานะ Freefall หลังกระโดดก่อน No Fall ทำงาน
+    local noFallDelay = 0.1 -- ระยะเวลา (วินาที) ที่ต้องอยู่ในสถานะ Freefall หลังกระโดดก่อน No Fall ทำงาน
     local heartbeatConnection
     local stateChangedConnection
     local characterAddedConnection
