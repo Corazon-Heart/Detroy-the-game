@@ -1,4 +1,4 @@
-local speeds = 0.1
+local speeds = 0.8
 local maxSpeed = 10
 local isFlying = false
 local tpwalking = false
@@ -109,12 +109,12 @@ end)
 game:GetService("RunService").Heartbeat:Connect(function()
     if isFlying then
         if isSpaceHeld then
-            currentUpwardVelocity = math.min(currentUpwardVelocity + 2, 50)  -- จำกัดความเร็วสูงสุดที่ 50
+            currentUpwardVelocity = math.min(currentUpwardVelocity + 2, 150)  -- จำกัดความเร็วสูงสุดที่ 50
             if hum and hum.RootPart then
                 hum.RootPart.Velocity = Vector3.new(hum.RootPart.Velocity.X, currentUpwardVelocity, hum.RootPart.Velocity.Z)
             end
         elseif isCtrlHeld then
-            currentDownwardVelocity = math.min(currentDownwardVelocity + 2, 50)  -- จำกัดความเร็วสูงสุดที่ 50
+            currentDownwardVelocity = math.min(currentDownwardVelocity + 2, 150)  -- จำกัดความเร็วสูงสุดที่ 50
             if hum and hum.RootPart then
                 hum.RootPart.Velocity = Vector3.new(hum.RootPart.Velocity.X, -currentDownwardVelocity, hum.RootPart.Velocity.Z)
             end
