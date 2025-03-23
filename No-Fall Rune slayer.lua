@@ -1,4 +1,4 @@
-return function(toggleCallback)
+
     local Players = game:GetService("Players")
     local localPlayer = Players.LocalPlayer
     local character
@@ -76,10 +76,9 @@ return function(toggleCallback)
                 disableNoFall()
             end
         end
-        if toggleCallback then
-            toggleCallback(isNoFallEnabled)
+        
         end
-    end
+
 
     if localPlayer.Character then
         onCharacterAdded(localPlayer.Character)
@@ -87,6 +86,3 @@ return function(toggleCallback)
     characterAddedConnection = localPlayer.CharacterAdded:Connect(onCharacterAdded)
 
     print("No Fall Module Loaded for", localPlayer.Name)
-
-    return toggleNoFall
-end
