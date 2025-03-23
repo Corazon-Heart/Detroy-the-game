@@ -1,7 +1,7 @@
 local RunService = game:GetService("RunService")
 local Workspace = game:GetService("Workspace")
 
-local bossNamesToTrack = {"Rune Golem", "Slime King", "Elder Treant", "Dire Bear"}
+local bossNamesToTrack = {"Rune Golem", "Slime King", "Elder Treant", "Dire Bear","Vangar","Razor Fang"}
 local bossPresentStatus = {}
 local bossCheckEnabled = false
 local bossCheckConnection
