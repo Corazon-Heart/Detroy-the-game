@@ -32,6 +32,7 @@ end
 local function updateFlyState(enabled)
     isFlying = enabled
     if enabled then
+        -- เปิดการบิน
         for i = 0.1, speeds do
             spawn(function()
                 local hb = game:GetService("RunService").Heartbeat
@@ -56,10 +57,11 @@ local function updateFlyState(enabled)
     end
 end
 
+-- กด Z เพื่อเปิด/ปิดการบิน
 game:GetService("UserInputService").InputBegan:Connect(function(input, gameProcessedEvent)
     if not gameProcessedEvent then
         if input.KeyCode == Enum.KeyCode.Z then
-            updateFlyState(not isFlying)
+            updateFlyState(not isFlying)  -- เปิด/ปิดการบินเมื่อกด Z
             -- ปิด Hover เมื่อเปิด/ปิด Fly (เป็นการตั้งค่าใหม่ทั้งหมด)
             if not isFlying then
                 isHovering = false
