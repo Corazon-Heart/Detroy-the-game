@@ -1,4 +1,4 @@
-[[
+return function(setNoClipStateCallback, setNoClipKeybindCallback)
     local Players = game:GetService("Players")
     local UserInputService = game:GetService("UserInputService")
 
@@ -30,33 +30,43 @@
         end)
     end
 
-    local function initializeNoClip(toggleCallback, keybindCallback)
-        if localPlayer.Character then
-            onCharacterAdded(localPlayer.Character)
-        end
-        localPlayer.CharacterAdded:Connect(onCharacterAdded)
+    if localPlayer.Character then
+        onCharacterAdded(localPlayer.Character)
+    end
+    localPlayer.CharacterAdded:Connect(onCharacterAdded)
 
-        UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
-            if gameProcessedEvent then return end
-            if input.KeyCode == noClipToggleKey then
-                isNoClipping = not isNoClipping
-                setNoClip(isNoClipping)
-                toggleCallback(isNoClipping)
-            end
-        end)
-
-        return function(state) -- ฟังก์ชันสำหรับตั้งค่าสถานะจาก UI
-            isNoClipping = state
+    UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+        if gameProcessedEvent then return end
+        if input.KeyCode == noClipToggleKey then
+            isNoClipping = not isNoClipping
             setNoClip(isNoClipping)
-        end, function(keyName) -- ฟังก์ชันสำหรับเปลี่ยน Keybind จาก UI
-            local newKey = Enum.KeyCode[keyName:upper()]
-            if newKey then
-                noClipToggleKey = newKey
-            else
-                warn("Invalid Key for No-Clip:", keyName)
+            if setNoClipStateCallback then
+                setNoClipStateCallback(isNoClipping) -- Call the external callback for UI toggle
             end
+        end
+    end)
+
+    -- ฟังก์ชันสำหรับตั้งค่าสถานะจาก UI (เรียกผ่าน Callback ที่ส่งมา)
+    local function externalSetNoClipState(state)
+        isNoClipping = state
+        setNoClip(isNoClipping)
+    end
+
+    -- ฟังก์ชันสำหรับเปลี่ยน Keybind จาก UI (เรียกผ่าน Callback ที่ส่งมา)
+    local function externalSetNoClipKeybind(keyName)
+        local newKey = Enum.KeyCode[keyName:upper()]
+        if newKey then
+            noClipToggleKey = newKey
+        else
+            warn("Invalid Key for No-Clip:", keyName)
         end
     end
 
-    return initializeNoClip
-]]
+    -- เรียก Callback ที่ส่งมาเพื่อส่งคืนฟังก์ชันควบคุมไปยัง Script หลัก
+    if setNoClipStateCallback then
+        setNoClipStateCallback(externalSetNoClipState)
+    end
+    if setNoClipKeybindCallback then
+        setNoClipKeybindCallback(externalSetNoClipKeybind)
+    end
+end
