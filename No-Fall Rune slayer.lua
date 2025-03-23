@@ -1,4 +1,4 @@
-return function(toggleCallback)
+
     local Players = game:GetService("Players")
     local localPlayer = Players.LocalPlayer
     local character
@@ -88,5 +88,4 @@ return function(toggleCallback)
 
     print("No Fall Module Loaded for", localPlayer.Name)
 
-    return toggleNoFall
 end
