@@ -1,8 +1,8 @@
 -- สร้างตัวแปรเพื่อควบคุมสถานะของสคริปต์
 local scriptEnabled = false
+
+-- สร้างตัวแปรการบินและสถานะอื่นๆ
 local isFlying = false
-local tpwalking = false
-local isHovering = false
 local isSpaceHeld = false
 local isCtrlHeld = false
 local currentUpwardVelocity = 0
@@ -14,8 +14,6 @@ local hum = chr and chr:FindFirstChildWhichIsA("Humanoid")
 -- ฟังก์ชันการเริ่มต้นใหม่ของสคริปต์เมื่อรีสปาวน์ตัวละคร
 local function resetScript()
     isFlying = false
-    tpwalking = false
-    isHovering = false
     isSpaceHeld = false
     isCtrlHeld = false
     currentUpwardVelocity = 0
@@ -25,53 +23,35 @@ local function resetScript()
     hum = chr and chr:FindFirstChildWhichIsA("Humanoid")
 end
 
--- ฟังก์ชันสำหรับการอัปเดตสถานะของการบิน
+-- ฟังก์ชันสำหรับการอัปเดตสถานะการบิน
 local function updateFlyState(enabled)
     isFlying = enabled
     if enabled then
-        for i = 0.1, 10 do
-            spawn(function()
-                local hb = game:GetService("RunService").Heartbeat
-                tpwalking = true
-                local chr = game.Players.LocalPlayer.Character
-                local hum = chr and chr:FindFirstChildWhichIsA("Humanoid")
-                while tpwalking and hb:Wait() and chr and hum and hum.Parent do
-                    if hum.MoveDirection.Magnitude > 0 then
-                        chr:TranslateBy(hum.MoveDirection)
-                    end
-                end
-            end)
-        end
+        -- เปิดฟังก์ชันการบิน
+        print("Fly Script Enabled.")
         speaker.Character.Animate.Disabled = true
-        -- เปิด Hover เมื่อเริ่มบิน
-        isHovering = true
     else
-        tpwalking = false
-        isHovering = false
-        speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Climbing, true)
+        -- ปิดการบิน
+        print("Fly Script Disabled.")
+        speaker.Character.Animate.Disabled = false
     end
 end
 
--- ฟังก์ชันสำหรับเปิด/ปิดสคริปต์ทั้งหมด
+-- ฟังก์ชันสำหรับเปิด/ปิดสคริปต์ทั้งหมด (toggle)
 local function toggleScript(state)
     scriptEnabled = state
     if scriptEnabled then
-        -- เปิดฟังก์ชันการบินและการควบคุมการบิน
+        -- เปิดฟังก์ชันการบิน
         updateFlyState(true)
-        -- เพิ่ม event ฟังก์ชันต่างๆ ที่เกี่ยวข้องกับการบิน
+        -- กำหนดการเชื่อมต่อ Input Events สำหรับการบิน
         game:GetService("UserInputService").InputBegan:Connect(function(input, gameProcessedEvent)
             if not gameProcessedEvent then
                 if input.KeyCode == Enum.KeyCode.Z then
-                    updateFlyState(not isFlying)
-                    if not isFlying then
-                        isHovering = false
-                    end
+                    updateFlyState(not isFlying)  -- สลับสถานะการบิน
                 elseif input.KeyCode == Enum.KeyCode.Space and isFlying then
                     isSpaceHeld = true
-                    isHovering = false
                 elseif input.KeyCode == Enum.KeyCode.LeftControl and isFlying then
                     isCtrlHeld = true
-                    isHovering = false
                 end
             end
         end)
@@ -87,20 +67,23 @@ local function toggleScript(state)
             end
         end)
 
-        -- ตรวจสอบตำแหน่งการเคลื่อนไหวในทุกๆ frame
+        -- ตรวจสอบการเคลื่อนไหวของตัวละครในทุกๆ frame
         game:GetService("RunService").Heartbeat:Connect(function()
             if isFlying then
                 if isSpaceHeld then
-                    currentUpwardVelocity = math.min(currentUpwardVelocity + 2, 50)
+                    -- เพิ่มความเร็วในการบินขึ้นเมื่อกด Space ค้าง
+                    currentUpwardVelocity = math.min(currentUpwardVelocity + 2, 50)  -- จำกัดความเร็วสูงสุดที่ 50
                     if hum and hum.RootPart then
                         hum.RootPart.Velocity = Vector3.new(hum.RootPart.Velocity.X, currentUpwardVelocity, hum.RootPart.Velocity.Z)
                     end
                 elseif isCtrlHeld then
-                    currentDownwardVelocity = math.min(currentDownwardVelocity + 2, 50)
+                    -- เพิ่มความเร็วในการบินลงเมื่อกด Left Control ค้าง
+                    currentDownwardVelocity = math.min(currentDownwardVelocity + 2, 50)  -- จำกัดความเร็วสูงสุดที่ 50
                     if hum and hum.RootPart then
                         hum.RootPart.Velocity = Vector3.new(hum.RootPart.Velocity.X, -currentDownwardVelocity, hum.RootPart.Velocity.Z)
                     end
                 else
+                    -- ถ้าไม่ได้กดปุ่ม Space หรือ Left Control ให้ตั้งค่า Velocity เป็น 0 (Hover)
                     currentUpwardVelocity = 0
                     currentDownwardVelocity = 0
                     if hum and hum.RootPart then
@@ -112,23 +95,7 @@ local function toggleScript(state)
     else
         -- ปิดฟังก์ชันการบิน
         updateFlyState(false)
+        -- ลบ event ที่เกี่ยวข้องทั้งหมด
+        print("Fly Script Disabled.")
     end
 end
-
--- สร้าง Toggle UI สำหรับเปิด/ปิด Fly Script
-Section:createToggle({
-    text = "Enable Fly",
-    state = false,  -- ตั้งค่าเริ่มต้นเป็น OFF
-    callback = function(state)
-        toggleScript(state)  -- เรียกใช้ฟังก์ชัน toggleScript เพื่อเปิด/ปิด Fly Script
-    end
-})
-
--- สร้าง Keybind UI สำหรับเปิด/ปิด Fly Script
-Section:createKeybind({
-    text = "Fly (Press Z)",
-    default = "Z",
-    callback = function()
-        toggleScript(not scriptEnabled)  -- เปลี่ยนสถานะของ Toggle
-    end
-})
