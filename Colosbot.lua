@@ -11,6 +11,33 @@ pcall(function()
 		repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild"CharacterHandler":FindFirstChild"Input":FindFirstChild"Events"
 		repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild"CharacterHandler":FindFirstChild"Input":FindFirstChild"Events":FindFirstChild"MasterEvent"
 		wait(.5)
+		local CurrentCheck = 0
+		for _,v in pairs(game.Players:GetPlayers()) do
+			if v:IsA("Player") then
+				spawn(function()
+					if v:IsDescendantOf(game.Players) and v and v:GetRankInGroup(15431531) >= 1 then
+						CurrentCheck = CurrentCheck + 1
+						wait()
+						game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+					else
+						CurrentCheck = CurrentCheck + 1
+					end
+				end)
+			end
+		end
+
+
+		--CheckAddedPlayer
+		game.Players.PlayerAdded:Connect(function(v)
+			wait()
+			if v:IsDescendantOf(game.Players) and v and v:GetRankInGroup(15431531) >= 1 then
+				game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+			end
+		end)
+
+		local MainTick = tick()
+		repeat wait() until CurrentCheck >= #game.Players:GetChildren() or tick() - MainTick >= 4
+		print"done check mod"
 		-- NoFall
 		local mt = getrawmetatable(game)
 		local oldMeta = mt.__namecall
@@ -59,12 +86,16 @@ pcall(function()
 			end
 		end
 
-		while wait(.5) do
-			checkAndTeleport()
 
+		_G.Botting = function()
+			repeat wait() until game.Players.LocalPlayer ~= nil
+			repeat wait() until game.Players.LocalPlayer.Character ~= nil
+			repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart"
+			checkAndTeleport()
+			game.Workspace.InvisibleParts.ColosseumEntrance.CFrame = CFrame.new(-311.4093933105469, 358.6604919433594, -689.0089111328125)
 			repeat 
-				game.Workspace.Camera.CFrame = CFrame.new(-830.033813, 194.463806, -1291.0896, -0.707096815, -0.15533042, 0.689845383, 7.4505806e-09, 0.97557497, 0.219667271, -0.707116842, 0.155326024, -0.689825892)
-				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-830.7783813476562, 192.71054077148438, -1290.3441162109375)
+				game.Workspace.Camera.CFrame = CFrame.new(1023.71997, -225.121262, 1501.48669, -0.948263526, -0.312660873, 0.0551318303, 0, 0.173652112, 0.984807014, -0.317484409, 0.933856547, -0.164667949)
+				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.InvisibleParts.ColosseumEntrance.CFrame
 				game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.E, false, nil)
 				game:GetService("RunService").Heartbeat:Wait()
 				game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode.E, false, nil)
@@ -81,8 +112,8 @@ pcall(function()
 			maxWeight = tonumber(maxWeight)
 			if currentWeight >= maxWeight then
 				repeat 
-					game.Workspace.Camera.CFrame = CFrame.new(-830.033813, 194.463806, -1291.0896, -0.707096815, -0.15533042, 0.689845383, 7.4505806e-09, 0.97557497, 0.219667271, -0.707116842, 0.155326024, -0.689825892)
-					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-830.7783813476562, 192.71054077148438, -1290.3441162109375)
+					game.Workspace.Camera.CFrame = CFrame.new(1023.71997, -225.121262, 1501.48669, -0.948263526, -0.312660873, 0.0551318303, 0, 0.173652112, 0.984807014, -0.317484409, 0.933856547, -0.164667949)
+					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.InvisibleParts.ColosseumEntrance.CFrame
 					game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.E, false, nil)
 					game:GetService("RunService").Heartbeat:Wait()
 					game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode.E, false, nil)
@@ -122,8 +153,8 @@ pcall(function()
 					wait(.2)
 				end
 				repeat 
-					game.Workspace.Camera.CFrame = CFrame.new(-830.033813, 194.463806, -1291.0896, -0.707096815, -0.15533042, 0.689845383, 7.4505806e-09, 0.97557497, 0.219667271, -0.707116842, 0.155326024, -0.689825892)
-					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-830.7783813476562, 192.71054077148438, -1290.3441162109375)
+					game.Workspace.Camera.CFrame = CFrame.new(1023.71997, -225.121262, 1501.48669, -0.948263526, -0.312660873, 0.0551318303, 0, 0.173652112, 0.984807014, -0.317484409, 0.933856547, -0.164667949)
+					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.InvisibleParts.ColosseumEntrance.CFrame
 					game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.E, false, nil)
 					game:GetService("RunService").Heartbeat:Wait()
 					game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode.E, false, nil)
@@ -240,35 +271,88 @@ pcall(function()
 				task.wait()
 			until Drogar.Parent == nil or endscript == true
 			if game.Players.LocalPlayer.Character:FindFirstChild"Humanoid" and game.Players.LocalPlayer.Character:FindFirstChild"Humanoid".Health > 0 then
-				game.Players.LocalPlayer.Character.Humanoid.Health = 0
+				repeat wait()
+					game.Players.LocalPlayer.Character.Humanoid.Health = 0
+				until game.Players.LocalPlayer.Character.Humanoid.Health == 0
 			end
 			local VirtualInputManager = game:GetService("VirtualInputManager")
-			game.Players.LocalPlayer.PlayerGui.InfoOverlays:WaitForChild"ConfirmFrame"
-			game.Players.LocalPlayer.PlayerGui.InfoOverlays:WaitForChild"ConfirmFrame":WaitForChild"MainFrame"
-			game.Players.LocalPlayer.PlayerGui.InfoOverlays:WaitForChild"ConfirmFrame":WaitForChild"MainFrame":WaitForChild"ButtonFrame"
-			game.Players.LocalPlayer.PlayerGui.InfoOverlays:WaitForChild"ConfirmFrame":WaitForChild"MainFrame":WaitForChild"ButtonFrame":WaitForChild"ConfirmButton"
-			wait()
-			local player = game:GetService("Players").LocalPlayer
+			local Players = game:GetService("Players")
+			local VirtualInputManager = game:GetService("VirtualInputManager")
+
+			local player = Players.LocalPlayer
+			local gui = player:WaitForChild("PlayerGui"):WaitForChild("InfoOverlays", 5) -- Wait for InfoOverlays with a timeout
+
+			if not gui then
+				warn("InfoOverlays not found")
+				return game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+			end
+
+			local confirmFrame = gui:WaitForChild("ConfirmFrame", 5)
+			if not confirmFrame then
+				warn("ConfirmFrame not found")
+				return game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+			end
+
+			local mainFrame = confirmFrame:WaitForChild("MainFrame", 5)
+			if not mainFrame then
+				warn("MainFrame not found")
+				return game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+			end
+
+			local buttonFrame = mainFrame:WaitForChild("ButtonFrame", 5)
+			if not buttonFrame then
+				warn("ButtonFrame not found")
+				return game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+			end
+
+			local confirmButton = buttonFrame:WaitForChild("ConfirmButton", 5)
+			if not confirmButton then
+				warn("ConfirmButton not found")
+				return game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+			end
+
 			repeat
-				if player.PlayerGui.InfoOverlays:FindFirstChild("ConfirmFrame") then
-					local button = player.PlayerGui.InfoOverlays.ConfirmFrame.MainFrame.ButtonFrame.ConfirmButton
+				if confirmButton then
+					local absPos = confirmButton.AbsolutePosition
+					local absSize = confirmButton.AbsoluteSize
 
-					if button then
-						local absPos = button.AbsolutePosition
-						local absSize = button.AbsoluteSize
+					-- Calculate the center of the button
+					local clickPos = absPos + (absSize / 2)
 
-						-- Calculate the center of the button
-						local clickPos = absPos + (absSize / 2)
+					-- Simulate a left mouse click at the button's position
+					VirtualInputManager:SendMouseButtonEvent(clickPos.X, clickPos.Y + 65, 0, true, game, 0) -- Mouse down
+					VirtualInputManager:SendMouseButtonEvent(clickPos.X, clickPos.Y + 65, 0, false, game, 0) -- Mouse up
+				end
+				task.wait()
+			until not gui:FindFirstChild("ConfirmFrame")
 
-						-- Simulate a left mouse click at the button's position
-						VirtualInputManager:SendMouseButtonEvent(clickPos.X, clickPos.Y + 65, 0, true, game, 0) -- Mouse down
-						VirtualInputManager:SendMouseButtonEvent(clickPos.X, clickPos.Y + 65, 0, false, game, 0) -- Mouse up
+			repeat wait() until game.Players.LocalPlayer.Character:IsDescendantOf(game.Workspace.Alive)
+			wait(0.5)
+			_G.Botting()
+		end
+		spawn(function()
+			local targetPosition = Vector3.new(1025.451416015625, -217.9293212890625, 1421.5732421875)
+			local radius = 10
+
+			function checkProximity()
+				local player = game.Players.LocalPlayer
+				if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+					local playerPosition = player.Character.HumanoidRootPart.Position
+					local distance = (playerPosition - targetPosition).magnitude
+
+					if distance <= radius then
+						_G.Botting()
 					end
 				end
-				wait()
-			until not player.PlayerGui.InfoOverlays:FindFirstChild("ConfirmFrame")
-			repeat wait() until game.Players.LocalPlayer.Character:IsDescendantOf(game.Workspace.Alive)
-		end
+			end
+
+			-- Run the check periodically
+			while true do
+				checkProximity()
+				wait(1) -- Adjust the interval as needed
+			end
+		end)
+		_G.Botting()
 	elseif game.PlaceId == 10290054819 then
 		local players = game:GetService("Players")
 		local player = players.LocalPlayer
