@@ -86,6 +86,30 @@ pcall(function()
 			end
 		end
 		
+		--CheckAFK
+		spawn(function()
+			local function checkAFK(player)
+				while wait() do
+					local humanoidRootPart = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+					local initialCFrame = humanoidRootPart.CFrame
+
+					task.wait(8)
+
+					if humanoidRootPart.Parent ~= nil and humanoidRootPart.CFrame == initialCFrame then
+						game:GetService("TeleportService"):Teleport(10290054819, player)
+					end
+				end
+			end
+
+			if game:GetService("Players").LocalPlayer.Character then
+				checkAFK(game:GetService("Players").LocalPlayer)
+			end
+
+			game:GetService("Players").LocalPlayer.CharacterAdded:Connect(function()
+				checkAFK(game:GetService("Players").LocalPlayer)
+			end)
+		end)
+		
 		--Check CF
 		spawn(function()
 			while wait() do
@@ -367,11 +391,21 @@ pcall(function()
 				until chatFrame.Visible == true
 			end
 			--Close
-			while (chatFrame.Visible and wait(0.3)) do
-				game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.One, false, nil)
+			repeat wait()
+				vim:SendKeyEvent(true, Enum.KeyCode.One, false, nil)
 				wait()
-				game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode.One, false, nil)
+				vim:SendKeyEvent(false, Enum.KeyCode.One, false, nil)
+			until chatFrame.Visible == false
+			wait(.5)
+			--Check Again
+			if chatFrame.Visible == true then
+				repeat wait()
+					vim:SendKeyEvent(true, Enum.KeyCode.One, false, nil)
+					wait()
+					vim:SendKeyEvent(false, Enum.KeyCode.One, false, nil)
+				until chatFrame.Visible == false
 			end
+			--Start
 			local start = false
 			local starttime = tick()
 			repeat
