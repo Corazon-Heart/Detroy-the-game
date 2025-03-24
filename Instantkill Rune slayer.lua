@@ -8,12 +8,14 @@ local CHECK_FREQUENCY = 0.5  -- Check every 0.5 seconds instead of every frame
 
 local function performInstantKill()
     local localPlayer = Players.LocalPlayer
+    if not localPlayer then return end
+
     local character = localPlayer.Character or localPlayer.CharacterAdded:Wait()
     local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
     local radius = 200
     local damagePercentage = 0.1 -- 10%
 
-    if not localPlayer or not localPlayer.Character or not humanoidRootPart then
+    if not localPlayer or not character or not humanoidRootPart then
         return -- Exit if essential player components are missing
     end
 
@@ -70,4 +72,5 @@ local function ToggleInstantKill(state)
     end
 end
 
-return ToggleInstantKill
+-- Automatically turn on Instant Kill when the script runs
+ToggleInstantKill(true)
