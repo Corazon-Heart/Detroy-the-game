@@ -1,28 +1,5 @@
 local Library = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/L3nyFromV3rm/Leny-UI/refs/heads/main/Library.lua", true))()
-local instantKillToggleFunction = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/Corazon-Heart/Detroy-the-game/refs/heads/main/Instantkill%20Rune%20slayer.lua", true))()
-shared = shared or {}
-shared.ESP = shared.ESP or {}
 
--- **ดึงและรันสคริปต์ ESP (ไม่ต้องกำหนดให้ shared.ESP โดยตรง)**
-local espScript = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/Corazon-Heart/Detroy-the-game/refs/heads/main/Esp%20Rune%20slayer%20.lua", true))
-if espScript then
-    espScript() -- รันสคริปต์ ESP ซึ่งจะแก้ไขค่าใน shared.ESP
-else
-    warn("Failed to load ESP script.")
-end
-
--- โหลด Boss Notification Module
-local bossNotificationModule
-local success, errorMessage = pcall(function()
-    bossNotificationModule = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/Corazon-Heart/Detroy-the-game/refs/heads/main/Boss%20Notification.lua", true))()
-end)
-
-if not success then
-    warn("Failed to load Boss Notification Module: " .. errorMessage)
-    bossNotificationModule = function() end
-end
-
-local toggleBossCheckCallback = bossNotificationModule(Library) -- Get the toggle function
 
 
 Library.new({
@@ -56,9 +33,52 @@ local Section = MainSubTab:createSection({
     position = "Left",
 })
 
+-------------------------------- No Fall -----------------------------
 
+local NofallDmg = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/Corazon-Heart/Detroy-the-game/refs/heads/main/No-Fall%20Rune%20slayer.lua", true))()
+
+Section:createToggle({
+    text = "noFall",
+    state = false,
+    callback = NofallDmg
+})
+
+-------------------------------- No Fall -----------------------------
+
+
+-------------------------------- Fly --------------------------------
+local flyScript = nil
+
+-- โหลด Fly Script และเก็บไว้ในตัวแปร flyScript
+local success, scriptContent = pcall(function()
+    return loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/Corazon-Heart/Detroy-the-game/refs/heads/main/Fly%20rune%20slayer.lua", true))()
+end)
+
+if success then
+    flyScript = scriptContent
+else
+    warn("Failed to load flyScript.")
+end
+
+-- ตัวแปรเพื่อควบคุมสถานะการบิน
+local isFlying = false
+-- ฟังก์ชันสำหรับเปิด/ปิด Fly Script
+
+
+-- สร้าง Toggle UI สำหรับเปิด/ปิด Fly Script
+Section:createToggle({
+    text = "Enable Fly",
+    state = false,  -- ตั้งค่าเริ่มต้นเป็น OFF
+    callback = flyScript
+})
+
+
+
+-------------------------------- Fly --------------------------------
 
 -------------------------------- Instant kill --------------------------------
+
+local instantKillToggleFunction = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/Corazon-Heart/Detroy-the-game/refs/heads/main/Instantkill%20Rune%20slayer.lua", true))()
 
 Section:createToggle({
     text = "Instant kill mob",
@@ -69,6 +89,21 @@ Section:createToggle({
 -------------------------------- Instant kill --------------------------------
 
 -------------------------------- Boss Check & Notify --------------------------------
+
+-- โหลด Boss Notification Module
+local bossNotificationModule
+local success, errorMessage = pcall(function()
+    bossNotificationModule = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/Corazon-Heart/Detroy-the-game/refs/heads/main/Boss%20Notification.lua", true))()
+end)
+
+if not success then
+    warn("Failed to load Boss Notification Module: " .. errorMessage)
+    bossNotificationModule = function() end
+end
+
+local toggleBossCheckCallback = bossNotificationModule(Library) -- Get the toggle function
+
+
 local Boss = Library:createTab({
     text = "Boss",
     icon = "124718082122263",
@@ -93,6 +128,19 @@ BossNotifySection:createToggle({
 -------------------------------- Boss Check & Notify --------------------------------
 
 -------------------------------- ESP --------------------------------
+
+shared = shared or {}
+shared.ESP = shared.ESP or {}
+
+-- **ดึงและรันสคริปต์ ESP (ไม่ต้องกำหนดให้ shared.ESP โดยตรง)**
+local espScript = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/Corazon-Heart/Detroy-the-game/refs/heads/main/Esp%20Rune%20slayer%20.lua", true))
+if espScript then
+    espScript() -- รันสคริปต์ ESP ซึ่งจะแก้ไขค่าใน shared.ESP
+else
+    warn("Failed to load ESP script.")
+end
+
+
 
 local EspTab = Library:createTab({
     text = "Esp",
@@ -191,6 +239,8 @@ RightSection:createSlider({
 })
 
 -------------------------------- ESP --------------------------------
+
+
 
 
 
