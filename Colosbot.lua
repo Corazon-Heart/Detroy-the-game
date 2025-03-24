@@ -352,16 +352,21 @@ pcall(function()
 			local vim = game:GetService("VirtualInputManager")
 			local chatFrame = game.Players.LocalPlayer.PlayerGui.ChatGui.MainFrame
 
-			while not (chatFrame.Visible and wait(0.3)) do
+			repeat wait()
 				vim:SendKeyEvent(true, Enum.KeyCode.E, false, nil)
 				wait()
 				vim:SendKeyEvent(false, Enum.KeyCode.E, false, nil)
+			until chatFrame.Visible == true
+			wait(.5)
+			--Check Again
+			if chatFrame.Visible == false then
+				repeat wait()
+					vim:SendKeyEvent(true, Enum.KeyCode.E, false, nil)
+					wait()
+					vim:SendKeyEvent(false, Enum.KeyCode.E, false, nil)
+				until chatFrame.Visible == true
 			end
-			while not (chatFrame.Visible and wait(0.3)) do
-				vim:SendKeyEvent(true, Enum.KeyCode.E, false, nil)
-				wait()
-				vim:SendKeyEvent(false, Enum.KeyCode.E, false, nil)
-			end
+			--Close
 			while (chatFrame.Visible and wait(0.3)) do
 				game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.One, false, nil)
 				wait()
