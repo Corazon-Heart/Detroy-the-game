@@ -89,7 +89,7 @@ pcall(function()
 		--CheckAFK
 		spawn(function()
 			while wait() do
-				repeat wait() until game.Players.LocalPlayer ~= nil
+				repeat wait() until game.Players.LocalPlayer.Character ~= nil
 				local humanoidRootPart = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
 				local initialCFrame = humanoidRootPart.CFrame
 
