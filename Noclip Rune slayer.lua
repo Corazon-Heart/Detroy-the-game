@@ -27,9 +27,9 @@ local function StopNC()
     end
 end
 
--- Function to toggle noclip when pressing X
+-- Function to toggle noclip when pressing N
 local function ToggleNoclip(input)
-    if input.KeyCode == Enum.KeyCode.X then
+    if input.KeyCode == Enum.KeyCode.N then
         if Clip then
             StartNC()
         else
