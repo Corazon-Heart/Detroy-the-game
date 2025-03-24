@@ -1,4 +1,3 @@
-setfpscap(30)
 spawn(function()
 	task.wait(600)
 	game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
@@ -93,15 +92,17 @@ pcall(function()
 
 		--CheckAFK
 		spawn(function()
-			while wait(1) do
+			while wait(2) do
 				repeat wait() until game.Players.LocalPlayer.Character ~= nil
 				local humanoidRootPart = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
 				local initialCFrame = humanoidRootPart.CFrame
 
 				task.wait(8)
 
-				if humanoidRootPart.Parent ~= nil and humanoidRootPart.CFrame == initialCFrame then
-					game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+				if humanoidRootPart.Parent ~= nil then
+					if humanoidRootPart.CFrame == initialCFrame then
+						game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+					end
 				end
 			end
 		end)
@@ -114,7 +115,7 @@ pcall(function()
 				local confirmFrame = infoOverlays:FindFirstChild("ConfirmFrame")
 
 				if confirmFrame then
-					task.delay(5, function()
+					task.delay(8, function()
 						if infoOverlays:FindFirstChild("ConfirmFrame") then
 							return game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
 						end
