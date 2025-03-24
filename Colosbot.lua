@@ -1,3 +1,8 @@
+setfpscap(30)
+spawn(function()
+	task.wait(600)
+	game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+end)
 pcall(function()
 	repeat
 		wait()
@@ -212,12 +217,30 @@ pcall(function()
 					vim:SendKeyEvent(false, Enum.KeyCode.E, false, nil)
 				until chatFrame.Visible == true
 			end
+			wait(.5)
+			--Check Again
+			if chatFrame.Visible == false then
+				repeat wait()
+					vim:SendKeyEvent(true, Enum.KeyCode.E, false, nil)
+					wait()
+					vim:SendKeyEvent(false, Enum.KeyCode.E, false, nil)
+				until chatFrame.Visible == true
+			end
 			--Close
 			repeat wait()
 				vim:SendKeyEvent(true, Enum.KeyCode.One, false, nil)
 				wait()
 				vim:SendKeyEvent(false, Enum.KeyCode.One, false, nil)
 			until chatFrame.Visible == false
+			wait(.5)
+			--Check Again
+			if chatFrame.Visible == true then
+				repeat wait()
+					vim:SendKeyEvent(true, Enum.KeyCode.One, false, nil)
+					wait()
+					vim:SendKeyEvent(false, Enum.KeyCode.One, false, nil)
+				until chatFrame.Visible == false
+			end
 			wait(.5)
 			--Check Again
 			if chatFrame.Visible == true then
