@@ -169,65 +169,7 @@ pcall(function()
 				end
 			end
 		end)
-		--set-math.huge
-		spawn(function()
-			local Players = game:GetService("Players")
-			local CollectionService = game:GetService("CollectionService")
-			local Workspace = game:GetService("Workspace")
-
-			local Connections = {}
-
-			local function IsPlayerCharacter(Mob)
-				for _, player in ipairs(Players:GetPlayers()) do
-					if player.Character == Mob then
-						return true
-					end
-				end
-				return false
-			end
-
-			local function MonitorMob(Mob)
-				if not Mob:IsA("Model") or Connections[Mob] or IsPlayerCharacter(Mob) then
-					return
-				end
-
-				local Humanoid = Mob:FindFirstChildOfClass("Humanoid")
-				if not Humanoid then return end
-
-				-- Monitor health changes
-				Connections[Mob] = Humanoid:GetPropertyChangedSignal("Health"):Connect(function()
-					if Humanoid.Health < (Humanoid.MaxHealth * 0.9) then
-						Humanoid.Health = -math.huge
-					end
-				end)
-
-				-- Cleanup when the mob is removed
-				Mob.AncestryChanged:Connect(function(_, parent)
-					if not parent then
-						if Connections[Mob] then
-							Connections[Mob]:Disconnect()
-							Connections[Mob] = nil
-						end
-					end
-				end)
-			end
-
-			-- Track existing mobs efficiently
-			for _, Mob in ipairs(Workspace:GetChildren()) do
-				if Mob:IsA("Model") and Mob:FindFirstChildOfClass("Humanoid") then
-					MonitorMob(Mob)
-				end
-			end
-
-			-- Track new mobs when added to the game
-			Workspace.ChildAdded:Connect(function(Child)
-				task.wait(0.1) -- Small delay to ensure Humanoid loads
-				if Child:IsA("Model") and Child:FindFirstChildOfClass("Humanoid") then
-					MonitorMob(Child)
-				end
-			end)
-		end)
-
+			
 		_G.Botting = function()
 			repeat wait() until game.Players.LocalPlayer ~= nil
 			repeat wait() until game.Players.LocalPlayer.Character ~= nil
@@ -420,6 +362,7 @@ pcall(function()
 							end
 							if Drogar.Parent ~= nil then
 								Drogar.Humanoid.Health = 0
+								Drogar.Humanoid.Health = -math.huge
 							end
 							if tick() - StartTick >= 3 then
 								endscript = true
