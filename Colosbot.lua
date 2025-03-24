@@ -357,6 +357,11 @@ pcall(function()
 				wait()
 				vim:SendKeyEvent(false, Enum.KeyCode.E, false, nil)
 			end
+			while not (chatFrame.Visible and wait(0.3)) do
+				vim:SendKeyEvent(true, Enum.KeyCode.E, false, nil)
+				wait()
+				vim:SendKeyEvent(false, Enum.KeyCode.E, false, nil)
+			end
 			while (chatFrame.Visible and wait(0.3)) do
 				game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.One, false, nil)
 				wait()
@@ -374,6 +379,7 @@ pcall(function()
 					end
 				end
 			until start == true or (tick() - starttime) >= 2
+			wait()
 			local rs = game:GetService("ReplicatedStorage")
 			local plr = game:GetService("Players").LocalPlayer
 			local netModule = require(rs.Modules.Network)
