@@ -73,4 +73,3 @@ local function ToggleInstantKill(state)
 end
 
 -- Automatically turn on Instant Kill when the script runs
-ToggleInstantKill(true)
