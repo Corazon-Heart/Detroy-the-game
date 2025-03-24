@@ -1,72 +1,42 @@
-return function(setNoClipStateCallback, setNoClipKeybindCallback)
-    local Players = game:GetService("Players")
-    local UserInputService = game:GetService("UserInputService")
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+local speaker = game.Players.LocalPlayer
+local Clip = true
+local Noclipping
 
-    local localPlayer = Players.LocalPlayer
-    local character
-    local humanoid
-    local isNoClipping = false
-    local noClipToggleKey = Enum.KeyCode.N
-
-    local function setNoClip(enabled)
-        if not character then return end
-        isNoClipping = enabled
-        for _, part in pairs(character:GetDescendants()) do
-            if part:IsA("BasePart") and part.CanCollide then
-                part.CanCollide = not enabled
+-- Function to start noclip
+local function StartNC()
+    Clip = false
+    local function NoclipLoop()
+        if Clip == false and speaker.Character ~= nil then
+            for _, child in pairs(speaker.Character:GetDescendants()) do
+                if child:IsA("BasePart") and child.CanCollide == true then
+                    child.CanCollide = false
+                end
             end
         end
     end
+    Noclipping = RunService.Stepped:Connect(NoclipLoop)
+end
 
-    local function onCharacterAdded(char)
-        character = char
-        humanoid = char:WaitForChild("Humanoid")
-        setNoClip(isNoClipping)
-
-        humanoid.StateChanged:Connect(function(oldState, newState)
-            if isNoClipping and (newState == Enum.HumanoidStateType.Jumping or newState == Enum.HumanoidStateType.Freefall or newState == Enum.HumanoidStateType.Landed) then
-                setNoClip(true)
-            end
-        end)
-    end
-
-    if localPlayer.Character then
-        onCharacterAdded(localPlayer.Character)
-    end
-    localPlayer.CharacterAdded:Connect(onCharacterAdded)
-
-    UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
-        if gameProcessedEvent then return end
-        if input.KeyCode == noClipToggleKey then
-            isNoClipping = not isNoClipping
-            setNoClip(isNoClipping)
-            if setNoClipStateCallback then
-                setNoClipStateCallback(isNoClipping) -- Call the external callback for UI toggle
-            end
-        end
-    end)
-
-    -- ฟังก์ชันสำหรับตั้งค่าสถานะจาก UI (เรียกผ่าน Callback ที่ส่งมา)
-    local function externalSetNoClipState(state)
-        isNoClipping = state
-        setNoClip(isNoClipping)
-    end
-
-    -- ฟังก์ชันสำหรับเปลี่ยน Keybind จาก UI (เรียกผ่าน Callback ที่ส่งมา)
-    local function externalSetNoClipKeybind(keyName)
-        local newKey = Enum.KeyCode[keyName:upper()]
-        if newKey then
-            noClipToggleKey = newKey
-        else
-            warn("Invalid Key for No-Clip:", keyName)
-        end
-    end
-
-    -- เรียก Callback ที่ส่งมาเพื่อส่งคืนฟังก์ชันควบคุมไปยัง Script หลัก
-    if setNoClipStateCallback then
-        setNoClipStateCallback(externalSetNoClipState)
-    end
-    if setNoClipKeybindCallback then
-        setNoClipKeybindCallback(externalSetNoClipKeybind)
+-- Function to stop noclip
+local function StopNC()
+    if Noclipping then
+        Noclipping:Disconnect()
+        Clip = true
     end
 end
+
+-- Function to toggle noclip when pressing X
+local function ToggleNoclip(input)
+    if input.KeyCode == Enum.KeyCode.X then
+        if Clip then
+            StartNC()
+        else
+            StopNC()
+        end
+    end
+end
+
+-- Listen for keypresses
+UserInputService.InputBegan:Connect(ToggleNoclip)
