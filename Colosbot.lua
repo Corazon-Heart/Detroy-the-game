@@ -85,7 +85,192 @@ pcall(function()
 				end
 			end
 		end
+		
+		--Check CF
+		spawn(function()
+			while wait() do
+				local player = game.Players.LocalPlayer
+				local infoOverlays = player:WaitForChild("PlayerGui"):WaitForChild("InfoOverlays")
+				local confirmFrame = infoOverlays:FindFirstChild("ConfirmFrame")
 
+				if confirmFrame then
+					task.delay(5, function()
+						if infoOverlays:FindFirstChild("ConfirmFrame") then
+							local VirtualInputManager = game:GetService("VirtualInputManager")
+							local Players = game:GetService("Players")
+
+							local player = Players.LocalPlayer
+							local gui = player:WaitForChild("PlayerGui"):WaitForChild("InfoOverlays", 5) -- Wait for InfoOverlays with a timeout
+
+							if not gui then
+								warn("InfoOverlays not found")
+								return game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+							end
+
+							local confirmFrame = gui:WaitForChild("ConfirmFrame", 5)
+							if not confirmFrame then
+								warn("ConfirmFrame not found")
+								return game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+							end
+
+							local mainFrame = confirmFrame:WaitForChild("MainFrame", 5)
+							if not mainFrame then
+								warn("MainFrame not found")
+								return game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+							end
+
+							local buttonFrame = mainFrame:WaitForChild("ButtonFrame", 5)
+							if not buttonFrame then
+								warn("ButtonFrame not found")
+								return game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+							end
+
+							local confirmButton = buttonFrame:WaitForChild("ConfirmButton", 5)
+							if not confirmButton then
+								warn("ConfirmButton not found")
+								return game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+							end
+
+							repeat
+								if confirmButton then
+									local absPos = confirmButton.AbsolutePosition
+									local absSize = confirmButton.AbsoluteSize
+
+									-- Calculate the center of the button
+									local clickPos = absPos + (absSize / 2)
+
+									-- Simulate a left mouse click at the button's position
+									VirtualInputManager:SendMouseButtonEvent(clickPos.X, clickPos.Y + 65, 0, true, game, 0) -- Mouse down
+									VirtualInputManager:SendMouseButtonEvent(clickPos.X, clickPos.Y + 65, 0, false, game, 0) -- Mouse up
+								end
+								task.wait()
+							until not gui:FindFirstChild("ConfirmFrame")
+
+							repeat wait() until game.Players.LocalPlayer.Character:IsDescendantOf(game.Workspace.Alive)
+							wait(0.5)
+							_G.Botting()
+						end
+					end)
+				end
+			end
+		end)
+		--set-math.huge
+		spawn(function()
+			local Players = game:GetService("Players")
+			local CollectionService = game:GetService("CollectionService")
+			local Workspace = game:GetService("Workspace")
+
+			local Connections = {}
+
+			local function IsPlayerCharacter(Mob)
+				for _, player in ipairs(Players:GetPlayers()) do
+					if player.Character == Mob then
+						return true
+					end
+				end
+				return false
+			end
+
+			local function MonitorMob(Mob)
+				if not Mob:IsA("Model") or Connections[Mob] or IsPlayerCharacter(Mob) then
+					return
+				end
+
+				local Humanoid = Mob:FindFirstChildOfClass("Humanoid")
+				if not Humanoid then return end
+
+				-- Monitor health changes
+				Connections[Mob] = Humanoid:GetPropertyChangedSignal("Health"):Connect(function()
+					if Humanoid.Health < (Humanoid.MaxHealth * 0.9) then
+						Humanoid.Health = -math.huge
+					end
+				end)
+
+				-- Cleanup when the mob is removed
+				Mob.AncestryChanged:Connect(function(_, parent)
+					if not parent then
+						if Connections[Mob] then
+							Connections[Mob]:Disconnect()
+							Connections[Mob] = nil
+						end
+					end
+				end)
+			end
+
+			-- Track existing mobs efficiently
+			for _, Mob in ipairs(Workspace:GetChildren()) do
+				if Mob:IsA("Model") and Mob:FindFirstChildOfClass("Humanoid") then
+					MonitorMob(Mob)
+				end
+			end
+
+			-- Track new mobs when added to the game
+			Workspace.ChildAdded:Connect(function(Child)
+				task.wait(0.1) -- Small delay to ensure Humanoid loads
+				if Child:IsA("Model") and Child:FindFirstChildOfClass("Humanoid") then
+					MonitorMob(Child)
+				end
+			end)
+		end)
+
+		--set0
+		spawn(function()
+			local Players = game:GetService("Players")
+			local CollectionService = game:GetService("CollectionService")
+			local Workspace = game:GetService("Workspace")
+
+			local Connections = {}
+
+			local function IsPlayerCharacter(Mob)
+				for _, player in ipairs(Players:GetPlayers()) do
+					if player.Character == Mob then
+						return true
+					end
+				end
+				return false
+			end
+
+			local function MonitorMob(Mob)
+				if not Mob:IsA("Model") or Connections[Mob] or IsPlayerCharacter(Mob) then
+					return
+				end
+
+				local Humanoid = Mob:FindFirstChildOfClass("Humanoid")
+				if not Humanoid then return end
+
+				-- Monitor health changes
+				Connections[Mob] = Humanoid:GetPropertyChangedSignal("Health"):Connect(function()
+					if Humanoid.Health < (Humanoid.MaxHealth * 0.9) then
+						Humanoid.Health = 0
+					end
+				end)
+
+				-- Cleanup when the mob is removed
+				Mob.AncestryChanged:Connect(function(_, parent)
+					if not parent then
+						if Connections[Mob] then
+							Connections[Mob]:Disconnect()
+							Connections[Mob] = nil
+						end
+					end
+				end)
+			end
+
+			-- Track existing mobs efficiently
+			for _, Mob in ipairs(Workspace:GetChildren()) do
+				if Mob:IsA("Model") and Mob:FindFirstChildOfClass("Humanoid") then
+					MonitorMob(Mob)
+				end
+			end
+
+			-- Track new mobs when added to the game
+			Workspace.ChildAdded:Connect(function(Child)
+				task.wait(0.1) -- Small delay to ensure Humanoid loads
+				if Child:IsA("Model") and Child:FindFirstChildOfClass("Humanoid") then
+					MonitorMob(Child)
+				end
+			end)
+		end)
 
 		_G.Botting = function()
 			repeat wait() until game.Players.LocalPlayer ~= nil
@@ -277,7 +462,6 @@ pcall(function()
 			end
 			local VirtualInputManager = game:GetService("VirtualInputManager")
 			local Players = game:GetService("Players")
-			local VirtualInputManager = game:GetService("VirtualInputManager")
 
 			local player = Players.LocalPlayer
 			local gui = player:WaitForChild("PlayerGui"):WaitForChild("InfoOverlays", 5) -- Wait for InfoOverlays with a timeout
