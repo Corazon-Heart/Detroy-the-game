@@ -1,4 +1,4 @@
-local speeds = 1
+local speeds = 0.86
 local maxSpeed = 10
 local isFlying = false
 local tpwalking = false
