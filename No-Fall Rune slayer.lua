@@ -1,88 +1,25 @@
+-- NoFall
+local mt = getrawmetatable(game)
+local oldMeta = mt.__namecall
 
-    local Players = game:GetService("Players")
-    local localPlayer = Players.LocalPlayer
-    local character
-    local humanoid
-    local isNoFallEnabled = false
-    local isJumping = false
-    local freefallStartTime = nil
-    local noFallDelay = 0.1 -- ระยะเวลา (วินาที) ที่ต้องอยู่ในสถานะ Freefall หลังกระโดดก่อน No Fall ทำงาน
-    local heartbeatConnection
-    local stateChangedConnection
-    local characterAddedConnection
+-- Function to make metatables writeable (for bypassing the protection)
+setreadonly(mt, false)
 
-    local function applyNoFall()
-        if not humanoid or not isNoFallEnabled then return end
+mt.__namecall = newcclosure(function(self, ...)
+    local method = getnamecallmethod()
+    local args = {...}
 
-        local function onStateChanged(oldState, newState)
-            if newState == Enum.HumanoidStateType.Jumping then
-                isJumping = true
-                freefallStartTime = nil
-            elseif newState == Enum.HumanoidStateType.Freefall then
-                if isJumping and not freefallStartTime then
-                    freefallStartTime = tick()
-                elseif not isJumping then
-                    -- กรณีตกจากที่สูงโดยไม่ได้กระโดด (ทำงานทันที)
-                    humanoid:ChangeState(Enum.HumanoidStateType.Landed)
-                end
-            elseif newState == Enum.HumanoidStateType.Landed then
-                isJumping = false
-                freefallStartTime = nil
-            end
-        end
-
-        local function onHeartbeat(deltaTime)
-            if isJumping and freefallStartTime and tick() - freefallStartTime >= noFallDelay then
-                -- ผ่านไประยะเวลา noFallDelay หลังกระโดดและยังไม่ถึงพื้น
-                humanoid:ChangeState(Enum.HumanoidStateType.Landed)
-                freefallStartTime = nil -- ป้องกันการทำงานซ้ำ
-                isJumping = false -- ถือว่าลงพื้นแล้ว
-            end
-        end
-
-        stateChangedConnection = humanoid.StateChanged:Connect(onStateChanged)
-        heartbeatConnection = game:GetService("RunService").Heartbeat:Connect(onHeartbeat)
-    end
-
-    local function disableNoFall()
-        if heartbeatConnection then
-            heartbeatConnection:Disconnect()
-            heartbeatConnection = nil
-        end
-        if stateChangedConnection then
-            stateChangedConnection:Disconnect()
-            stateChangedConnection = nil
-        end
-        isJumping = false
-        freefallStartTime = nil
-    end
-
-    local function onCharacterAdded(char)
-        character = char
-        humanoid = char:WaitForChild("Humanoid")
-        if isNoFallEnabled then
-            applyNoFall()
-        else
-            disableNoFall()
+    -- Check if method is "FireServer" and the arguments match our criteria
+    if method == "FireServer" and #args == 1 and typeof(args[1]) == "table" then
+        -- Check if Config is FallDamage
+        if args[1]["Config"] == "FallDamage" then
+            return false  -- Block the remote event
         end
     end
 
-    local function toggleNoFall(enabled)
-        isNoFallEnabled = enabled
-        if character and humanoid then
-            if isNoFallEnabled then
-                applyNoFall()
-            else
-                disableNoFall()
-            end
-        end
-        
-        end
+    -- Call the original method if the condition is not met
+    return oldMeta(self, ...)
+end)
 
-
-    if localPlayer.Character then
-        onCharacterAdded(localPlayer.Character)
-    end
-    characterAddedConnection = localPlayer.CharacterAdded:Connect(onCharacterAdded)
-
-    print("No Fall Module Loaded for", localPlayer.Name)
+-- Make the metatable read-only again to avoid further modifications
+setreadonly(mt, true)
