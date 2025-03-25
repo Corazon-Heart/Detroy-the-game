@@ -41,7 +41,6 @@ pcall(function()
 
 		local MainTick = tick()
 		repeat wait() until CurrentCheck >= #game.Players:GetChildren() or tick() - MainTick >= 4
-		print"done check mod"
 		-- NoFall
 		local mt = getrawmetatable(game)
 		local oldMeta = mt.__namecall
@@ -383,7 +382,7 @@ pcall(function()
 				game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.Interact:FireServer(unpack(args))
 				wait(.15)
 			until chatFrame.Visible == true
-			wait(.25)
+			wait(.3)
 			repeat
 				local args = {
 					[1] = "Challenge The Demon Claw, Drogar."
@@ -432,7 +431,7 @@ pcall(function()
 						game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.Interact:FireServer(unpack(args))
 						wait(.15)
 					until chatFrame.Visible == true
-					wait()
+					wait(.3)
 					repeat
 						local args = {
 							[1] = "Challenge The Demon Claw, Drogar."
