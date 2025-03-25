@@ -315,8 +315,7 @@ pcall(function()
 				["Lesser Intellect Rune"] = true,
 				["Lesser Spirit Rune"] = true,
 				["Lesser Stamina Rune"] = true,
-				["Edge Wing"] = true,
-				["Drogar's Vest"] = true
+				["Edge Wing"] = true
 			}
 
 
@@ -357,8 +356,7 @@ pcall(function()
 						"Lesser Intellect Rune",
 						"Lesser Spirit Rune",
 						"Lesser Stamina Rune",
-					        "Edge Wing",
-					        "Drogar's Vest"
+					        "Edge Wing"
 					}
 
 					for _, itemName in ipairs(itemsToSell) do
