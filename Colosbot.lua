@@ -1,5 +1,5 @@
 spawn(function()
-	task.wait(600)
+	task.wait(1200)
 	game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
 end)
 pcall(function()
