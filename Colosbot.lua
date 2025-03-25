@@ -389,7 +389,10 @@ pcall(function()
 				}
 
 				game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.Interact:FireServer(unpack(args))
-				wait(.75)
+				wait(.65)
+				game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.D, false, game)
+				wait(0.1)
+				game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode.D, false, game)
 			until chatFrame.Visible == true
 			wait(.25)
 			repeat
@@ -453,7 +456,10 @@ pcall(function()
 							}
 
 							game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.Interact:FireServer(unpack(args))
-							wait(.75)
+							wait(.65)
+							game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.D, false, game)
+							wait(0.1)
+							game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode.D, false, game)
 						until chatFrame.Visible == true
 					end
 					wait(.25)
