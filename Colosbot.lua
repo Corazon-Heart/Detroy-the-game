@@ -164,13 +164,8 @@ pcall(function()
 			repeat wait() until game.Players.LocalPlayer.Character ~= nil
 			repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart"
 			checkAndTeleport()
-			game.Workspace.InvisibleParts.ColosseumEntrance.CFrame = CFrame.new(-311.4093933105469, 358.6604919433594, -689.0089111328125)
 			repeat 
-				game.Workspace.Camera.CFrame = CFrame.new(1023.71997, -225.121262, 1501.48669, -0.948263526, -0.312660873, 0.0551318303, 0, 0.173652112, 0.984807014, -0.317484409, 0.933856547, -0.164667949)
-				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.InvisibleParts.ColosseumEntrance.CFrame
-				game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.E, false, nil)
-				game:GetService("RunService").Heartbeat:Wait()
-				game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode.E, false, nil)
+				fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
 			until (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude < 10
 			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(937.6810913085938, -217.88751220703125, 1686.1224365234375)
 			repeat wait() until (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375)).magnitude < 5
@@ -209,11 +204,7 @@ pcall(function()
 
 			if currentWeight >= maxWeight and Found == true then
 				repeat 
-					game.Workspace.Camera.CFrame = CFrame.new(1023.71997, -225.121262, 1501.48669, -0.948263526, -0.312660873, 0.0551318303, 0, 0.173652112, 0.984807014, -0.317484409, 0.933856547, -0.164667949)
-					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.InvisibleParts.ColosseumEntrance.CFrame
-					game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.E, false, nil)
-					game:GetService("RunService").Heartbeat:Wait()
-					game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode.E, false, nil)
+					fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
 				until (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude < 10
 				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-386.4886779785156, 154.18463134765625, -955.7117309570312)
 				game.Workspace.Camera.CFrame = CFrame.new(-375.058167, 161.526382, -955.592163, 0.00871383399, -0.464894921, 0.885323048, 0, 0.885356724, 0.464912534, -0.999962091, -0.00405117078, 0.00771485083)
@@ -250,11 +241,7 @@ pcall(function()
 					wait(.2)
 				end
 				repeat 
-					game.Workspace.Camera.CFrame = CFrame.new(1023.71997, -225.121262, 1501.48669, -0.948263526, -0.312660873, 0.0551318303, 0, 0.173652112, 0.984807014, -0.317484409, 0.933856547, -0.164667949)
-					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.InvisibleParts.ColosseumEntrance.CFrame
-					game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.E, false, nil)
-					game:GetService("RunService").Heartbeat:Wait()
-					game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode.E, false, nil)
+					fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
 				until (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude < 10
 				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(937.6810913085938, -217.88751220703125, 1686.1224365234375)
 				repeat wait() until (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375)).magnitude < 5
