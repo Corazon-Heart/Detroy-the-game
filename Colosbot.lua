@@ -395,6 +395,7 @@ pcall(function()
 							if Drogar.Parent ~= nil then
 								Drogar.Humanoid.Health = 0
 								Drogar.Humanoid.Health = -math.huge
+								Drogar.Humanoid:TakeDamage(math.huge)
 							end
 							if tick() - StartTick >= 2 then
 								endscript = true
