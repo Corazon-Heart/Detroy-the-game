@@ -164,7 +164,7 @@ pcall(function()
 			repeat wait() until game.Players.LocalPlayer.Character ~= nil
 			repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart"
 			checkAndTeleport()
-			repeat wait()
+			repeat wait(.5)
 				fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
 			until (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude < 10
 			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(937.6810913085938, -217.88751220703125, 1686.1224365234375)
@@ -203,7 +203,7 @@ pcall(function()
 			end
 
 			if currentWeight >= maxWeight and Found == true then
-				repeat wait()
+				repeat wait(.5)
 					fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
 				until (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude < 10
 				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-386.4886779785156, 154.18463134765625, -955.7117309570312)
@@ -240,7 +240,7 @@ pcall(function()
 					end
 					wait(.2)
 				end
-				repeat wait()
+				repeat wait(.5)
 					fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
 				until (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude < 10
 				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(937.6810913085938, -217.88751220703125, 1686.1224365234375)
