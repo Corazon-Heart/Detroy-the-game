@@ -523,6 +523,7 @@ pcall(function()
 						wait(0.5)
 						randomChild.Parent = serverScrollFrame
 						game.GuiService:ClearError()
+						wait(3)
 					end
 				end
 			end
