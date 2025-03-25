@@ -314,7 +314,9 @@ pcall(function()
 				["Lesser Agility Rune"] = true,
 				["Lesser Intellect Rune"] = true,
 				["Lesser Spirit Rune"] = true,
-				["Lesser Stamina Rune"] = true
+				["Lesser Stamina Rune"] = true,
+				["Edge Wing"] = true,
+				["Drogar's Vest"] = true
 			}
 
 
