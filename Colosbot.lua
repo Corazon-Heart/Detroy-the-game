@@ -263,23 +263,6 @@ pcall(function()
 				until chatFrame.Visible == true
 			end
 			wait(.5)
-			--Check Again
-			if chatFrame.Visible == false then
-				repeat wait()
-					vim:SendKeyEvent(true, Enum.KeyCode.E, false, nil)
-					wait()
-					vim:SendKeyEvent(false, Enum.KeyCode.E, false, nil)
-				until chatFrame.Visible == true
-			end
-			wait(.5)
-			--Check Again
-			if chatFrame.Visible == false then
-				repeat wait()
-					vim:SendKeyEvent(true, Enum.KeyCode.E, false, nil)
-					wait()
-					vim:SendKeyEvent(false, Enum.KeyCode.E, false, nil)
-				until chatFrame.Visible == true
-			end
 			--Close
 			repeat wait()
 				vim:SendKeyEvent(true, Enum.KeyCode.One, false, nil)
@@ -306,6 +289,8 @@ pcall(function()
 			end
 			--Start
 			local start = false
+			local glitch = false
+			local fd = false
 			local starttime = tick()
 			repeat
 				task.wait()
@@ -316,7 +301,72 @@ pcall(function()
 						start = true
 					end
 				end
-			until start == true or (tick() - starttime) >= 2
+				if (tick() - starttime) >= 2 then
+					start = true
+					glitch = true
+				end
+			until start == true
+			if glitch == true then
+				for i,v in pairs(workspace.Alive:GetChildren()) do
+					if v.Name:find"Drogar" then
+						fd = true
+					end
+				end
+				if fd == false then
+					local vim = game:GetService("VirtualInputManager")
+					local chatFrame = game.Players.LocalPlayer.PlayerGui.ChatGui.MainFrame
+
+					repeat wait()
+						vim:SendKeyEvent(true, Enum.KeyCode.E, false, nil)
+						wait()
+						vim:SendKeyEvent(false, Enum.KeyCode.E, false, nil)
+					until chatFrame.Visible == true
+					wait(.5)
+					--Check Again
+					if chatFrame.Visible == false then
+						repeat wait()
+							vim:SendKeyEvent(true, Enum.KeyCode.E, false, nil)
+							wait()
+							vim:SendKeyEvent(false, Enum.KeyCode.E, false, nil)
+						until chatFrame.Visible == true
+					end
+					wait(.5)
+					--Check Again
+					if chatFrame.Visible == false then
+						repeat wait()
+							vim:SendKeyEvent(true, Enum.KeyCode.E, false, nil)
+							wait()
+							vim:SendKeyEvent(false, Enum.KeyCode.E, false, nil)
+						until chatFrame.Visible == true
+					end
+					wait(.5)
+					--Close
+					repeat wait()
+						vim:SendKeyEvent(true, Enum.KeyCode.One, false, nil)
+						wait()
+						vim:SendKeyEvent(false, Enum.KeyCode.One, false, nil)
+					until chatFrame.Visible == false
+					wait(.5)
+					--Check Again
+					if chatFrame.Visible == true then
+						repeat wait()
+							vim:SendKeyEvent(true, Enum.KeyCode.One, false, nil)
+							wait()
+							vim:SendKeyEvent(false, Enum.KeyCode.One, false, nil)
+						until chatFrame.Visible == false
+					end
+					wait(.5)
+					--Check Again
+					if chatFrame.Visible == true then
+						repeat wait()
+							vim:SendKeyEvent(true, Enum.KeyCode.One, false, nil)
+							wait()
+							vim:SendKeyEvent(false, Enum.KeyCode.One, false, nil)
+						until chatFrame.Visible == false
+					end
+					wait(2)
+				end
+			end
 			wait()
 			local rs = game:GetService("ReplicatedStorage")
 			local plr = game:GetService("Players").LocalPlayer
@@ -632,8 +682,9 @@ pcall(function()
 						virtualInput:SendMouseButtonEvent(childClickPos.X, childClickPos.Y + 65, 0, false, game, 0)
 						wait(0.5)
 						randomChild.Parent = serverScrollFrame
+						wait(1)
 						game.GuiService:ClearError()
-						wait(2)
+						wait(.5)
 					end
 				end
 			end
