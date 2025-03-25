@@ -504,7 +504,7 @@ pcall(function()
 				if playerCountText and playerCountText:IsA("TextLabel") then
 					local currentPlayers = tonumber(playerCountText.Text:match("(%d+)/%d+"))
 
-					if currentPlayers and currentPlayers <= 7 then
+					if currentPlayers and currentPlayers <= 8 then
 						local searchBar = mainFrame:WaitForChild("SearchBar")
 						randomChild.Parent = searchBar
 						local childPos = randomChild.AbsolutePosition
