@@ -369,7 +369,7 @@ pcall(function()
 				repeat wait() until (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375)).magnitude < 5
 			end
 
-			wait(1)
+			wait(.75)
 			local chatFrame = game.Players.LocalPlayer.PlayerGui.ChatGui.MainFrame
 			repeat
 				local args = {
@@ -383,7 +383,7 @@ pcall(function()
 				game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.Interact:FireServer(unpack(args))
 				wait(.15)
 			until chatFrame.Visible == true
-			wait()
+			wait(.25)
 			repeat
 				local args = {
 					[1] = "Challenge The Demon Claw, Drogar."
@@ -469,8 +469,12 @@ pcall(function()
 					end
 				end
 			until Drogar ~= nil
-
-			TP(Drogar.HumanoidRootPart.Position)
+			Drogar:WaitForChild("HumanoidRootPart",10)
+			if Drogar:FindFirstChild"HumanoidRootPart" then
+				TP(Drogar.HumanoidRootPart.Position)
+			else
+				return game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+			end
 			repeat
 				if game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart" and Drogar:FindFirstChild"HumanoidRootPart" then
 					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Drogar.HumanoidRootPart.CFrame*CFrame.new(0,-6,7)
