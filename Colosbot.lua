@@ -163,6 +163,8 @@ pcall(function()
 			repeat wait() until game.Players.LocalPlayer ~= nil
 			repeat wait() until game.Players.LocalPlayer.Character ~= nil
 			repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart"
+			repeat wait() until workspace.InvisibleParts:FindFirstChild"ColosseumEntrance"
+			repeat wait() until workspace.InvisibleParts:FindFirstChild"ColosseumEntrance":FindFirstChild"InteractPrompt"
 			checkAndTeleport()
 			repeat wait(.5)
 				fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
