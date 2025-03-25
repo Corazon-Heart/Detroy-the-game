@@ -380,10 +380,12 @@ pcall(function()
 				repeat wait() until (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375)).magnitude < 5
 			end
 
-			wait()
-			TP(Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375));
+			wait(.5)
 			local chatFrame = game.Players.LocalPlayer.PlayerGui.ChatGui.MainFrame
 			repeat
+				if game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart" then
+					TP(Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375));
+				end
 				local args = {
 					[1] = {
 						["player"] = game:GetService("Players").LocalPlayer,
@@ -444,8 +446,10 @@ pcall(function()
 					local vim = game:GetService("VirtualInputManager")
 					local chatFrame = game.Players.LocalPlayer.PlayerGui.ChatGui.MainFrame
 					if chatFrame.Visible == false then
-						TP(Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375));
 						repeat
+							if game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart" then
+								TP(Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375));
+							end
 							local args = {
 								[1] = {
 									["player"] = game:GetService("Players").LocalPlayer,
