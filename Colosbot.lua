@@ -360,7 +360,9 @@ pcall(function()
 					end
 					wait(.2)
 				end
-				repeat wait(.5)
+				repeat 
+					game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.DialogueEvent:FireServer()
+					wait(.5)
 					fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
 				until (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude < 10
 				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(937.6810913085938, -217.88751220703125, 1686.1224365234375)
