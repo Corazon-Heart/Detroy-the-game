@@ -341,6 +341,24 @@ pcall(function()
 					vim:SendKeyEvent(false, Enum.KeyCode.E, false, nil)
 				until chatFrame.Visible == true
 			end
+			wait(.5)
+			--Check Again
+			if chatFrame.Visible == false then
+				repeat wait()
+					vim:SendKeyEvent(true, Enum.KeyCode.E, false, nil)
+					wait()
+					vim:SendKeyEvent(false, Enum.KeyCode.E, false, nil)
+				until chatFrame.Visible == true
+			end
+			wait(.5)
+			--Check Again
+			if chatFrame.Visible == false then
+				repeat wait()
+					vim:SendKeyEvent(true, Enum.KeyCode.E, false, nil)
+					wait()
+					vim:SendKeyEvent(false, Enum.KeyCode.E, false, nil)
+				until chatFrame.Visible == true
+			end
 			--Close
 			repeat wait()
 				vim:SendKeyEvent(true, Enum.KeyCode.One, false, nil)
