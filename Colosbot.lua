@@ -260,58 +260,29 @@ pcall(function()
 				repeat wait() until (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375)).magnitude < 5
 			end
 
-			wait(.5)
-			local vim = game:GetService("VirtualInputManager")
+			wait(1)
 			local chatFrame = game.Players.LocalPlayer.PlayerGui.ChatGui.MainFrame
+			repeat
+				local args = {
+					[1] = {
+						["player"] = game:GetService("Players").LocalPlayer,
+						["Object"] = workspace.Effects.NPCS.Drakonar,
+						["Action"] = "NPC"
+					}
+				}
 
-			repeat wait()
-				vim:SendKeyEvent(true, Enum.KeyCode.E, false, nil)
-				wait()
-				vim:SendKeyEvent(false, Enum.KeyCode.E, false, nil)
+				game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.Interact:FireServer(unpack(args))
+				wait(.15)
 			until chatFrame.Visible == true
-			wait(.5)
-			--Check Again
-			if chatFrame.Visible == false then
-				repeat wait()
-					vim:SendKeyEvent(true, Enum.KeyCode.E, false, nil)
-					wait()
-					vim:SendKeyEvent(false, Enum.KeyCode.E, false, nil)
-				until chatFrame.Visible == true
-			end
-			wait(.5)
-			--Check Again
-			if chatFrame.Visible == false then
-				repeat wait()
-					vim:SendKeyEvent(true, Enum.KeyCode.E, false, nil)
-					wait()
-					vim:SendKeyEvent(false, Enum.KeyCode.E, false, nil)
-				until chatFrame.Visible == true
-			end
-			wait(.5)
-			--Close
-			repeat wait()
-				vim:SendKeyEvent(true, Enum.KeyCode.One, false, nil)
-				wait()
-				vim:SendKeyEvent(false, Enum.KeyCode.One, false, nil)
+			wait()
+			repeat
+				local args = {
+					[1] = "Challenge The Demon Claw, Drogar."
+				}
+
+				game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.DialogueEvent:FireServer(unpack(args))
+				wait(.15)
 			until chatFrame.Visible == false
-			wait(.5)
-			--Check Again
-			if chatFrame.Visible == true then
-				repeat wait()
-					vim:SendKeyEvent(true, Enum.KeyCode.One, false, nil)
-					wait()
-					vim:SendKeyEvent(false, Enum.KeyCode.One, false, nil)
-				until chatFrame.Visible == false
-			end
-			wait(.5)
-			--Check Again
-			if chatFrame.Visible == true then
-				repeat wait()
-					vim:SendKeyEvent(true, Enum.KeyCode.One, false, nil)
-					wait()
-					vim:SendKeyEvent(false, Enum.KeyCode.One, false, nil)
-				until chatFrame.Visible == false
-			end
 			--Start
 			local start = false
 			local glitch = false
@@ -340,55 +311,27 @@ pcall(function()
 				if fd == false then
 					local vim = game:GetService("VirtualInputManager")
 					local chatFrame = game.Players.LocalPlayer.PlayerGui.ChatGui.MainFrame
+					repeat
+						local args = {
+							[1] = {
+								["player"] = game:GetService("Players").LocalPlayer,
+								["Object"] = workspace.Effects.NPCS.Drakonar,
+								["Action"] = "NPC"
+							}
+						}
 
-					repeat wait()
-						vim:SendKeyEvent(true, Enum.KeyCode.E, false, nil)
-						wait()
-						vim:SendKeyEvent(false, Enum.KeyCode.E, false, nil)
+						game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.Interact:FireServer(unpack(args))
+						wait(.15)
 					until chatFrame.Visible == true
-					wait(.5)
-					--Check Again
-					if chatFrame.Visible == false then
-						repeat wait()
-							vim:SendKeyEvent(true, Enum.KeyCode.E, false, nil)
-							wait()
-							vim:SendKeyEvent(false, Enum.KeyCode.E, false, nil)
-						until chatFrame.Visible == true
-					end
-					wait(.5)
-					--Check Again
-					if chatFrame.Visible == false then
-						repeat wait()
-							vim:SendKeyEvent(true, Enum.KeyCode.E, false, nil)
-							wait()
-							vim:SendKeyEvent(false, Enum.KeyCode.E, false, nil)
-						until chatFrame.Visible == true
-					end
-					wait(.5)
-					--Close
-					repeat wait()
-						vim:SendKeyEvent(true, Enum.KeyCode.One, false, nil)
-						wait()
-						vim:SendKeyEvent(false, Enum.KeyCode.One, false, nil)
+					wait()
+					repeat
+						local args = {
+							[1] = "Challenge The Demon Claw, Drogar."
+						}
+
+						game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.DialogueEvent:FireServer(unpack(args))
+						wait(.15)
 					until chatFrame.Visible == false
-					wait(.5)
-					--Check Again
-					if chatFrame.Visible == true then
-						repeat wait()
-							vim:SendKeyEvent(true, Enum.KeyCode.One, false, nil)
-							wait()
-							vim:SendKeyEvent(false, Enum.KeyCode.One, false, nil)
-						until chatFrame.Visible == false
-					end
-					wait(.5)
-					--Check Again
-					if chatFrame.Visible == true then
-						repeat wait()
-							vim:SendKeyEvent(true, Enum.KeyCode.One, false, nil)
-							wait()
-							vim:SendKeyEvent(false, Enum.KeyCode.One, false, nil)
-						until chatFrame.Visible == false
-					end
 					wait(2)
 				end
 			end
