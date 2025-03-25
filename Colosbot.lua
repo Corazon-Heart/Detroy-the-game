@@ -182,7 +182,32 @@ pcall(function()
 			-- Convert them to numbers
 			currentWeight = tonumber(currentWeight)
 			maxWeight = tonumber(maxWeight)
-			if currentWeight >= maxWeight then
+			local Found = false
+			local SellItem = {
+				["Intellect Rune"] = true,
+				["Agility Rune"] = true,
+				["Spirit Rune"] = true,
+				["Stamina Rune"] = true,
+				["Strength Rune"] = true,
+				["Thick Leather"] = true,
+				["Lesser Strength Rune"] = true,
+				["Lesser Agility Rune"] = true,
+				["Lesser Intellect Rune"] = true,
+				["Lesser Spirit Rune"] = true,
+				["Lesser Stamina Rune"] = true
+			}
+
+
+			if game.Players.LocalPlayer:FindFirstChild"Backpack" then
+				for _, item in ipairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+					if SellItem[item.Name] then
+						Found = true
+						break -- Stop searching once found
+					end
+				end
+			end
+
+			if currentWeight >= maxWeight and Found == true then
 				repeat 
 					game.Workspace.Camera.CFrame = CFrame.new(1023.71997, -225.121262, 1501.48669, -0.948263526, -0.312660873, 0.0551318303, 0, 0.173652112, 0.984807014, -0.317484409, 0.933856547, -0.164667949)
 					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.InvisibleParts.ColosseumEntrance.CFrame
