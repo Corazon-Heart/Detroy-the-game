@@ -123,7 +123,7 @@ pcall(function()
 				end
 			end
 		end)
-			
+
 		_G.Botting = function()
 			repeat wait() until game.Players.LocalPlayer ~= nil
 			repeat wait() until game.Players.LocalPlayer.Character ~= nil
@@ -417,7 +417,12 @@ pcall(function()
 					local distance = (playerPosition - targetPosition).magnitude
 
 					if distance <= radius then
-						return game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+						wait(3)
+						local playerPosition = player.Character.HumanoidRootPart.Position
+						local distance = (playerPosition - targetPosition).magnitude
+						if distance <= radius then 
+							return game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+						end
 					end
 				end
 			end
