@@ -274,7 +274,7 @@ pcall(function()
 						if v.Name == "Drogar's Vest" and tonumber(Rs) <= 3 then
 							sellEvent:FireServer(v, nil, true)
 							wait(.2)
-						elseif v.Name == "Edge Wing" and tonumber(Rs) <= 1 then
+						elseif v.Name == "Edge Wing" and tonumber(Rs) <= 2 then
 							sellEvent:FireServer(v, nil, true)
 							wait(.2)
 						end
