@@ -421,6 +421,7 @@ pcall(function()
 			}
 
 			netModule.connect("MasterEvent", "FireServer", plr.Character, tradeData)
+			game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.DialogueEvent:FireServer()
 			local Drogar = nil
 			local endscript = false
 			repeat wait()
