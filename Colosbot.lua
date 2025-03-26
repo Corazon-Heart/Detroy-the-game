@@ -280,6 +280,7 @@ pcall(function()
 						end
 					end
 				end
+				game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.DialogueEvent:FireServer()
 				wait(.2)
 				game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
 				fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
@@ -287,6 +288,8 @@ pcall(function()
 				local startTime = tick()
 				while (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude >= 10 do
 					if tick() - startTime > 2 then
+						game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.DialogueEvent:FireServer()
+						wait(.2)
 						fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
 						startTime = tick()
 					end
