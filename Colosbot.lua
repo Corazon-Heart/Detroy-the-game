@@ -546,7 +546,8 @@ pcall(function()
 								Drogar.Humanoid.Health = 0
 								Drogar.Humanoid.Health = -math.huge
 							end
-							if tick() - StartTick >= ((math.random(10,15)/10) then
+							local duration = math.random(10, 15) / 10
+							if tick() - StartTick >= tonumber(duration) then
 								endscript = true
 							end
 						until Drogar.Parent == nil or endscript == true
