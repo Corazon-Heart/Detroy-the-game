@@ -687,6 +687,7 @@ pcall(function()
 							until not gui:FindFirstChild("ConfirmFrame")
 
 							repeat wait() until game.Players.LocalPlayer.Character:IsDescendantOf(game.Workspace.Alive)
+							game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart",15)
 							wait(1)
 							_G.Botting()
 						end
