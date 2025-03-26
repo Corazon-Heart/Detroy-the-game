@@ -422,13 +422,79 @@ pcall(function()
 			game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.DialogueEvent:FireServer()
 			local Drogar = nil
 			local endscript = false
+			local startmain = tick()
+			local re = false
 			repeat wait()
 				for i,v in pairs(workspace.Alive:GetChildren()) do
 					if v.Name:find"Drogar" then
 						Drogar = v
 					end
 				end
-			until Drogar ~= nil
+				if tick() - startmain >= 4 then
+					re = true
+				end
+			until Drogar ~= nil or re == true
+			if re == true then
+				game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+				fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
+
+				local startTime = tick()
+				while (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude >= 10 do
+					if tick() - startTime > 2 then
+						fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
+						startTime = tick()
+					end
+					wait(0.1)
+				end
+				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(937.6810913085938, -217.88751220703125, 1686.1224365234375)
+				repeat wait() until (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375)).magnitude < 5
+				wait(.5)
+				repeat
+					if game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart" then
+						TP(Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375));
+					end
+					local args = {
+						[1] = {
+							["player"] = game:GetService("Players").LocalPlayer,
+							["Object"] = workspace.Effects.NPCS.Drakonar,
+							["Action"] = "NPC"
+						}
+					}
+
+					game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.Interact:FireServer(unpack(args))
+					wait(.65)
+					game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.D, false, game)
+					wait(0.1)
+					game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode.D, false, game)
+				until game.Players.LocalPlayer.PlayerGui.ChatGui.MainFrame.Visible == true
+				wait(.25)
+				repeat
+					local args = {
+						[1] = "Challenge The Demon Claw, Drogar."
+					}
+
+					game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.DialogueEvent:FireServer(unpack(args))
+					wait(.15)
+				until game.Players.LocalPlayer.PlayerGui.ChatGui.MainFrame.Visible == false
+				wait(.15)
+				if game.Players.LocalPlayer.PlayerGui.ChatGui.MainFrame.Visible == true then
+					repeat
+						local args = {
+							[1] = "Challenge The Demon Claw, Drogar."
+						}
+
+						game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.DialogueEvent:FireServer(unpack(args))
+						wait(.15)
+					until game.Players.LocalPlayer.PlayerGui.ChatGui.MainFrame.Visible == false
+				end
+				repeat wait()
+					for i,v in pairs(workspace.Alive:GetChildren()) do
+						if v.Name:find"Drogar" then
+							Drogar = v
+						end
+					end
+				until Drogar ~= nil
+			end
 			Drogar:WaitForChild("HumanoidRootPart",10)
 			if Drogar:FindFirstChild"HumanoidRootPart" then
 				TP(Drogar.HumanoidRootPart.Position)
