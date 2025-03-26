@@ -221,7 +221,7 @@ pcall(function()
 				end
 			end
 
-			if currentWeight >= maxWeight and Found == true then
+			if (currentWeight >= maxWeight or currentWeight >= 200) and Found == true then
 				game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
 				fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
 
