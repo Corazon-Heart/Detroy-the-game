@@ -280,6 +280,7 @@ pcall(function()
 						end
 					end
 				end
+				wait(1)
 				game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.DialogueEvent:FireServer()
 				wait(.2)
 				game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
