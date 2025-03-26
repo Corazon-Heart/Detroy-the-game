@@ -15,6 +15,10 @@ pcall(function()
 		repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild"CharacterHandler":FindFirstChild"Input":FindFirstChild"Events"
 		repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild"CharacterHandler":FindFirstChild"Input":FindFirstChild"Events":FindFirstChild"MasterEvent"
 		wait(.5)
+		game:GetService("Players").LocalPlayer.Idled:Connect(function()
+			c:CaptureController()
+			c:ClickButton2(Vector2.new(math.random(10, 50), math.random(10, 50)))
+		end)
 		local CurrentCheck = 0
 		for _,v in pairs(game.Players:GetPlayers()) do
 			if v:IsA("Player") then
@@ -727,7 +731,10 @@ pcall(function()
 		-- Wait for Menu and its children
 		local menu = gui:WaitForChild("Menu")
 		local cosmeticButton = menu:WaitForChild("CosmeticButton")
-
+		game:GetService("Players").LocalPlayer.Idled:Connect(function()
+			c:CaptureController()
+			c:ClickButton2(Vector2.new(math.random(10, 50), math.random(10, 50)))
+		end)
 		-- Simulate space key press
 		wait(1)
 		local virtualInput = game:GetService("VirtualInputManager")
