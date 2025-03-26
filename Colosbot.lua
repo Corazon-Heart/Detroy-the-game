@@ -198,8 +198,8 @@ pcall(function()
 			maxWeight = tonumber(maxWeight)
 			local Found = false
 			local SellItem = {
-				["Intellect Rune"] = true,
-				["Agility Rune"] = true,
+				["Intellect Rune"] = false,
+				["Agility Rune"] = false,
 				["Spirit Rune"] = true,
 				["Stamina Rune"] = true,
 				["Strength Rune"] = true,
