@@ -157,7 +157,7 @@ pcall(function()
 				end
 			end
 		end)
-		
+
 		--set-math.huge
 		spawn(function()
 			local Players = game:GetService("Players")
@@ -275,7 +275,7 @@ pcall(function()
 				end
 			end)
 		end)
-		
+
 		_G.Botting = function()
 			repeat wait() until game.Players.LocalPlayer ~= nil
 			repeat wait() until game.Players.LocalPlayer.Character ~= nil
@@ -338,25 +338,23 @@ pcall(function()
 				wait()
 				game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode.E, false, nil)
 				wait(1)
+				local player = game:GetService("Players").LocalPlayer
+				local backpack = player.Backpack
+				local sellEvent = player.Character.CharacterHandler.Input.Events.SellEvent
+				local itemsToSell = {
+					"Intellect Rune",
+					"Agility Rune",
+					"Spirit Rune",
+					"Stamina Rune",
+					"Strength Rune",
+					"Thick Leather",
+					"Lesser Strength Rune",
+					"Lesser Agility Rune",
+					"Lesser Intellect Rune",
+					"Lesser Spirit Rune",
+					"Lesser Stamina Rune"
+				}
 				for i = 1,12 do
-					local player = game:GetService("Players").LocalPlayer
-					local backpack = player.Backpack
-					local sellEvent = player.Character.CharacterHandler.Input.Events.SellEvent
-
-					local itemsToSell = {
-						"Intellect Rune",
-						"Agility Rune",
-						"Spirit Rune",
-						"Stamina Rune",
-						"Strength Rune",
-						"Thick Leather",
-						"Lesser Strength Rune",
-						"Lesser Agility Rune",
-						"Lesser Intellect Rune",
-						"Lesser Spirit Rune",
-						"Lesser Stamina Rune"
-					}
-
 					for _, itemName in ipairs(itemsToSell) do
 						local item = backpack:FindFirstChild(itemName)
 						if item then
@@ -365,6 +363,18 @@ pcall(function()
 					end
 					wait(.2)
 				end
+				for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+					if v.Name == "Drogar's Vest" or v.Name == "Edge Wing" then
+						if v.Name == "Drogar's Vest" and v:GetAttribute("MaxSlots") <= 3 then
+							sellEvent:FireServer(v, nil, true)
+							wait(.2)
+						elseif v.Name == "Edge Wing" and v:GetAttribute("MaxSlots") <= 1 then
+							sellEvent:FireServer(v, nil, true)
+							wait(.2)
+						end
+					end
+				end
+				wait(.2)
 				repeat 
 					game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.DialogueEvent:FireServer()
 					wait()
