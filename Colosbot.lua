@@ -369,10 +369,14 @@ pcall(function()
 				end
 				for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
 					if v.Name == "Drogar's Vest" or v.Name == "Edge Wing" then
-						if v.Name == "Drogar's Vest" and v:GetAttribute("MaxSlots") <= 3 then
+						local Rs = v:GetAttribute("MaxSlots")
+						if Rs == nil then
+							Rs = 0
+						end
+						if v.Name == "Drogar's Vest" and tonumber(Rs) <= 3 then
 							sellEvent:FireServer(v, nil, true)
 							wait(.2)
-						elseif v.Name == "Edge Wing" and v:GetAttribute("MaxSlots") <= 1 then
+						elseif v.Name == "Edge Wing" and tonumber(Rs) <= 1 then
 							sellEvent:FireServer(v, nil, true)
 							wait(.2)
 						end
