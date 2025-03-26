@@ -301,7 +301,6 @@ pcall(function()
 			end
 
 			wait(.5)
-			local chatFrame = game.Players.LocalPlayer.PlayerGui.ChatGui.MainFrame
 			repeat
 				if game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart" then
 					TP(Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375));
@@ -319,7 +318,7 @@ pcall(function()
 				game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.D, false, game)
 				wait(0.1)
 				game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode.D, false, game)
-			until chatFrame.Visible == true
+			until game.Players.LocalPlayer.PlayerGui.ChatGui.MainFrame.Visible == true
 			wait(.25)
 			repeat
 				local args = {
@@ -328,9 +327,9 @@ pcall(function()
 
 				game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.DialogueEvent:FireServer(unpack(args))
 				wait(.15)
-			until chatFrame.Visible == false
+			until game.Players.LocalPlayer.PlayerGui.ChatGui.MainFrame.Visible == false
 			wait(.15)
-			if chatFrame.Visible == true then
+			if game.Players.LocalPlayer.PlayerGui.ChatGui.MainFrame.Visible == true then
 				repeat
 					local args = {
 						[1] = "Challenge The Demon Claw, Drogar."
@@ -338,7 +337,7 @@ pcall(function()
 
 					game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.DialogueEvent:FireServer(unpack(args))
 					wait(.15)
-				until chatFrame.Visible == false
+				until game.Players.LocalPlayer.PlayerGui.ChatGui.MainFrame.Visible == false
 			end
 			--Start
 			local start = false
@@ -367,8 +366,7 @@ pcall(function()
 				end
 				if fd == false then
 					local vim = game:GetService("VirtualInputManager")
-					local chatFrame = game.Players.LocalPlayer.PlayerGui.ChatGui.MainFrame
-					if chatFrame.Visible == false then
+					if game.Players.LocalPlayer.PlayerGui.ChatGui.MainFrame.Visible == false then
 						repeat
 							if game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart" then
 								TP(Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375));
@@ -386,7 +384,7 @@ pcall(function()
 							game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.D, false, game)
 							wait(0.1)
 							game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode.D, false, game)
-						until chatFrame.Visible == true
+						until game.Players.LocalPlayer.PlayerGui.ChatGui.MainFrame.Visible == true
 					end
 					wait(.25)
 					repeat
@@ -396,9 +394,9 @@ pcall(function()
 
 						game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.DialogueEvent:FireServer(unpack(args))
 						wait(.15)
-					until chatFrame.Visible == false
+					until game.Players.LocalPlayer.PlayerGui.ChatGui.MainFrame.Visible == false
 					wait(.15)
-					if chatFrame.Visible == true then
+					if game.Players.LocalPlayer.PlayerGui.ChatGui.MainFrame.Visible == true then
 						repeat
 							local args = {
 								[1] = "Challenge The Demon Claw, Drogar."
@@ -406,7 +404,7 @@ pcall(function()
 
 							game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.DialogueEvent:FireServer(unpack(args))
 							wait(.15)
-						until chatFrame.Visible == false
+						until game.Players.LocalPlayer.PlayerGui.ChatGui.MainFrame.Visible == false
 					end
 					wait(2)
 				end
