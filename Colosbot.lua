@@ -300,16 +300,7 @@ pcall(function()
 				repeat wait() until (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375)).magnitude < 5
 			end
 
-			wait(.3)
-			local rs = game:GetService("ReplicatedStorage")
-			local plr = game:GetService("Players").LocalPlayer
-			local netModule = require(rs.Modules.Network)
- 
-			local tradeData = {
-				Config = "WhistleCall",
-			}
-			netModule.connect("MasterEvent", "FireServer", plr.Character, tradeData)
-			wait(.2)
+			wait(.5)
 			repeat
 				if game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart" then
 					TP(Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375));
