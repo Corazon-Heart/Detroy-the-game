@@ -161,12 +161,13 @@ if game.PlaceId == 99995671928896 then
 				local A = _table[B]
 				table.remove(_table, B)
 				game:GetService("TeleportService"):TeleportToPlaceInstance(99995671928896, tostring(A), game.Players.LocalPlayer)
-				wait(2)
+				wait(3)
 				game.GuiService:ClearError()
 			end
 		end
 	end
 	local CurrentCheck = 0
+	pcall(function()
 	for _,v in pairs(game.Players:GetChildren()) do
 		if v:IsA("Player") then
 			spawn(function()
@@ -192,6 +193,7 @@ if game.PlaceId == 99995671928896 then
 
 	local MainTick = tick()
 	repeat wait() until CurrentCheck >= #game.Players:GetChildren() or tick() - MainTick >= 4
+	end)
 	-- NoFall
 	local mt = getrawmetatable(game)
 	local oldMeta = mt.__namecall
@@ -218,7 +220,7 @@ if game.PlaceId == 99995671928896 then
 	-- Make the metatable read-only again to avoid further modifications
 	setreadonly(mt, true)
 	spawn(function()
-		while wait(.5) do
+		while wait(1) do
 			game.Players.LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("InfoOverlays")
 			if game.Players.LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("InfoOverlays"):FindFirstChild"ConfirmFrame" then
 				shop()
@@ -228,7 +230,7 @@ if game.PlaceId == 99995671928896 then
 			if game.Players.LocalPlayer.Character:FindFirstChild("BoolValues") then
 				if game.Players.LocalPlayer.Character.BoolValues:FindFirstChild"CombatTag" then
 					if game.Players.LocalPlayer.Character.BoolValues.CombatTag.Value >= 1 then
-						wait(4)
+						wait(2)
 						shop()
 					end
 				end
@@ -278,7 +280,29 @@ if game.PlaceId == 99995671928896 then
 			end
 		end
 	end
-	local skip = false
+for i,v in pairs(workspace:GetDescendants()) do
+if (v.Name:find"Lava" or v.Name:find"lava") and v:IsA"Part" then
+v.CFrame = CFrame.new(math.huge,math.huge,math.huge)
+end
+end
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+local speaker = game.Players.LocalPlayer
+local Clip = true
+local Noclipping
+
+    Clip = false
+    local function NoclipLoop()
+        if Clip == false and speaker.Character ~= nil then
+            for _, child in pairs(speaker.Character:GetDescendants()) do
+                if child:IsA("BasePart") and child.CanCollide == true then
+                    child.CanCollide = false
+                end
+            end
+        end
+    end
+    Noclipping = RunService.Stepped:Connect(NoclipLoop)
+
 	for i,v in pairs(game.Workspace.Harvestable:GetChildren()) do
 		if (v.Name:find"Mithril" or v.Name:find("Platinum")) and v:FindFirstChild"Icosphere" then
 			if v:FindFirstChild"Icosphere".Transparency == 0 then
@@ -310,7 +334,7 @@ if game.PlaceId == 99995671928896 then
 						local A = v.Icosphere.Position
 						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Icosphere.CFrame
 						repeat wait() until (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - A).magnitude < 5
-						for i = 1,4 do
+						for i = 1,3 do
 							game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Icosphere.CFrame
 							local args = {
 								[1] = {
@@ -322,7 +346,10 @@ if game.PlaceId == 99995671928896 then
 							game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.Interact:FireServer(unpack(args))
 							wait(.125)
 						end
-						wait(1.5)
+						wait(.1)
+						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Icosphere.CFrame*CFrame.new(0,-10,0)
+						game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
+						wait(1.4)
 						if game:GetService("Players").LocalPlayer.PlayerGui.GUI:FindFirstChild"ProgressBars" then
 							local startTime = tick()
 							local Des = false
@@ -334,8 +361,10 @@ if game.PlaceId == 99995671928896 then
 								end
 							until Des == true or tick() - startTime >= 5.5
 							wait(.5)
+							game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
 						else
-							wait(5.5)
+							wait(6)
+							game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
 						end
 					end
 				end
@@ -497,6 +526,8 @@ if game.PlaceId == 99995671928896 then
 			end
 		end
 	end
+	game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame *= CFrame.new(0,15,0)
 	wait()
 	shop()
 elseif game.PlaceId == 10290054819 then
@@ -590,7 +621,7 @@ elseif game.PlaceId == 10290054819 then
 			local A = _table[B]
 			table.remove(_table, B)
 			game:GetService("TeleportService"):TeleportToPlaceInstance(99995671928896, tostring(A), game.Players.LocalPlayer)
-			wait(2)
+			wait(3)
 			game.GuiService:ClearError()
 		end
 	end
