@@ -187,6 +187,15 @@ pcall(function()
 				wait(0.1)
 			end
 			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(937.6810913085938, -217.88751220703125, 1686.1224365234375)
+			wait()
+			local rs = game:GetService("ReplicatedStorage")
+			local plr = game:GetService("Players").LocalPlayer
+			local netModule = require(rs.Modules.Network)
+ 
+			local tradeData = {
+				Config = "WhistleCall",
+			}
+			netModule.connect("MasterEvent", "FireServer", plr.Character, tradeData)
 			repeat wait() until (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375)).magnitude < 5
 			local statValue = game:GetService("Players").LocalPlayer.PlayerGui.InventoryGui.MainBackpack.SearchBar.Weight.StatValue.Text
 
