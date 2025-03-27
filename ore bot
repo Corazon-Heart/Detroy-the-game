@@ -70,6 +70,7 @@ if game.PlaceId == 99995671928896 then
 		c:ClickButton2(Vector2.new(math.random(10, 50), math.random(10, 50)))
 	end)
 	local shop = function()
+		game.Players.LocalPlayer:Kick("Server Hopping....")
 		while wait() do
 			local HttpService = game:GetService("HttpService")
 			local TeleportService = game:GetService("TeleportService")
@@ -84,42 +85,55 @@ if game.PlaceId == 99995671928896 then
 			end
 
 			local servers = {}
-
+			local maxAttempts = 6
+			local attempt = 0
 			local success, req = pcall(function()
 				return syn and syn.request or http_request or request
 			end)
 
 			if not success or not req then
 				warn("HTTP Request function not found.")
-				return game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+				return TeleportService:Teleport(10290054819, Players.LocalPlayer)
 			end
 
-			local response = req({
-				Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true", PlaceId),
-				Method = "GET"
-			})
+			while attempt < maxAttempts do
+				attempt = attempt + 1
+				local response = req({
+					Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true", PlaceId),
+					Method = "GET"
+				})
 
-			if response and response.Body then
-				local success, body = pcall(function()
-					return HttpService:JSONDecode(response.Body)
-				end)
+				if response and response.Body then
+					local decodeSuccess, body = pcall(function()
+						return HttpService:JSONDecode(response.Body)
+					end)
 
-				if success and body and body.data then
-					for _, v in ipairs(body.data) do
-						if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing < v.maxPlayers and v.id ~= JobId then
-							table.insert(servers, 1, v.id)
+					if decodeSuccess and body and body.data then
+						for _, v in ipairs(body.data) do
+							if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing < v.maxPlayers and v.id ~= JobId then
+								table.insert(servers, 1, v.id)
+							end
 						end
 					end
+				end
+
+				if #servers > 0 then
+					break
+				end
+
+				if attempt < maxAttempts then
+					wait(2) -- Small delay before retrying
 				end
 			end
 
 			if #servers > 0 then
 				TeleportService:TeleportToPlaceInstance(PlaceId, servers[math.random(1, #servers)], Players.LocalPlayer)
 			else
-				game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+				TeleportService:Teleport(10290054819, Players.LocalPlayer)
 			end
 		end
 	end
+
 	local CurrentCheck = 0
 	for _,v in pairs(game.Players:GetChildren()) do
 		if v:IsA("Player") then
@@ -439,10 +453,12 @@ if game.PlaceId == 99995671928896 then
 elseif game.PlaceId == 10290054819 then
 	repeat wait() until game.Players.LocalPlayer ~= nil
 	game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Menu",15)
-	local HttpService = game:GetService("HttpService")
-	local TeleportService = game:GetService("TeleportService")
-	local Players = game:GetService("Players")
+
 	while wait() do
+		local HttpService = game:GetService("HttpService")
+		local TeleportService = game:GetService("TeleportService")
+		local Players = game:GetService("Players")
+
 		local PlaceId = 99995671928896  -- Use game's PlaceId
 		local JobId = game.JobId  -- Use game's JobId
 
@@ -452,39 +468,51 @@ elseif game.PlaceId == 10290054819 then
 		end
 
 		local servers = {}
-
+		local maxAttempts = 6
+		local attempt = 0
 		local success, req = pcall(function()
 			return syn and syn.request or http_request or request
 		end)
 
 		if not success or not req then
 			warn("HTTP Request function not found.")
-			return game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+			return TeleportService:Teleport(10290054819, Players.LocalPlayer)
 		end
 
-		local response = req({
-			Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true", PlaceId),
-			Method = "GET"
-		})
+		while attempt < maxAttempts do
+			attempt = attempt + 1
+			local response = req({
+				Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true", PlaceId),
+				Method = "GET"
+			})
 
-		if response and response.Body then
-			local success, body = pcall(function()
-				return HttpService:JSONDecode(response.Body)
-			end)
+			if response and response.Body then
+				local decodeSuccess, body = pcall(function()
+					return HttpService:JSONDecode(response.Body)
+				end)
 
-			if success and body and body.data then
-				for _, v in ipairs(body.data) do
-					if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing < v.maxPlayers and v.id ~= JobId then
-						table.insert(servers, 1, v.id)
+				if decodeSuccess and body and body.data then
+					for _, v in ipairs(body.data) do
+						if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing < v.maxPlayers and v.id ~= JobId then
+							table.insert(servers, 1, v.id)
+						end
 					end
 				end
+			end
+
+			if #servers > 0 then
+				break
+			end
+
+			if attempt < maxAttempts then
+				wait(2) -- Small delay before retrying
 			end
 		end
 
 		if #servers > 0 then
 			TeleportService:TeleportToPlaceInstance(PlaceId, servers[math.random(1, #servers)], Players.LocalPlayer)
 		else
-			game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+			TeleportService:Teleport(10290054819, Players.LocalPlayer)
 		end
 	end
 end
