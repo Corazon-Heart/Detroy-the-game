@@ -23,7 +23,7 @@ if _G.SetFPSCAP == true then
 		return setfpscap
 	end)
 	if success and typeof(result) == "function" then
-		setfpscap(10)
+		setfpscap(25)
 	else
 		print("setfpscap is NOT available")
 	end
@@ -252,6 +252,23 @@ if game.PlaceId == 99995671928896 then
 			return true
 		end
 	end
+	-- Function to check and teleport other players
+	local function CheckPlayer(pos)
+		local B = false
+		for _, v in pairs(game.Players:GetChildren()) do
+			if v ~= game.Players.LocalPlayer and v.Character and v.Character:FindFirstChild("HumanoidRootPart") then
+				local distance = (v.Character.HumanoidRootPart.Position - pos).magnitude
+				if distance <= 100 then
+					B = true
+				end
+			end
+		end
+		if B == false then
+			return false
+		elseif B == true then
+			return true
+		end
+	end
 	for i,v in pairs(game.Workspace.Harvestable:GetChildren()) do
 		if (v.Name:find"Mithril" or v.Name:find("Platinum")) and v:FindFirstChild"Icosphere" then
 			for x,h in pairs(v:GetChildren()) do
@@ -265,7 +282,7 @@ if game.PlaceId == 99995671928896 then
 	for i,v in pairs(game.Workspace.Harvestable:GetChildren()) do
 		if (v.Name:find"Mithril" or v.Name:find("Platinum")) and v:FindFirstChild"Icosphere" then
 			if v:FindFirstChild"Icosphere".Transparency == 0 then
-				if not checkAndTeleport(v.Icosphere.Position) then
+				if not checkAndTeleport(v.Icosphere.Position) and not CheckPlayer(v.Icosphere.Position) then
 					local statValue = game:GetService("Players").LocalPlayer.PlayerGui.InventoryGui.MainBackpack.SearchBar.Weight.StatValue.Text
 
 					-- Extract numbers using pattern matching
