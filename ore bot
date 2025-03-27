@@ -37,6 +37,88 @@ repeat
 until game:IsLoaded()
 if game.PlaceId == 99995671928896 then
 	repeat wait() until game.Players.LocalPlayer ~= nil
+	local HttpService = game:GetService("HttpService")
+	local TeleportService = game:GetService("TeleportService")
+	local Players = game:GetService("Players")
+
+
+	-- Function to append content to a file
+	local function appendfile(path, contents)
+		writefile(path, (readfile(path) or "") .. contents .. "\n")
+	end
+
+	-- Function to load settings from a file
+	local function LoadSettings(path)
+		local str = readfile(path)
+		return HttpService:JSONDecode(str)
+	end
+
+	-- Function to write settings to a file
+	local function WriteSettings(path, settingsTable)
+		writefile(path, HttpService:JSONEncode(settingsTable))
+	end
+
+	-- Generate filename based on the current date
+	local dateStr = os.date("%Y-%m-%d")  -- Format: YYYY-MM-DD
+	local filename = dateStr .. ".lua"
+
+	-- Check if file exists
+	if not isfile(filename) then
+		local PlaceId = 99995671928896  -- Use game's actual PlaceId
+		local JobId = game.JobId  -- Use game's JobId
+
+		if not PlaceId then
+			warn("Error: PlaceId is nil!")
+			return
+		end
+
+		local servers = {}
+		local maxAttempts = 10
+		local req = syn and syn.request or (http and http.request) or request
+
+		if not req then
+			warn("HTTP Request function not found.")
+			return TeleportService:Teleport(10290054819, Players.LocalPlayer)
+		end
+
+		for attempt = 1, maxAttempts do
+			print("Attempting to fetch server list... Attempt " .. attempt)
+
+			local response = req({
+				Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true", PlaceId),
+				Method = "GET"
+			})
+
+			if response and response.Body then
+				local success, body = pcall(function()
+					return HttpService:JSONDecode(response.Body)
+				end)
+
+				if success and body and body.data then
+					for _, v in ipairs(body.data) do
+						if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing < v.maxPlayers and v.id ~= JobId then
+							table.insert(servers, 1, v.id)
+						end
+					end
+				end
+			end
+
+			if #servers > 0 then
+				break
+			end
+
+			if attempt < maxAttempts then
+				wait(5) -- Small delay before retrying
+			end
+		end
+
+		if #servers > 0 then
+			WriteSettings(filename, servers)
+		else
+			warn("No valid servers found.")
+		end
+	end
+
 	game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Menu",15)
 	if game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild"Menu" then
 		game:GetService("Players").LocalPlayer.PlayerGui.Menu:WaitForChild("CosmeticButton",15)
@@ -66,74 +148,24 @@ if game.PlaceId == 99995671928896 then
 	repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild"CharacterHandler":FindFirstChild"Input":FindFirstChild"Events":FindFirstChild"MasterEvent"
 	wait(.5)
 	game:GetService("Players").LocalPlayer.Idled:Connect(function()
-		c:CaptureController()
-		c:ClickButton2(Vector2.new(math.random(10, 50), math.random(10, 50)))
+		game:GetService("VirtualUser"):CaptureController()
+		game:GetService("VirtualUser"):ClickButton2(Vector2.new(math.random(10, 50), math.random(10, 50)))
 	end)
 	local shop = function()
 		game.Players.LocalPlayer:Kick("Server Hopping....")
-		while wait() do
-			local HttpService = game:GetService("HttpService")
-			local TeleportService = game:GetService("TeleportService")
-			local Players = game:GetService("Players")
-
-			local PlaceId = 99995671928896  -- Use game's PlaceId
-			local JobId = game.JobId  -- Use game's JobId
-
-			if not PlaceId then
-				warn("Error: PlaceId is nil!")
-				return
-			end
-
-			local servers = {}
-			local maxAttempts = 6
-			local attempt = 0
-			local success, req = pcall(function()
-				return syn and syn.request or http_request or request
-			end)
-
-			if not success or not req then
-				warn("HTTP Request function not found.")
-				return TeleportService:Teleport(10290054819, Players.LocalPlayer)
-			end
-
-			while attempt < maxAttempts do
-				attempt = attempt + 1
-				local response = req({
-					Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true", PlaceId),
-					Method = "GET"
-				})
-
-				if response and response.Body then
-					local decodeSuccess, body = pcall(function()
-						return HttpService:JSONDecode(response.Body)
-					end)
-
-					if decodeSuccess and body and body.data then
-						for _, v in ipairs(body.data) do
-							if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing < v.maxPlayers and v.id ~= JobId then
-								table.insert(servers, 1, v.id)
-							end
-						end
-					end
-				end
-
-				if #servers > 0 then
-					break
-				end
-
-				if attempt < maxAttempts then
-					wait(2) -- Small delay before retrying
-				end
-			end
-
-			if #servers > 0 then
-				TeleportService:TeleportToPlaceInstance(PlaceId, servers[math.random(1, #servers)], Players.LocalPlayer)
-			else
-				TeleportService:Teleport(10290054819, Players.LocalPlayer)
+		local dateStr = os.date("%Y-%m-%d")
+		local _table = LoadSettings(dateStr..".lua")
+		if _table ~= nil and _table[1] ~= nil then
+			while true do
+				local B = math.random(1,#_table)
+				local A = _table[B]
+				table.remove(_table, B)
+				game:GetService("TeleportService"):TeleportToPlaceInstance(99995671928896, tostring(A), game.Players.LocalPlayer)
+				wait(2)
+				game.GuiService:ClearError()
 			end
 		end
 	end
-
 	local CurrentCheck = 0
 	for _,v in pairs(game.Players:GetChildren()) do
 		if v:IsA("Player") then
@@ -453,13 +485,33 @@ if game.PlaceId == 99995671928896 then
 elseif game.PlaceId == 10290054819 then
 	repeat wait() until game.Players.LocalPlayer ~= nil
 	game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Menu",15)
+	local HttpService = game:GetService("HttpService")
+	local TeleportService = game:GetService("TeleportService")
+	local Players = game:GetService("Players")
 
-	while wait() do
-		local HttpService = game:GetService("HttpService")
-		local TeleportService = game:GetService("TeleportService")
-		local Players = game:GetService("Players")
+	-- Function to append content to a file
+	local function appendfile(path, contents)
+		writefile(path, (readfile(path) or "") .. contents .. "\n")
+	end
 
-		local PlaceId = 99995671928896  -- Use game's PlaceId
+	-- Function to load settings from a file
+	local function LoadSettings(path)
+		local str = readfile(path)
+		return HttpService:JSONDecode(str)
+	end
+
+	-- Function to write settings to a file
+	local function WriteSettings(path, settingsTable)
+		writefile(path, HttpService:JSONEncode(settingsTable))
+	end
+
+	-- Generate filename based on the current date
+	local dateStr = os.date("%Y-%m-%d")  -- Format: YYYY-MM-DD
+	local filename = dateStr .. ".lua"
+
+	-- Check if file exists
+	if not isfile(filename) then
+		local PlaceId = 99995671928896  -- Use game's actual PlaceId
 		local JobId = game.JobId  -- Use game's JobId
 
 		if not PlaceId then
@@ -468,30 +520,28 @@ elseif game.PlaceId == 10290054819 then
 		end
 
 		local servers = {}
-		local maxAttempts = 6
-		local attempt = 0
-		local success, req = pcall(function()
-			return syn and syn.request or http_request or request
-		end)
+		local maxAttempts = 10
+		local req = syn and syn.request or (http and http.request) or request
 
-		if not success or not req then
+		if not req then
 			warn("HTTP Request function not found.")
 			return TeleportService:Teleport(10290054819, Players.LocalPlayer)
 		end
 
-		while attempt < maxAttempts do
-			attempt = attempt + 1
+		for attempt = 1, maxAttempts do
+			print("Attempting to fetch server list... Attempt " .. attempt)
+
 			local response = req({
 				Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true", PlaceId),
 				Method = "GET"
 			})
 
 			if response and response.Body then
-				local decodeSuccess, body = pcall(function()
+				local success, body = pcall(function()
 					return HttpService:JSONDecode(response.Body)
 				end)
 
-				if decodeSuccess and body and body.data then
+				if success and body and body.data then
 					for _, v in ipairs(body.data) do
 						if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing < v.maxPlayers and v.id ~= JobId then
 							table.insert(servers, 1, v.id)
@@ -505,14 +555,26 @@ elseif game.PlaceId == 10290054819 then
 			end
 
 			if attempt < maxAttempts then
-				wait(2) -- Small delay before retrying
+				wait(5) -- Small delay before retrying
 			end
 		end
 
 		if #servers > 0 then
-			TeleportService:TeleportToPlaceInstance(PlaceId, servers[math.random(1, #servers)], Players.LocalPlayer)
+			WriteSettings(filename, servers)
 		else
-			TeleportService:Teleport(10290054819, Players.LocalPlayer)
+			warn("No valid servers found.")
+		end
+	end
+	local dateStr = os.date("%Y-%m-%d")
+	local _table = LoadSettings(dateStr..".lua")
+	if _table ~= nil and _table[1] ~= nil then
+		while true do
+			local B = math.random(1,#_table)
+			local A = _table[B]
+			table.remove(_table, B)
+			game:GetService("TeleportService"):TeleportToPlaceInstance(99995671928896, tostring(A), game.Players.LocalPlayer)
+			wait(2)
+			game.GuiService:ClearError()
 		end
 	end
 end
