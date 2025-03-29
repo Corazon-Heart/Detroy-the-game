@@ -527,7 +527,6 @@ pcall(function()
 				netModule.connect("MasterEvent", "FireServer", plr.Character, tradeData)
 				if Drogar:FindFirstChild"Humanoid" and Drogar:FindFirstChild"HumanoidRootPart" then
 					if Drogar.Humanoid.Health <= Drogar.Humanoid.MaxHealth*0.9 and isnetworkowner(Drogar.HumanoidRootPart) then
-						print(isnetworkowner(Drogar.HumanoidRootPart))
 						local StartTick = tick()
 						local Safe = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame*CFrame.new(0,50,0)
 						if not game.Players.LocalPlayer.Character:FindFirstChild"Float" then
