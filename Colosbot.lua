@@ -528,9 +528,16 @@ pcall(function()
 				if Drogar:FindFirstChild"Humanoid" and Drogar:FindFirstChild"HumanoidRootPart" then
 					if Drogar.Humanoid.Health <= Drogar.Humanoid.MaxHealth*0.9 and isnetworkowner(Drogar.HumanoidRootPart) then
 						if Drogar.Parent ~= nil and Drogar:FindFirstChild"Humanoid" then
-							Drogar.Humanoid.Health = 0
-							wait()
-							game.Players.LocalPlayer.Character.Humanoid.Health = 0
+							for i = 1,10 do
+								if Drogar.Parent ~= nil and Drogar:FindFirstChild"Humanoid" then
+									Drogar.Humanoid.Health = 0
+								end
+							end
+							for i = 1,10 do
+								if game.Players.LocalPlayer.Character:FindFirstChild"Humanoid" and game.Players.LocalPlayer.Character:FindFirstChild"Humanoid".Health > 0 then
+									game.Players.LocalPlayer.Character.Humanoid.Health = 0
+								end
+							end
 						end
 					end
 				end
