@@ -530,26 +530,6 @@ pcall(function()
 						if Drogar.Parent ~= nil and Drogar:FindFirstChild"Humanoid" then
 							Drogar.Humanoid.Health = 0
 						end
-						local Safe = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame*CFrame.new(0,40,0)
-						if not game.Players.LocalPlayer.Character:FindFirstChild"Float" then
-							local Float = Instance.new('Part', game.Players.LocalPlayer.Character)
-							Float.Name = 'Float'
-							Float.Transparency = 1
-							Float.Size = Vector3.new(6,1,6)
-							Float.Anchored = true
-							Float.CFrame = Safe * CFrame.new(0,-3.5,0)
-						else
-							game.Players.LocalPlayer.Character:FindFirstChild"Float".CFrame = Safe * CFrame.new(0,-3.5,0)
-						end
-						if game.Players.LocalPlayer.Character ~= nil and game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart" then
-							game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Safe
-						end
-						if Drogar.Parent ~= nil and Drogar:FindFirstChild"Humanoid" then
-							Drogar.Humanoid.Health = 0
-						end
-						if game.Players.LocalPlayer.Character:FindFirstChild"Float" then
-							game.Players.LocalPlayer.Character:FindFirstChild"Float":Destroy()
-						end
 					end
 				end
 				task.wait()
