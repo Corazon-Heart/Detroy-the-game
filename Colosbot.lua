@@ -529,6 +529,8 @@ pcall(function()
 					if Drogar.Humanoid.Health <= Drogar.Humanoid.MaxHealth*0.9 and isnetworkowner(Drogar.HumanoidRootPart) then
 						if Drogar.Parent ~= nil and Drogar:FindFirstChild"Humanoid" then
 							Drogar.Humanoid.Health = 0
+							wait()
+							game.Players.LocalPlayer.Character.Humanoid.Health = 0
 						end
 					end
 				end
