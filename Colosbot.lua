@@ -530,7 +530,6 @@ pcall(function()
 						if Drogar.Parent ~= nil and Drogar:FindFirstChild"Humanoid" then
 							Drogar.Humanoid.Health = 0
 						end
-						local StartTick = tick()
 						local Safe = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame*CFrame.new(0,40,0)
 						if not game.Players.LocalPlayer.Character:FindFirstChild"Float" then
 							local Float = Instance.new('Part', game.Players.LocalPlayer.Character)
@@ -542,17 +541,12 @@ pcall(function()
 						else
 							game.Players.LocalPlayer.Character:FindFirstChild"Float".CFrame = Safe * CFrame.new(0,-3.5,0)
 						end
-						repeat task.wait()
-							if game.Players.LocalPlayer.Character ~= nil and game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart" then
-								game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Safe
-							end
-							if Drogar.Parent ~= nil then
-								Drogar.Humanoid.Health = 0
-							end
-							if tick() - StartTick >= 0.2 then
-								endscript = true
-							end
-						until Drogar.Parent == nil or endscript == true
+						if game.Players.LocalPlayer.Character ~= nil and game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart" then
+							game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Safe
+						end
+						if Drogar.Parent ~= nil and Drogar:FindFirstChild"Humanoid" then
+							Drogar.Humanoid.Health = 0
+						end
 						if game.Players.LocalPlayer.Character:FindFirstChild"Float" then
 							game.Players.LocalPlayer.Character:FindFirstChild"Float":Destroy()
 						end
