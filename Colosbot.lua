@@ -501,6 +501,7 @@ pcall(function()
 			else
 				return game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
 			end
+			local killtime = tick()
 			repeat
 				if game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart" and Drogar:FindFirstChild"HumanoidRootPart" then
 					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Drogar.HumanoidRootPart.CFrame*CFrame.new(0,-6,7)
@@ -524,8 +525,8 @@ pcall(function()
 				}
 
 				netModule.connect("MasterEvent", "FireServer", plr.Character, tradeData)
-				if Drogar:FindFirstChild"Humanoid" then
-					if Drogar.Humanoid.Health <= Drogar.Humanoid.MaxHealth*0.9 then
+				if Drogar:FindFirstChild"Humanoid" and Drogar:FindFirstChild"HumanoidRootPart" then
+					if Drogar.Humanoid.Health <= Drogar.Humanoid.MaxHealth*0.9 and isnetworkowner(Drogar.HumanoidRootPart) then
 						local StartTick = tick()
 						local Safe = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame*CFrame.new(0,100,0)
 						if not game.Players.LocalPlayer.Character:FindFirstChild"Float" then
@@ -557,7 +558,7 @@ pcall(function()
 					end
 				end
 				task.wait()
-			until Drogar.Parent == nil or endscript == true
+			until Drogar.Parent == nil or endscript == true or tick() - killtime >= 30
 			if game.Players.LocalPlayer.Character:FindFirstChild"Humanoid" and game.Players.LocalPlayer.Character:FindFirstChild"Humanoid".Health > 0 then
 				repeat wait()
 					game.Players.LocalPlayer.Character.Humanoid.Health = 0
