@@ -546,7 +546,7 @@ pcall(function()
 							if Drogar.Parent ~= nil then
 								Drogar.Humanoid.Health = 0
 							end
-							if tick() - StartTick >= 3 then
+							if tick() - StartTick >= 1 then
 								endscript = true
 							end
 						until Drogar.Parent == nil or endscript == true
