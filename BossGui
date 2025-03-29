@@ -1,0 +1,346 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/stysscythe/script/main/LibTest.lua"))()
+local Window = Library.Window('KR4K Library')
+local Test1 = Window.CreateTab('Welcome!')
+local rs = game:GetService("ReplicatedStorage")
+local plr = game:GetService("Players").LocalPlayer
+local netModule = require(rs.Modules.Network)
+ 
+local tradeData = {
+    Config = "WhistleCall",
+}
+ 
+netModule.connect("MasterEvent", "FireServer", plr.Character, tradeData)
+wait()
+local rs = game:GetService("ReplicatedStorage")
+local plr = game:GetService("Players").LocalPlayer
+local netModule = require(rs.Modules.Network)
+ 
+local tradeData = {
+    Config = "EquipWeapon",
+}
+ 
+netModule.connect("MasterEvent", "FireServer", plr.Character, tradeData)
+Test1.CreateButton("Licht King", function()
+	--Licht King
+	local function fireProximityAndWait()
+		fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
+
+		local startTime = tick()
+		while (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude >= 10 do
+			if tick() - startTime > 2 then
+				fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
+				startTime = tick()
+			end
+			wait(0.1)
+		end
+	end
+
+
+	fireProximityAndWait()
+	-- Teleport once the condition is met
+	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1721.454345703125, 422.90582275390625, -3894.0126953125)
+
+end)
+Test1.CreateButton("Elder Treant Location", function()
+	--Elder Treant
+	local function fireProximityAndWait()
+		fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
+
+		local startTime = tick()
+		while (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude >= 10 do
+			if tick() - startTime > 2 then
+				fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
+				startTime = tick()
+			end
+			wait(0.1)
+		end
+	end
+
+
+	fireProximityAndWait()
+	-- Teleport once the condition is met
+	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1028.5682373046875, 155.67971801757812, -1482.1468505859375)
+
+end)
+Test1.CreateButton("Elder Treant (Body)", function()
+	for i,v in pairs(game.Workspace.Alive:GetChildren()) do
+
+		if v.Name:find"Elder T"then
+			A = v.HumanoidRootPart.CFrame
+		end
+	end
+	if A == nil then return end
+	local function fireProximityAndWait()
+
+		fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
+
+		local startTime = tick()
+		while (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude >= 10 do
+			if tick() - startTime > 2 then
+				fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
+				startTime = tick()
+			end
+			wait(0.1)
+		end
+	end
+
+
+	fireProximityAndWait()
+	-- Teleport once the condition is met
+	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = A
+end)
+Test1.CreateButton("Rune Golem", function()
+	for i,v in pairs(game.Workspace.Alive:GetChildren()) do
+
+		if v.Name:find"Rune Golem"then
+			A = v.HumanoidRootPart.CFrame
+		end
+	end
+	if A == nil then return end
+	local function fireProximityAndWait()
+
+		fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
+
+		local startTime = tick()
+		while (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude >= 10 do
+			if tick() - startTime > 2 then
+				fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
+				startTime = tick()
+			end
+			wait(0.1)
+		end
+	end
+
+
+	fireProximityAndWait()
+	-- Teleport once the condition is met
+	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = A
+end)
+Test1.CreateButton("Goblin King", function()
+	--Goblin King
+	local function fireProximityAndWait()
+		fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
+
+		local startTime = tick()
+		while (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude >= 10 do
+			if tick() - startTime > 2 then
+				fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
+				startTime = tick()
+			end
+			wait(0.1)
+		end
+	end
+
+
+	fireProximityAndWait()
+	-- Teleport once the condition is met
+	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1416.1436767578125, -5.341595649719238, -1903.239013671875)
+
+end)
+Test1.CreateButton("Server Hop", function()
+	game:GetService("StarterGui"):SetCore("SendNotification", { Title = "Server Hopping", Text = "Wait....", Duration = 30 })
+	local PlaceID = 99995671928896
+	local AllIDs = {}
+	local foundAnything = ""
+	local actualHour = os.date("!*t").hour
+	local Deleted = false
+
+	function TPReturner()
+		local Site
+		if foundAnything == "" then
+			Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100'))
+		else
+			Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100&cursor=' .. foundAnything))
+		end
+
+		local ID = ""
+		if Site.nextPageCursor and Site.nextPageCursor ~= "null" and Site.nextPageCursor ~= nil then
+			foundAnything = Site.nextPageCursor
+		end
+
+		local num = 0
+		for i, v in pairs(Site.data) do
+			local Possible = true
+			ID = tostring(v.id)
+			if tonumber(v.maxPlayers) > tonumber(v.playing) then
+				for _, Existing in pairs(AllIDs) do
+					if num ~= 0 then
+						if ID == tostring(Existing) then
+							Possible = false
+						end
+					else
+						if tonumber(actualHour) ~= tonumber(Existing) then
+							AllIDs = {}
+							table.insert(AllIDs, actualHour)
+						end
+					end
+					num = num + 1
+				end
+				if Possible == true then
+					table.insert(AllIDs, ID)
+					wait()
+					pcall(function()
+						game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
+					end)
+					wait(2)
+				end
+			end
+		end
+	end
+
+	function Teleport()
+		while wait() do
+			pcall(function()
+				TPReturner()
+				if foundAnything ~= "" then
+					TPReturner()
+				end
+			end)
+		end
+	end
+
+	Teleport()
+end)
+Test1.CreateKeybind("Toggle UI", Enum.KeyCode.LeftAlt, function()
+	Library:ToggleUI()
+end)
+
+--end
+pcall(function()
+	local speeds = 0.86
+	local maxSpeed = 10
+	local isFlying = false
+	local tpwalking = false
+	local isHovering = false -- เพิ่มตัวแปรสถานะการ Hover
+	local speaker = game:GetService("Players").LocalPlayer
+	local chr = speaker.Character
+	local hum = chr and chr:FindFirstChildWhichIsA("Humanoid")
+
+	local isSpaceHeld = false
+	local isCtrlHeld = false
+	local currentUpwardVelocity = 0
+	local currentDownwardVelocity = 0
+
+	-- ตัวแปรสถานะเปิด/ปิดสคริปต์
+	local scriptEnabled = false
+
+	-- ฟังก์ชันการเริ่มต้นใหม่ของสคริปต์เมื่อรีสปาวน์ตัวละคร
+	local function resetScript()
+		-- รีเซ็ตตัวแปร
+		isFlying = false
+		tpwalking = false
+		isHovering = false
+		isSpaceHeld = false
+		isCtrlHeld = false
+		currentUpwardVelocity = 0
+		currentDownwardVelocity = 0
+
+		-- ปิด/เปิดการฟังก์ชันต่างๆ อีกครั้ง
+		speaker = game:GetService("Players").LocalPlayer
+		chr = speaker.Character
+		hum = chr and chr:FindFirstChildWhichIsA("Humanoid")
+	end
+
+	-- ฟังก์ชันเปิด/ปิดการบิน
+	local function updateFlyState(enabled)
+		isFlying = enabled
+		if enabled then
+			for i = 0.1, speeds do
+				spawn(function()
+					local hb = game:GetService("RunService").Heartbeat
+					tpwalking = true
+					local chr = game.Players.LocalPlayer.Character
+					local hum = chr and chr:FindFirstChildWhichIsA("Humanoid")
+					while tpwalking and hb:Wait() and chr and hum and hum.Parent do
+						if hum.MoveDirection.Magnitude > 0 then
+							chr:TranslateBy(hum.MoveDirection)
+						end
+					end
+				end)
+			end
+			speaker.Character.Animate.Disabled = true
+			isHovering = true
+		else
+			tpwalking = false
+			isHovering = false
+			speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Climbing, true)
+		end
+	end
+
+	-- ฟังก์ชันหลักในการเปิด/ปิดสคริปต์ทั้งหมด
+	local function toggleScript(state)
+		if state then
+			-- เปิดสคริปต์
+			scriptEnabled = true
+			updateFlyState(true)
+			print("Fly script enabled")
+		else
+			-- ปิดสคริปต์และลบ
+			scriptEnabled = false
+			updateFlyState(false)
+			print("Fly script disabled")
+
+			-- ทำลายทุกอย่างที่เกี่ยวข้องกับสคริปต์นี้
+			speaker.Character:FindFirstChild("Humanoid").StateChanged:Disconnect()  -- Disconnect event ที่เกี่ยวข้อง
+			game:GetService("RunService").Heartbeat:Disconnect()  -- Disconnect Heartbeat event
+			game:GetService("UserInputService").InputBegan:Disconnect()  -- Disconnect InputBegan event
+			game:GetService("UserInputService").InputEnded:Disconnect()  -- Disconnect InputEnded event
+		end
+	end
+
+	-- ฟังก์ชันที่เชื่อมต่อกับ InputBegan และ InputEnded เพื่อรับข้อมูลจากผู้เล่น
+	game:GetService("UserInputService").InputBegan:Connect(function(input, gameProcessedEvent)
+		if not gameProcessedEvent then
+			if input.KeyCode == Enum.KeyCode.Z then
+				-- เมื่อกด Z ให้ toggle การบิน
+				toggleScript(not scriptEnabled)
+			elseif input.KeyCode == Enum.KeyCode.Space and isFlying then
+				isSpaceHeld = true
+				isHovering = false
+			elseif input.KeyCode == Enum.KeyCode.LeftControl and isFlying then
+				isCtrlHeld = true
+				isHovering = false
+			end
+		end
+	end)
+
+	game:GetService("UserInputService").InputEnded:Connect(function(input, gameProcessedEvent)
+		if not gameProcessedEvent then
+			if input.KeyCode == Enum.KeyCode.Space then
+				isSpaceHeld = false
+			elseif input.KeyCode == Enum.KeyCode.LeftControl then
+				isCtrlHeld = false
+			end
+		end
+	end)
+
+	-- ฟังก์ชันในการคำนวณความเร็วการบินตามที่กดปุ่ม
+	game:GetService("RunService").Heartbeat:Connect(function()
+		if isFlying then
+			if isSpaceHeld then
+				currentUpwardVelocity = math.min(currentUpwardVelocity + 2, 150)  -- จำกัดความเร็วสูงสุดที่ 50
+				if hum and hum.RootPart then
+					hum.RootPart.Velocity = Vector3.new(hum.RootPart.Velocity.X, currentUpwardVelocity, hum.RootPart.Velocity.Z)
+				end
+			elseif isCtrlHeld then
+				currentDownwardVelocity = math.min(currentDownwardVelocity + 2, 150)  -- จำกัดความเร็วสูงสุดที่ 50
+				if hum and hum.RootPart then
+					hum.RootPart.Velocity = Vector3.new(hum.RootPart.Velocity.X, -currentDownwardVelocity, hum.RootPart.Velocity.Z)
+				end
+			else
+				-- ถ้าไม่ได้กดปุ่ม Space หรือ Left Control ให้ตั้งค่า Velocity เป็น 0 (Hover)
+				currentUpwardVelocity = 0
+				currentDownwardVelocity = 0
+				if hum and hum.RootPart then
+					hum.RootPart.Velocity = Vector3.new(hum.RootPart.Velocity.X, 0, hum.RootPart.Velocity.Z)
+				end
+			end
+		end
+	end)
+
+	-- ตรวจสอบเมื่อ Character ถูกสร้างใหม่และรีเซ็ตสคริปต์
+	speaker.CharacterAdded:Connect(function()
+		wait(1)  -- รอให้ Character ใหม่ถูกสร้างเสร็จ
+		resetScript()
+	end)
+end)
