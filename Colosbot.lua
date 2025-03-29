@@ -527,8 +527,9 @@ pcall(function()
 				netModule.connect("MasterEvent", "FireServer", plr.Character, tradeData)
 				if Drogar:FindFirstChild"Humanoid" and Drogar:FindFirstChild"HumanoidRootPart" then
 					if Drogar.Humanoid.Health <= Drogar.Humanoid.MaxHealth*0.9 and isnetworkowner(Drogar.HumanoidRootPart) then
+						print(isnetworkowner(Drogar.HumanoidRootPart))
 						local StartTick = tick()
-						local Safe = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame*CFrame.new(0,100,0)
+						local Safe = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame*CFrame.new(0,50,0)
 						if not game.Players.LocalPlayer.Character:FindFirstChild"Float" then
 							local Float = Instance.new('Part', game.Players.LocalPlayer.Character)
 							Float.Name = 'Float'
@@ -545,10 +546,8 @@ pcall(function()
 							end
 							if Drogar.Parent ~= nil then
 								Drogar.Humanoid.Health = 0
-								Drogar.Humanoid.Health = -math.huge
 							end
-							local duration = math.random(10, 15) / 10
-							if tick() - StartTick >= tonumber(duration) then
+							if tick() - StartTick >= 3 then
 								endscript = true
 							end
 						until Drogar.Parent == nil or endscript == true
