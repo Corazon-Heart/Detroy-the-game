@@ -20,6 +20,11 @@ local tradeData = {
 }
  
 netModule.connect("MasterEvent", "FireServer", plr.Character, tradeData)
+for i,v in pairs(workspace:GetDescendants()) do
+	if (v.Name:find"Lava" or v.Name:find"lava") and v:IsA"Part" then
+		v.CFrame = CFrame.new(math.huge,math.huge,math.huge)
+	end
+end
 Test1.CreateButton("Licht King", function()
 	--Licht King
 	local function fireProximityAndWait()
@@ -155,6 +160,26 @@ end
 fireProximityAndWait()
 -- Teleport once the condition is met
 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Effects.NPCS.WinfridTheBlacksmith.HumanoidRootPart.CFrame
+end)
+Test1.CreateButton("TP Fiend", function()
+local A = CFrame.new(-618.617981, -62.6995506, -358.526367, -0.972720742, -3.17664082e-08, -0.231979266, -2.41212317e-09, 1, -1.26822059e-07, 0.231979266, -1.22802874e-07, -0.972720742)
+local function fireProximityAndWait()
+    fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
+
+    local startTime = tick()
+    while (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude >= 10 do
+        if tick() - startTime > 2 then
+            fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
+            startTime = tick()
+        end
+        wait(0.1)
+    end
+end
+
+
+fireProximityAndWait()
+-- Teleport once the condition is met
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = A
 end)
 Test1.CreateButton("Server Hop", function()
 	game:GetService("StarterGui"):SetCore("SendNotification", { Title = "Server Hopping", Text = "Wait....", Duration = 30 })
