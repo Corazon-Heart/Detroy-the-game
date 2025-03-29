@@ -751,7 +751,7 @@ pcall(function()
 			wait()
 		end
 
-
+		local count = 0
 		while true do
 			wait()
 			local children = serverScrollFrame:GetChildren()
@@ -775,6 +775,10 @@ pcall(function()
 						wait()
 						virtualInput:SendMouseButtonEvent(childClickPos.X, childClickPos.Y + 65, 0, false, game, 0)
 						wait(0.5)
+						count += 1
+						if count >= 20 then
+							game:Shutdown()
+						end
 						randomChild.Parent = serverScrollFrame
 						wait(1)
 						game.GuiService:ClearError()
