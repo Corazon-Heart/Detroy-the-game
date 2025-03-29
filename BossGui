@@ -137,6 +137,25 @@ Test1.CreateButton("Goblin King", function()
 	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1416.1436767578125, -5.341595649719238, -1903.239013671875)
 
 end)
+Test1.CreateButton("TP Blacksmith", function()
+local function fireProximityAndWait()
+    fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
+
+    local startTime = tick()
+    while (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude >= 10 do
+        if tick() - startTime > 2 then
+            fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
+            startTime = tick()
+        end
+        wait(0.1)
+    end
+end
+
+
+fireProximityAndWait()
+-- Teleport once the condition is met
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Effects.NPCS.WinfridTheBlacksmith.HumanoidRootPart.CFrame
+end)
 Test1.CreateButton("Server Hop", function()
 	game:GetService("StarterGui"):SetCore("SendNotification", { Title = "Server Hopping", Text = "Wait....", Duration = 30 })
 	local PlaceID = 99995671928896
