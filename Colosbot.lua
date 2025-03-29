@@ -199,7 +199,7 @@ pcall(function()
 			local Found = false
 			local SellItem = {
 				["Intellect Rune"] = true,
-				["Agility Rune"] = true,-
+				["Agility Rune"] = true,
 				["Spirit Rune"] = true,
 				--["Stamina Rune"] = true,
 				["Strength Rune"] = true,
