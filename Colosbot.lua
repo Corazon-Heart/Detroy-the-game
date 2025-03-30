@@ -34,7 +34,7 @@ pcall(function()
 		local filename = dateStr .. ".lua"
 		if isfile(filename) then
 			local _table = LoadSettings(dateStr..".lua")
-			if _table == nil or _table[1] == nil then
+			if _table == nil or _table[1] == nil or #_table <= 5 then
 				local PlaceId = 99995671928896  -- Use game's actual PlaceId
 				local JobId = game.JobId  -- Use game's JobId
 
@@ -897,7 +897,7 @@ pcall(function()
 
 		if isfile(filename) then
 			local _table = LoadSettings(dateStr..".lua")
-			if _table == nil or _table[1] == nil then
+			if _table == nil or _table[1] == nil or #_table <= 5 then
 				local PlaceId = 99995671928896  -- Use game's actual PlaceId
 				local JobId = game.JobId  -- Use game's JobId
 
