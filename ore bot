@@ -1,33 +1,3 @@
-_G.SetFPSCAP = true
-local allowedUsers = {
-	["JeenoKN06"] = true,
-	["AQzcvw"] = true,
-	["JeenoKN13"] = true,
-	["Yenazerk"] = true
-}
-
-
-
---DoneEditBelow
---DoneEditBelow
---DoneEditBelow
-repeat wait() until game:IsLoaded()
-repeat wait() until game.Players.LocalPlayer ~= nil
-local Players = game:GetService("Players")
-local player = Players.LocalPlayer
-
-if not allowedUsers[player.Name] then return end
---Script
-if _G.SetFPSCAP == true then
-	local success, result = pcall(function()
-		return setfpscap
-	end)
-	if success and typeof(result) == "function" then
-		setfpscap(25)
-	else
-		print("setfpscap is NOT available")
-	end
-end
 spawn(function()
 	task.wait(600)
 	game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
@@ -59,7 +29,7 @@ if game.PlaceId == 99995671928896 then
 	end
 
 	-- Generate filename based on the current date
-	local dateStr = os.date("%Y-%m-%d")  -- Format: YYYY-MM-DD
+	local dateStr = tostring(game.Players.LocalPlayer.Name..os.date("%Y-%m-%d"))
 	local filename = dateStr .. ".lua"
 
 	-- Check if file exists
@@ -152,47 +122,48 @@ if game.PlaceId == 99995671928896 then
 		game:GetService("VirtualUser"):ClickButton2(Vector2.new(math.random(10, 50), math.random(10, 50)))
 	end)
 	local shop = function()
+		wait(.5)
 		game.Players.LocalPlayer:Kick("Server Hopping....")
-		local dateStr = os.date("%Y-%m-%d")
+		local dateStr = tostring(game.Players.LocalPlayer.Name..os.date("%Y-%m-%d"))
 		local _table = LoadSettings(dateStr..".lua")
 		if _table ~= nil and _table[1] ~= nil then
-			while true do
-				local B = math.random(1,#_table)
+			while #_table > 0 do
+				local B = math.random(1, #_table)
 				local A = _table[B]
-				table.remove(_table, B)
 				game:GetService("TeleportService"):TeleportToPlaceInstance(99995671928896, tostring(A), game.Players.LocalPlayer)
+				table.remove(_table, B)
 				wait(3)
-				game.GuiService:ClearError()
 			end
+
 		end
 	end
 	local CurrentCheck = 0
 	pcall(function()
-	for _,v in pairs(game.Players:GetChildren()) do
-		if v:IsA("Player") then
-			spawn(function()
-				if v:IsDescendantOf(game.Players) and v and v:GetRankInGroup(15431531) >= 1 then
-					CurrentCheck = CurrentCheck + 1
-					wait()
-					shop()
-				else
-					CurrentCheck = CurrentCheck + 1
-				end
-			end)
+		for _,v in pairs(game.Players:GetChildren()) do
+			if v:IsA("Player") then
+				spawn(function()
+					if v:IsDescendantOf(game.Players) and v and v:GetRankInGroup(15431531) >= 1 then
+						CurrentCheck = CurrentCheck + 1
+						wait()
+						shop()
+					else
+						CurrentCheck = CurrentCheck + 1
+					end
+				end)
+			end
 		end
-	end
 
 
-	--CheckAddedPlayer
-	game.Players.PlayerAdded:Connect(function(v)
-		wait()
-		if v:IsDescendantOf(game.Players) and v and v:GetRankInGroup(15431531) >= 1 then
-			shop()
-		end
-	end)
+		--CheckAddedPlayer
+		game.Players.PlayerAdded:Connect(function(v)
+			wait()
+			if v:IsDescendantOf(game.Players) and v and v:GetRankInGroup(15431531) >= 1 then
+				shop()
+			end
+		end)
 
-	local MainTick = tick()
-	repeat wait() until CurrentCheck >= #game.Players:GetChildren() or tick() - MainTick >= 4
+		local MainTick = tick()
+		repeat wait() until CurrentCheck >= #game.Players:GetChildren() or tick() - MainTick >= 4
 	end)
 	-- NoFall
 	local mt = getrawmetatable(game)
@@ -280,28 +251,104 @@ if game.PlaceId == 99995671928896 then
 			end
 		end
 	end
-for i,v in pairs(workspace:GetDescendants()) do
-if (v.Name:find"Lava" or v.Name:find"lava") and v:IsA"Part" then
-v.CFrame = CFrame.new(math.huge,math.huge,math.huge)
-end
-end
-local UserInputService = game:GetService("UserInputService")
-local RunService = game:GetService("RunService")
-local speaker = game.Players.LocalPlayer
-local Clip = true
-local Noclipping
+	for i,v in pairs(workspace:GetDescendants()) do
+		if (v.Name:find"Lava" or v.Name:find"lava") and v:IsA"Part" then
+			v.CFrame = CFrame.new(math.huge,math.huge,math.huge)
+		end
+	end
+	local UserInputService = game:GetService("UserInputService")
+	local RunService = game:GetService("RunService")
+	local speaker = game.Players.LocalPlayer
+	local Clip = true
+	local Noclipping
 
-    Clip = false
-    local function NoclipLoop()
-        if Clip == false and speaker.Character ~= nil then
-            for _, child in pairs(speaker.Character:GetDescendants()) do
-                if child:IsA("BasePart") and child.CanCollide == true then
-                    child.CanCollide = false
-                end
-            end
-        end
-    end
-    Noclipping = RunService.Stepped:Connect(NoclipLoop)
+	Clip = false
+	local function NoclipLoop()
+		if Clip == false and speaker.Character ~= nil then
+			for _, child in pairs(speaker.Character:GetDescendants()) do
+				if child:IsA("BasePart") and child.CanCollide == true then
+					child.CanCollide = false
+				end
+			end
+		end
+	end
+	Noclipping = RunService.Stepped:Connect(NoclipLoop)
+	game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("GUI",10)
+	game:GetService("Players").LocalPlayer.PlayerGui.GUI:WaitForChild("ProgressBars",10)
+	local player = game:GetService("Players").LocalPlayer
+	local character = player.Character or player.CharacterAdded:Wait()
+	local pickaxeBuff = character:WaitForChild("BoolValues"):WaitForChild("PickaxeBuff")
+	game.Players.LocalPlayer.Backpack:WaitForChild("Rocky Mountain Tonic",2)
+	local mine = false
+	for i,v in pairs(game.Workspace.Harvestable:GetChildren()) do
+		if (v.Name:find"Mithril" or v.Name:find("Platinum")) and v:FindFirstChild"Icosphere" then
+			if v:FindFirstChild"Icosphere".Transparency == 0 then
+				mine = true
+			end
+		end
+	end
+	if mine == false then
+		shop()
+	end
+	if pickaxeBuff.Value < 60 then
+		if not game.Players.LocalPlayer.Backpack:FindFirstChild("Rocky Mountain Tonic") and not game.Players.LocalPlayer.Character:FindFirstChild("Rocky Mountain Tonic") then
+			local args = {
+				[1] = {
+					["Seller"] = "Klaus",
+					["AmountToCraft"] = "1",
+					["SelectedItem"] = {
+						["Station"] = "Buy",
+						["ToolTip"] = "",
+						["Name"] = "Rocky Mountain Tonic",
+						["Materials"] = {
+							[1] = {
+								["Name"] = "Coins",
+								["Amount"] = 125
+							}
+						}
+					}
+				}
+			}
+
+			game:GetService("Players").LocalPlayer.PlayerGui.CraftingGui.LocalScript.RemoteEvent:FireServer(unpack(args))
+			wait(1.5)
+		end
+		local startT = tick()
+		repeat
+			wait()
+			if not player.Character:FindFirstChild"Rocky Mountain Tonic" then
+				local item = player.Backpack:FindFirstChild("Rocky Mountain Tonic")
+				if item then
+					repeat player.Character.Humanoid:EquipTool(item) wait() until player.Character:FindFirstChild"Rocky Mountain Tonic"
+					wait()
+					repeat wait() item:Activate() until not player.Character:FindFirstChild"Rocky Mountain Tonic"
+				else
+					if not game.Players.LocalPlayer.Backpack:FindFirstChild("Rocky Mountain Tonic") and not game.Players.LocalPlayer.Character:FindFirstChild("Rocky Mountain Tonic") then
+						local args = {
+							[1] = {
+								["Seller"] = "Klaus",
+								["AmountToCraft"] = "1",
+								["SelectedItem"] = {
+									["Station"] = "Buy",
+									["ToolTip"] = "",
+									["Name"] = "Rocky Mountain Tonic",
+									["Materials"] = {
+										[1] = {
+											["Name"] = "Coins",
+											["Amount"] = 125
+										}
+									}
+								}
+							}
+						}
+
+						game:GetService("Players").LocalPlayer.PlayerGui.CraftingGui.LocalScript.RemoteEvent:FireServer(unpack(args))
+						wait(1.5)
+					end
+				end
+			end
+		until pickaxeBuff.Value >= 60 or tick()-startT >= 4
+	end
 
 	for i,v in pairs(game.Workspace.Harvestable:GetChildren()) do
 		if (v.Name:find"Mithril" or v.Name:find("Platinum")) and v:FindFirstChild"Icosphere" then
@@ -309,63 +356,64 @@ local Noclipping
 				if not checkAndTeleport(v.Icosphere.Position) and not CheckPlayer(v.Icosphere.Position) then
 					local statValue = game:GetService("Players").LocalPlayer.PlayerGui.InventoryGui.MainBackpack.SearchBar.Weight.StatValue.Text
 
-					-- Extract numbers using pattern matching
 					local currentWeight, maxWeight = string.match(statValue, "(%d+)/(%d+)")
 
-					-- Convert them to numbers
 					currentWeight = tonumber(currentWeight)
 					maxWeight = tonumber(maxWeight)
 					if currentWeight < maxWeight then
-						game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.D, false, game)
-						game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode.D, false, game)
 						wait()
-						fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
-						local startTime = tick()
-						while (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude >= 10 do
-							if tick() - startTime > 2 then
-								game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.D, false, game)
-								game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode.D, false, game)
-								wait()
-								fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
-								startTime = tick()
+						local ST = tick()
+						local skipthis = false
+						local OreCFrame = v.Icosphere.CFrame
+						repeat
+							game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.D, false, game)
+							game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode.D, false, game)
+							if game.Players.LocalPlayer.Character:FindFirstChild("BoolValues") then
+								if game.Players.LocalPlayer.Character.BoolValues:FindFirstChild"CombatTag" then
+									if game.Players.LocalPlayer.Character.BoolValues.CombatTag.Value >= 1 then
+										skipthis = true
+									end
+								end
 							end
-							wait()
-						end
-						local A = v.Icosphere.Position
-						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Icosphere.CFrame
-						repeat wait() until (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - A).magnitude < 5
-						for i = 1,3 do
-							game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Icosphere.CFrame
-							local args = {
-								[1] = {
-									["player"] = game:GetService("Players").LocalPlayer,
-									["Object"] = v,
-									["Action"] = "Mine"
+							fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
+							for i = 1,10 do
+								game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = OreCFrame
+								local args = {
+									[1] = {
+										["player"] = game:GetService("Players").LocalPlayer,
+										["Object"] = v,
+										["Action"] = "Mine"
+									}
 								}
-							}
-							game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.Interact:FireServer(unpack(args))
-							wait(.125)
+								game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.Interact:FireServer(unpack(args))
+								wait()
+							end
+							if tick()-ST >= 3 then
+								skipthis = true
+							end
+							wait(.2)
+						until game:GetService("Players").LocalPlayer.PlayerGui.GUI.ProgressBars:FindFirstChild"ProgressFrame" or skipthis == true
+						if skipthis == false then
+							game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = OreCFrame*CFrame.new(0,-5,0)
+							game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
 						end
-						wait(.1)
-						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Icosphere.CFrame*CFrame.new(0,-10,0)
-						game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
-						wait(1.4)
 						if game:GetService("Players").LocalPlayer.PlayerGui.GUI:FindFirstChild"ProgressBars" then
 							local startTime = tick()
 							local Des = false
 							repeat wait()
 								if game:GetService("Players").LocalPlayer.PlayerGui.GUI.ProgressBars:GetChildren()[1] ~= nil then
 									if game:GetService("Players").LocalPlayer.PlayerGui.GUI.ProgressBars:GetChildren()[1].Name == "Destroying" then
+										repeat wait() until not game:GetService("Players").LocalPlayer.PlayerGui.GUI:FindFirstChild"Destroying"
 										Des = true
 									end
 								end
-							until Des == true or tick() - startTime >= 5.5
-							wait(.5)
-							game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
-						else
-							wait(6)
-							game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+								if game:GetService("Players").LocalPlayer.PlayerGui.GUI.ProgressBars:GetChildren()[1] == nil then
+									Des = true
+								end
+							until Des == true or tick() - startTime >= 7
+							repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui.GUI.ProgressBars:GetChildren()[1] == nil
 						end
+						game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
 					end
 				end
 			end
@@ -377,67 +425,10 @@ local Noclipping
 
 	currentWeight = tonumber(currentWeight)
 	maxWeight = tonumber(maxWeight)
-	if currentWeight >= maxWeight-3 then
-		local function fireProximityAndWait()
-			game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.D, false, game)
-			game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode.D, false, game)
-			wait()
-			fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
-
-			local startTime = tick()
-			while (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude >= 10 do
-				if tick() - startTime > 2 then
-					game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.D, false, game)
-					game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode.D, false, game)
-					wait()
-					fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
-					startTime = tick()
-				end
-				wait()
-			end
-		end
-
-
-		fireProximityAndWait()
-		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Effects.NPCS.WinfridTheBlacksmith.HumanoidRootPart.CFrame
-		wait(.2)
-		local args = {
-			[1] = {
-				["AmountToCraft"] = 100,
-				["SelectedItem"] = {
-					["Station"] = "Smelter",
-					["ToolTip"] = "",
-					["Name"] = "Platinum Bar",
-					["Materials"] = {
-						[1] = {
-							["Name"] = "Platinum Ore",
-							["Amount"] = 1
-						}
-					}
-				}
-			}
-		}
-
-		game:GetService("Players").LocalPlayer.PlayerGui.CraftingGui.LocalScript.RemoteEvent:FireServer(unpack(args))
-		local args = {
-			[1] = {
-				["AmountToCraft"] = 100,
-				["SelectedItem"] = {
-					["Station"] = "Smelter",
-					["ToolTip"] = "",
-					["Name"] = "Mithril Bar",
-					["Materials"] = {
-						[1] = {
-							["Name"] = "Mithril Ore",
-							["Amount"] = 1
-						}
-					}
-				}
-			}
-		}
-
-		game:GetService("Players").LocalPlayer.PlayerGui.CraftingGui.LocalScript.RemoteEvent:FireServer(unpack(args))
-		wait(2)
+	if currentWeight >= maxWeight-3 or currentWeight >= 250 then
+		game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.D, false, game)
+		game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode.D, false, game)
+		wait()
 		game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
 		fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
 
@@ -475,21 +466,21 @@ local Noclipping
 			end
 			wait(.4)
 		end
-		wait(1)
+		wait(.75)
 	end
 	wait()
 	local second = "https://discord.com/api/webhooks/1352861014219161652/aO7aBuN9-3tE3IKutuu93ykrtO5XZj3kdty6qEZmL0kSWMUgC3kO6IU2gHMVVIvM6kkT"
 
 	local HTTP = game:GetService("HttpService")
 
-	local function sendSecondLog(item, name, jobid)
+	local function sendSecondLog(item, name, jobid, hpboss, maxhpboss)
 		local time = os.date("*t")
 		time = string.format("%02d:%02d:%02d", time.hour, time.min, time.sec) or "00:00:00"
 		local JSONTable = {
 			['embeds'] = {
 				{
-					['title'] = name.." | Found Boss, ",
-					['description'] = "Boss: "..item..", \n".."```".."game.Players.LocalPlayer.ClientNetwork.MenuOptions:FireServer({['teleport'] = '"..jobid.."',['config'] = 'server_list'})".."```",
+					['title'] = name.." | Found Boss, "..hpboss.."/"..maxhpboss,
+					['description'] = "Boss: "..item..", \n".."```".."game:GetService('TeleportService'):TeleportToPlaceInstance(99995671928896, '"..jobid.."', game.Players.LocalPlayer)".."```",
 					['footer'] = {
 						['text'] = time
 					},
@@ -514,21 +505,27 @@ local Noclipping
 		"Elder Treant",
 		"Dire Bear",
 		"Licht King",
-		"Mother Spider",
+		--"Mother Spider",
 		"Goblin King",
 		"Vangar"
 	}
 
+	local hp = 0
+	local maxhp = 0
 	for _, mob in pairs(game.Workspace:FindFirstChild("Alive"):GetChildren()) do
 		for _, bossName in ipairs(bossNamesToTrack) do
 			if mob.Name:find(bossName) then
-				sendSecondLog(tostring(bossName), game.Players.LocalPlayer.Name, tostring(game.JobId))
+				if mob:FindFirstChild"Humanoid" then
+					hp = math.floor(tonumber(mob.Humanoid.Health))
+					maxhp = math.floor(tonumber(mob.Humanoid.MaxHealth))
+				end
+				sendSecondLog(tostring(bossName), game.Players.LocalPlayer.Name, tostring(game.JobId), tostring(hp), tostring(maxhp))
 			end
 		end
 	end
 	game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
-	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame *= CFrame.new(0,15,0)
-	wait()
+	fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
+	wait(.5)
 	shop()
 elseif game.PlaceId == 10290054819 then
 	repeat wait() until game.Players.LocalPlayer ~= nil
@@ -554,7 +551,7 @@ elseif game.PlaceId == 10290054819 then
 	end
 
 	-- Generate filename based on the current date
-	local dateStr = os.date("%Y-%m-%d")  -- Format: YYYY-MM-DD
+	local dateStr = tostring(game.Players.LocalPlayer.Name..os.date("%Y-%m-%d"))
 	local filename = dateStr .. ".lua"
 
 	-- Check if file exists
@@ -613,16 +610,16 @@ elseif game.PlaceId == 10290054819 then
 			warn("No valid servers found.")
 		end
 	end
-	local dateStr = os.date("%Y-%m-%d")
+	local dateStr = tostring(game.Players.LocalPlayer.Name..os.date("%Y-%m-%d"))
 	local _table = LoadSettings(dateStr..".lua")
 	if _table ~= nil and _table[1] ~= nil then
-		while true do
-			local B = math.random(1,#_table)
+		while #_table > 0 do
+			local B = math.random(1, #_table)
 			local A = _table[B]
-			table.remove(_table, B)
 			game:GetService("TeleportService"):TeleportToPlaceInstance(99995671928896, tostring(A), game.Players.LocalPlayer)
+			table.remove(_table, B)
 			wait(3)
-			game.GuiService:ClearError()
 		end
+
 	end
 end
