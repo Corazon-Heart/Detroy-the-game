@@ -681,7 +681,7 @@ pcall(function()
 					if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(937.6810913085938, -617.88751220703125, 1686.1224365234375)).magnitude < 400 then
 						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Drogar.HumanoidRootPart.CFrame*CFrame.new(0,-6,7)
 					else
-						wait(1)
+						wait(2.5)
 					end
 				end
 				wait()
