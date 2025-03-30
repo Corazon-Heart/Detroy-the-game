@@ -126,6 +126,7 @@ pcall(function()
 			wait(.5)
 			game.Players.LocalPlayer:Kick("Server Hopping....")
 			local dateStr = tostring(game.Players.LocalPlayer.Name..os.date("%Y-%m-%d"))
+			local filename = dateStr .. ".lua"
 			local _table = LoadSettings(dateStr..".lua")
 			if _table ~= nil and _table[1] ~= nil then
 				while #_table > 0 do
@@ -133,6 +134,7 @@ pcall(function()
 					local A = _table[B]
 					game:GetService("TeleportService"):TeleportToPlaceInstance(99995671928896, tostring(A), game.Players.LocalPlayer)
 					table.remove(_table, B)
+					WriteSettings(filename, _table)
 					wait(3)
 				end
 
@@ -897,6 +899,7 @@ pcall(function()
 			end
 		end
 		local dateStr = tostring(game.Players.LocalPlayer.Name..os.date("%Y-%m-%d"))
+		local filename = dateStr .. ".lua"
 		local _table = LoadSettings(dateStr..".lua")
 		if _table ~= nil and _table[1] ~= nil then
 			while #_table > 0 do
@@ -904,9 +907,9 @@ pcall(function()
 				local A = _table[B]
 				game:GetService("TeleportService"):TeleportToPlaceInstance(99995671928896, tostring(A), game.Players.LocalPlayer)
 				table.remove(_table, B)
+				WriteSettings(filename, _table)
 				wait(3)
 			end
-
 		end
 	end
 end)
