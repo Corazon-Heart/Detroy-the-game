@@ -100,7 +100,7 @@ if game.PlaceId == 99995671928896 then
 		}
 
 		game:GetService("Players").LocalPlayer.ClientNetwork.MenuOptions:FireServer(unpack(args))
-		wait(1)
+		wait(1.5)
 		local args = {
 			[1] = {
 				["slot"] = "Slot_1",
