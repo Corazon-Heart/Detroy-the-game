@@ -320,14 +320,14 @@ pcall(function()
 				["Intellect Rune"] = true,
 				["Agility Rune"] = true,
 				["Spirit Rune"] = true,
-				--["Stamina Rune"] = true,
+				["Stamina Rune"] = true,
 				["Strength Rune"] = true,
 				["Thick Leather"] = true,
 				["Lesser Strength Rune"] = true,
 				["Lesser Agility Rune"] = true,
 				["Lesser Intellect Rune"] = true,
 				["Lesser Spirit Rune"] = true,
-				--["Lesser Stamina Rune"] = true
+				["Lesser Stamina Rune"] = true
 			}
 
 
@@ -366,14 +366,14 @@ pcall(function()
 					"Intellect Rune",
 					"Agility Rune",
 					"Spirit Rune",
-					--"Stamina Rune",
+					"Stamina Rune",
 					"Strength Rune",
 					"Thick Leather",
 					"Lesser Strength Rune",
 					"Lesser Agility Rune",
 					"Lesser Intellect Rune",
 					"Lesser Spirit Rune",
-					--"Lesser Stamina Rune"
+					"Lesser Stamina Rune"
 				}
 				for i = 1,12 do
 					for _, itemName in ipairs(itemsToSell) do
