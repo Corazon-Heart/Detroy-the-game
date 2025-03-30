@@ -716,7 +716,7 @@ pcall(function()
 					end
 				end
 				task.wait()
-			until Drogar.Parent == nil or endscript == true or tick() - killtime >= 30 or game.Players.LocalPlayer.PlayerGui.InfoOverlays:FindFirstChild"ConfirmFrame"
+			until Drogar.Parent == nil or endscript == true or tick() - killtime >= 25 or game.Players.LocalPlayer.PlayerGui.InfoOverlays:FindFirstChild"ConfirmFrame"
 			if game.Players.LocalPlayer.Character:FindFirstChild"Humanoid" and game.Players.LocalPlayer.Character:FindFirstChild"Humanoid".Health > 0 then
 				repeat wait()
 					game.Players.LocalPlayer.Character.Humanoid.Health = 0
