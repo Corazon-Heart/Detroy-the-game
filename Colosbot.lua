@@ -677,12 +677,8 @@ pcall(function()
 			end
 			local killtime = tick()
 			repeat
-				if game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart" and Drogar:FindFirstChild"HumanoidRootPart" and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1005.5820922851562, -238.3594970703125, 1517.7528076171875)).magnitude < 250 then
-					if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1005.5820922851562, -238.3594970703125, 1517.7528076171875)).magnitude < 250 then
-						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Drogar.HumanoidRootPart.CFrame*CFrame.new(0,-6,7)
-					else
-						wait(3)
-					end
+				if game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart" and Drogar:FindFirstChild"HumanoidRootPart" then
+					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Drogar.HumanoidRootPart.CFrame*CFrame.new(0,-6,7)
 				end
 				wait()
 				local rs = game:GetService("ReplicatedStorage")
