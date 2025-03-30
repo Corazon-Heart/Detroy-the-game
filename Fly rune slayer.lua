@@ -1,5 +1,5 @@
-local speeds = 0.86
-local maxSpeed = 10
+local speeds = 2
+local maxSpeed = 30
 local isFlying = false
 local tpwalking = false
 local isHovering = false -- เพิ่มตัวแปรสถานะการ Hover
@@ -14,7 +14,36 @@ local currentDownwardVelocity = 0
 
 -- ตัวแปรสถานะเปิด/ปิดสคริปต์
 local scriptEnabled = false
+function TP(Object) 
+    local tweenService = game:GetService("TweenService")
+    local rootPart = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    
+    if not rootPart then return end
 
+    local tweenInfo = TweenInfo.new(
+        (rootPart.Position - Object).magnitude / 70, 
+        Enum.EasingStyle.Linear, 
+        Enum.EasingDirection.In, 
+        0, false, 0
+    )
+    
+    local tween = tweenService:Create(rootPart, tweenInfo, {CFrame = CFrame.new(Object)})
+    tween:Play()
+
+    -- ตรวจสอบการยกเลิก Tween ทันทีเมื่อ Space หรือ Ctrl ไม่ถูกกด
+    spawn(function()
+        while tween.PlaybackState == Enum.PlaybackState.Playing do
+            if not isSpaceHeld and not isCtrlHeld then
+                tween:Cancel()
+                break
+            end
+            task.wait()
+        end
+    end)
+
+    tween.Completed:Wait()
+end
+        
 -- ฟังก์ชันการเริ่มต้นใหม่ของสคริปต์เมื่อรีสปาวน์ตัวละคร
 local function resetScript()
     -- รีเซ็ตตัวแปร
@@ -58,26 +87,36 @@ local function updateFlyState(enabled)
     end
 end
 
--- ฟังก์ชันหลักในการเปิด/ปิดสคริปต์ทั้งหมด
+local heartbeatConnection
+local inputBeganConnection
+local inputEndedConnection
+local stateChangedConnection
+
 local function toggleScript(state)
     if state then
         -- เปิดสคริปต์
         scriptEnabled = true
         updateFlyState(true)
-        print("Fly script enabled")
+
+        -- เชื่อมต่อเหตุการณ์
+        stateChangedConnection = speaker.Character:FindFirstChild("Humanoid").StateChanged:Connect(function() end)
+        heartbeatConnection = game:GetService("RunService").Heartbeat:Connect(function() end)
+        inputBeganConnection = game:GetService("UserInputService").InputBegan:Connect(function() end)
+        inputEndedConnection = game:GetService("UserInputService").InputEnded:Connect(function() end)
+
     else
-        -- ปิดสคริปต์และลบ
+        -- ปิดสคริปต์
         scriptEnabled = false
         updateFlyState(false)
-        print("Fly script disabled")
-        
-        -- ทำลายทุกอย่างที่เกี่ยวข้องกับสคริปต์นี้
-        speaker.Character:FindFirstChild("Humanoid").StateChanged:Disconnect()  -- Disconnect event ที่เกี่ยวข้อง
-        game:GetService("RunService").Heartbeat:Disconnect()  -- Disconnect Heartbeat event
-        game:GetService("UserInputService").InputBegan:Disconnect()  -- Disconnect InputBegan event
-        game:GetService("UserInputService").InputEnded:Disconnect()  -- Disconnect InputEnded event
+
+        -- ตรวจสอบและยกเลิกการเชื่อมต่ออย่างปลอดภัย
+        if stateChangedConnection then stateChangedConnection:Disconnect() end
+        if heartbeatConnection then heartbeatConnection:Disconnect() end
+        if inputBeganConnection then inputBeganConnection:Disconnect() end
+        if inputEndedConnection then inputEndedConnection:Disconnect() end
     end
 end
+
 
 -- ฟังก์ชันที่เชื่อมต่อกับ InputBegan และ InputEnded เพื่อรับข้อมูลจากผู้เล่น
 game:GetService("UserInputService").InputBegan:Connect(function(input, gameProcessedEvent)
@@ -111,12 +150,14 @@ game:GetService("RunService").Heartbeat:Connect(function()
         if isSpaceHeld then
             currentUpwardVelocity = math.min(currentUpwardVelocity + 2, 150)  -- จำกัดความเร็วสูงสุดที่ 50
             if hum and hum.RootPart then
-                hum.RootPart.Velocity = Vector3.new(hum.RootPart.Velocity.X, currentUpwardVelocity, hum.RootPart.Velocity.Z)
+                TP(hum.RootPart.Position+Vector3.new(0,5,0))
+                hum.RootPart.Velocity = Vector3.new(0,0,0)
             end
         elseif isCtrlHeld then
             currentDownwardVelocity = math.min(currentDownwardVelocity + 2, 150)  -- จำกัดความเร็วสูงสุดที่ 50
             if hum and hum.RootPart then
-                hum.RootPart.Velocity = Vector3.new(hum.RootPart.Velocity.X, -currentDownwardVelocity, hum.RootPart.Velocity.Z)
+                TP(hum.RootPart.Position+Vector3.new(0,-5,0))
+                hum.RootPart.Velocity = Vector3.new(0,0,0)
             end
         else
             -- ถ้าไม่ได้กดปุ่ม Space หรือ Left Control ให้ตั้งค่า Velocity เป็น 0 (Hover)
