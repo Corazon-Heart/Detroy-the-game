@@ -677,8 +677,8 @@ pcall(function()
 			end
 			local killtime = tick()
 			repeat
-				if game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart" and Drogar:FindFirstChild"HumanoidRootPart" and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(937.6810913085938, -417.88751220703125, 1686.1224365234375)).magnitude < 400 then
-					if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(937.6810913085938, -417.88751220703125, 1686.1224365234375)).magnitude < 500 then
+				if game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart" and Drogar:FindFirstChild"HumanoidRootPart" and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(937.6810913085938, -617.88751220703125, 1686.1224365234375)).magnitude < 400 then
+					if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(937.6810913085938, -617.88751220703125, 1686.1224365234375)).magnitude < 400 then
 						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Drogar.HumanoidRootPart.CFrame*CFrame.new(0,-6,7)
 					else
 						wait(1)
