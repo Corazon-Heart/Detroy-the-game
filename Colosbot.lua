@@ -32,7 +32,64 @@ pcall(function()
 		-- Generate filename based on the current date
 		local dateStr = tostring(game.Players.LocalPlayer.Name..os.date("%Y-%m-%d"))
 		local filename = dateStr .. ".lua"
+		if isfile(filename) then
+			local _table = LoadSettings(dateStr..".lua")
+			if _table == nil or _table[1] == nil then
+				local PlaceId = 99995671928896  -- Use game's actual PlaceId
+				local JobId = game.JobId  -- Use game's JobId
 
+				if not PlaceId then
+					warn("Error: PlaceId is nil!")
+					return
+				end
+
+				local servers = {}
+				local maxAttempts = 10
+				local req = syn and syn.request or (http and http.request) or request
+
+				if not req then
+					warn("HTTP Request function not found.")
+					return TeleportService:Teleport(10290054819, Players.LocalPlayer)
+				end
+
+				for attempt = 1, maxAttempts do
+					print("Attempting to fetch server list... Attempt " .. attempt)
+
+					local response = req({
+						Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true", PlaceId),
+						Method = "GET"
+					})
+
+					if response and response.Body then
+						local success, body = pcall(function()
+							return HttpService:JSONDecode(response.Body)
+						end)
+
+						if success and body and body.data then
+							for _, v in ipairs(body.data) do
+								if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing < v.maxPlayers and v.id ~= JobId then
+									table.insert(servers, 1, v.id)
+								end
+							end
+						end
+					end
+
+					if #servers > 0 then
+						break
+					end
+
+					if attempt < maxAttempts then
+						wait(5) -- Small delay before retrying
+					end
+				end
+
+				if #servers > 0 then
+					WriteSettings(filename, servers)
+				else
+					warn("No valid servers found.")
+				end
+			end
+		end
 		-- Check if file exists
 		if not isfile(filename) then
 			local PlaceId = 99995671928896  -- Use game's actual PlaceId
@@ -137,7 +194,6 @@ pcall(function()
 					WriteSettings(filename, _table)
 					wait(3)
 				end
-
 			end
 		end
 		local CurrentCheck = 0
@@ -838,6 +894,65 @@ pcall(function()
 		-- Generate filename based on the current date
 		local dateStr = tostring(game.Players.LocalPlayer.Name..os.date("%Y-%m-%d"))
 		local filename = dateStr .. ".lua"
+
+		if isfile(filename) then
+			local _table = LoadSettings(dateStr..".lua")
+			if _table == nil or _table[1] == nil then
+				local PlaceId = 99995671928896  -- Use game's actual PlaceId
+				local JobId = game.JobId  -- Use game's JobId
+
+				if not PlaceId then
+					warn("Error: PlaceId is nil!")
+					return
+				end
+
+				local servers = {}
+				local maxAttempts = 10
+				local req = syn and syn.request or (http and http.request) or request
+
+				if not req then
+					warn("HTTP Request function not found.")
+					return TeleportService:Teleport(10290054819, Players.LocalPlayer)
+				end
+
+				for attempt = 1, maxAttempts do
+					print("Attempting to fetch server list... Attempt " .. attempt)
+
+					local response = req({
+						Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true", PlaceId),
+						Method = "GET"
+					})
+
+					if response and response.Body then
+						local success, body = pcall(function()
+							return HttpService:JSONDecode(response.Body)
+						end)
+
+						if success and body and body.data then
+							for _, v in ipairs(body.data) do
+								if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing < v.maxPlayers and v.id ~= JobId then
+									table.insert(servers, 1, v.id)
+								end
+							end
+						end
+					end
+
+					if #servers > 0 then
+						break
+					end
+
+					if attempt < maxAttempts then
+						wait(5) -- Small delay before retrying
+					end
+				end
+
+				if #servers > 0 then
+					WriteSettings(filename, servers)
+				else
+					warn("No valid servers found.")
+				end
+			end
+		end
 
 		-- Check if file exists
 		if not isfile(filename) then
