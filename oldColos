@@ -528,33 +528,16 @@ pcall(function()
 				if Drogar:FindFirstChild"Humanoid" and Drogar:FindFirstChild"HumanoidRootPart" then
 					if Drogar.Humanoid.Health <= Drogar.Humanoid.MaxHealth*0.9 and isnetworkowner(Drogar.HumanoidRootPart) then
 						if Drogar.Parent ~= nil and Drogar:FindFirstChild"Humanoid" then
-							Drogar.Humanoid.Health = 0
-						end
-						local StartTick = tick()
-						local Safe = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame*CFrame.new(0,40,0)
-						if not game.Players.LocalPlayer.Character:FindFirstChild"Float" then
-							local Float = Instance.new('Part', game.Players.LocalPlayer.Character)
-							Float.Name = 'Float'
-							Float.Transparency = 1
-							Float.Size = Vector3.new(6,1,6)
-							Float.Anchored = true
-							Float.CFrame = Safe * CFrame.new(0,-3.5,0)
-						else
-							game.Players.LocalPlayer.Character:FindFirstChild"Float".CFrame = Safe * CFrame.new(0,-3.5,0)
-						end
-						repeat task.wait()
-							if game.Players.LocalPlayer.Character ~= nil and game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart" then
-								game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Safe
+							for i = 1,10 do
+								if Drogar.Parent ~= nil and Drogar:FindFirstChild"Humanoid" then
+									Drogar.Humanoid.Health = 0
+								end
 							end
-							if Drogar.Parent ~= nil then
-								Drogar.Humanoid.Health = 0
+							for i = 1,10 do
+								if game.Players.LocalPlayer.Character:FindFirstChild"Humanoid" and game.Players.LocalPlayer.Character:FindFirstChild"Humanoid".Health > 0 then
+									game.Players.LocalPlayer.Character.Humanoid.Health = 0
+								end
 							end
-							if tick() - StartTick >= 0.2 then
-								endscript = true
-							end
-						until Drogar.Parent == nil or endscript == true
-						if game.Players.LocalPlayer.Character:FindFirstChild"Float" then
-							game.Players.LocalPlayer.Character:FindFirstChild"Float":Destroy()
 						end
 					end
 				end
@@ -691,7 +674,13 @@ pcall(function()
 
 							repeat wait() until game.Players.LocalPlayer.Character:IsDescendantOf(game.Workspace.Alive)
 							game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart",15)
-							wait(1)
+							wait(0.3)
+							while true do
+								local deltaTime = RunService.Heartbeat:Wait()
+								if deltaTime < 0.5 then 
+									break
+								end
+							end
 							_G.Botting()
 						end
 					end
@@ -771,7 +760,7 @@ pcall(function()
 			wait()
 		end
 
-
+		local count = 0
 		while true do
 			wait()
 			local children = serverScrollFrame:GetChildren()
@@ -795,6 +784,10 @@ pcall(function()
 						wait()
 						virtualInput:SendMouseButtonEvent(childClickPos.X, childClickPos.Y + 65, 0, false, game, 0)
 						wait(0.5)
+						count += 1
+						if count >= 20 then
+							game:Shutdown()
+						end
 						randomChild.Parent = serverScrollFrame
 						wait(1)
 						game.GuiService:ClearError()
