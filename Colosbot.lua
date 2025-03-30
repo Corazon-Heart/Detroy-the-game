@@ -197,7 +197,6 @@ pcall(function()
 		-- Target position
 		local targetPosition = Vector3.new(1013.8218383789062, -239.08447265625, 1572.6201171875)
 		local teleportRadius = 500
-		local destinationPlaceId = 10290054819
 
 		-- Function to check and teleport other players
 		local function checkAndTeleport()
@@ -205,10 +204,8 @@ pcall(function()
 				if player ~= game.Players.LocalPlayer and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
 					local playerPosition = player.Character.HumanoidRootPart.Position
 					local distance = (playerPosition - targetPosition).magnitude
-
 					if distance <= teleportRadius then
-						-- Teleport player to the target place
-						TeleportService:Teleport(destinationPlaceId, game.Players.LocalPlayer)
+						shop()
 					end
 				end
 			end
