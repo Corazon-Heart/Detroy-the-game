@@ -101,7 +101,7 @@ pcall(function()
 			}
 
 			game:GetService("Players").LocalPlayer.ClientNetwork.MenuOptions:FireServer(unpack(args))
-			wait(1)
+			wait(1.5)
 			local args = {
 				[1] = {
 					["slot"] = "Slot_1",
