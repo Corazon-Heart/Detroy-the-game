@@ -8,6 +8,109 @@ pcall(function()
 	until game:IsLoaded()
 	if game.PlaceId == 99995671928896 then
 		repeat wait() until game.Players.LocalPlayer ~= nil
+		local HttpService = game:GetService("HttpService")
+		local TeleportService = game:GetService("TeleportService")
+		local Players = game:GetService("Players")
+
+
+		-- Function to append content to a file
+		local function appendfile(path, contents)
+			writefile(path, (readfile(path) or "") .. contents .. "\n")
+		end
+
+		-- Function to load settings from a file
+		local function LoadSettings(path)
+			local str = readfile(path)
+			return HttpService:JSONDecode(str)
+		end
+
+		-- Function to write settings to a file
+		local function WriteSettings(path, settingsTable)
+			writefile(path, HttpService:JSONEncode(settingsTable))
+		end
+
+		-- Generate filename based on the current date
+		local dateStr = tostring(game.Players.LocalPlayer.Name..os.date("%Y-%m-%d"))
+		local filename = dateStr .. ".lua"
+
+		-- Check if file exists
+		if not isfile(filename) then
+			local PlaceId = 99995671928896  -- Use game's actual PlaceId
+			local JobId = game.JobId  -- Use game's JobId
+
+			if not PlaceId then
+				warn("Error: PlaceId is nil!")
+				return
+			end
+
+			local servers = {}
+			local maxAttempts = 10
+			local req = syn and syn.request or (http and http.request) or request
+
+			if not req then
+				warn("HTTP Request function not found.")
+				return TeleportService:Teleport(10290054819, Players.LocalPlayer)
+			end
+
+			for attempt = 1, maxAttempts do
+				print("Attempting to fetch server list... Attempt " .. attempt)
+
+				local response = req({
+					Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true", PlaceId),
+					Method = "GET"
+				})
+
+				if response and response.Body then
+					local success, body = pcall(function()
+						return HttpService:JSONDecode(response.Body)
+					end)
+
+					if success and body and body.data then
+						for _, v in ipairs(body.data) do
+							if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing < v.maxPlayers and v.id ~= JobId then
+								table.insert(servers, 1, v.id)
+							end
+						end
+					end
+				end
+
+				if #servers > 0 then
+					break
+				end
+
+				if attempt < maxAttempts then
+					wait(5) -- Small delay before retrying
+				end
+			end
+
+			if #servers > 0 then
+				WriteSettings(filename, servers)
+			else
+				warn("No valid servers found.")
+			end
+		end
+
+		game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Menu",15)
+		if game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild"Menu" then
+			game:GetService("Players").LocalPlayer.PlayerGui.Menu:WaitForChild("CosmeticButton",15)
+			wait(1.5)
+			local args = {
+				[1] = {
+					["config"] = "start_screen"
+				}
+			}
+
+			game:GetService("Players").LocalPlayer.ClientNetwork.MenuOptions:FireServer(unpack(args))
+			wait(1)
+			local args = {
+				[1] = {
+					["slot"] = "Slot_1",
+					["config"] = "slots"
+				}
+			}
+
+			game:GetService("Players").LocalPlayer.ClientNetwork.MenuOptions:FireServer(unpack(args))
+		end
 		repeat wait() until game.Players.LocalPlayer.Character ~= nil
 		repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart"
 		repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild"CharacterHandler"
@@ -19,6 +122,22 @@ pcall(function()
 			game:GetService("VirtualUser"):CaptureController()
 			game:GetService("VirtualUser"):ClickButton2(Vector2.new(math.random(10, 50), math.random(10, 50)))
 		end)
+		local shop = function()
+			wait(.5)
+			game.Players.LocalPlayer:Kick("Server Hopping....")
+			local dateStr = tostring(game.Players.LocalPlayer.Name..os.date("%Y-%m-%d"))
+			local _table = LoadSettings(dateStr..".lua")
+			if _table ~= nil and _table[1] ~= nil then
+				while #_table > 0 do
+					local B = math.random(1, #_table)
+					local A = _table[B]
+					game:GetService("TeleportService"):TeleportToPlaceInstance(99995671928896, tostring(A), game.Players.LocalPlayer)
+					table.remove(_table, B)
+					wait(3)
+				end
+
+			end
+		end
 		local CurrentCheck = 0
 		for _,v in pairs(game.Players:GetPlayers()) do
 			if v:IsA("Player") then
@@ -26,7 +145,7 @@ pcall(function()
 					if v:IsDescendantOf(game.Players) and v and v:GetRankInGroup(15431531) >= 1 then
 						CurrentCheck = CurrentCheck + 1
 						wait()
-						game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+						shop()
 					else
 						CurrentCheck = CurrentCheck + 1
 					end
@@ -39,7 +158,7 @@ pcall(function()
 		game.Players.PlayerAdded:Connect(function(v)
 			wait()
 			if v:IsDescendantOf(game.Players) and v and v:GetRankInGroup(15431531) >= 1 then
-				game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+				shop()
 			end
 		end)
 
@@ -111,31 +230,31 @@ pcall(function()
 
 							if not gui then
 								warn("InfoOverlays not found")
-								return game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+								return shop()
 							end
 
 							local confirmFrame = gui:WaitForChild("ConfirmFrame", 5)
 							if not confirmFrame then
 								warn("ConfirmFrame not found")
-								return game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+								return shop()
 							end
 
 							local mainFrame = confirmFrame:WaitForChild("MainFrame", 5)
 							if not mainFrame then
 								warn("MainFrame not found")
-								return game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+								return shop()
 							end
 
 							local buttonFrame = mainFrame:WaitForChild("ButtonFrame", 5)
 							if not buttonFrame then
 								warn("ButtonFrame not found")
-								return game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+								return shop()
 							end
 
 							local confirmButton = buttonFrame:WaitForChild("ConfirmButton", 5)
 							if not confirmButton then
 								warn("ConfirmButton not found")
-								return game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+								return shop()
 							end
 
 							repeat
@@ -499,7 +618,7 @@ pcall(function()
 			if Drogar:FindFirstChild"HumanoidRootPart" then
 				TP(Drogar.HumanoidRootPart.Position)
 			else
-				return game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+				return shop()
 			end
 			local killtime = tick()
 			repeat
@@ -556,31 +675,31 @@ pcall(function()
 
 			if not gui then
 				warn("InfoOverlays not found")
-				return game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+				return shop()
 			end
 
 			local confirmFrame = gui:WaitForChild("ConfirmFrame", 5)
 			if not confirmFrame then
 				warn("ConfirmFrame not found")
-				return game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+				return shop()
 			end
 
 			local mainFrame = confirmFrame:WaitForChild("MainFrame", 5)
 			if not mainFrame then
 				warn("MainFrame not found")
-				return game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+				return shop()
 			end
 
 			local buttonFrame = mainFrame:WaitForChild("ButtonFrame", 5)
 			if not buttonFrame then
 				warn("ButtonFrame not found")
-				return game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+				return shop()
 			end
 
 			local confirmButton = buttonFrame:WaitForChild("ConfirmButton", 5)
 			if not confirmButton then
 				warn("ConfirmButton not found")
-				return game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+				return shop()
 			end
 
 			repeat
@@ -630,31 +749,31 @@ pcall(function()
 
 							if not gui then
 								warn("InfoOverlays not found")
-								return game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+								return shop()
 							end
 
 							local confirmFrame = gui:WaitForChild("ConfirmFrame", 5)
 							if not confirmFrame then
 								warn("ConfirmFrame not found")
-								return game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+								return shop()
 							end
 
 							local mainFrame = confirmFrame:WaitForChild("MainFrame", 5)
 							if not mainFrame then
 								warn("MainFrame not found")
-								return game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+								return shop()
 							end
 
 							local buttonFrame = mainFrame:WaitForChild("ButtonFrame", 5)
 							if not buttonFrame then
 								warn("ButtonFrame not found")
-								return game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+								return shop()
 							end
 
 							local confirmButton = buttonFrame:WaitForChild("ConfirmButton", 5)
 							if not confirmButton then
 								warn("ConfirmButton not found")
-								return game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
+								return shop()
 							end
 
 							repeat
@@ -695,106 +814,99 @@ pcall(function()
 		end)
 		_G.Botting()
 	elseif game.PlaceId == 10290054819 then
-		local players = game:GetService("Players")
-		local player = players.LocalPlayer
-		local gui = player:WaitForChild("PlayerGui") -- Ensure PlayerGui exists
+		repeat wait() until game.Players.LocalPlayer ~= nil
+		game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Menu",15)
+		local HttpService = game:GetService("HttpService")
+		local TeleportService = game:GetService("TeleportService")
+		local Players = game:GetService("Players")
 
-		-- Wait for Menu and its children
-		local menu = gui:WaitForChild("Menu")
-		local cosmeticButton = menu:WaitForChild("CosmeticButton")
-		game:GetService("Players").LocalPlayer.Idled:Connect(function()
-			c:CaptureController()
-			c:ClickButton2(Vector2.new(math.random(10, 50), math.random(10, 50)))
-		end)
-		-- Simulate space key press
-		wait(1)
-		local virtualInput = game:GetService("VirtualInputManager")
-		virtualInput:SendKeyEvent(true, Enum.KeyCode.Space, false, nil)
-		game:GetService("RunService").Heartbeat:Wait()
-		virtualInput:SendKeyEvent(false, Enum.KeyCode.Space, false, nil)
-
-		-- Wait for PlayButton to appear
-		local buttonFrame = menu:WaitForChild("ButtonFrame")
-		local playButton = buttonFrame:WaitForChild("PlayButton")
-		local absPos = playButton.AbsolutePosition
-		local absSize = playButton.AbsoluteSize
-
-		-- Click PlayButton
-		local clickPos = absPos + (absSize / 2)
-		virtualInput:SendMouseButtonEvent(clickPos.X, clickPos.Y + 65, 0, true, game, 0)
-		virtualInput:SendMouseButtonEvent(clickPos.X, clickPos.Y + 65, 0, false, game, 0)
-		wait(1)
-		-- Wait for CharacterSlots UI
-		local slots = gui:WaitForChild("Slots")
-		local characterSlots = slots:WaitForChild("CharacterSlots")
-		local scrollingFrame = characterSlots:WaitForChild("ScrollingFrame")
-		local slot1 = scrollingFrame:WaitForChild("Slot_1")
-		local slotPos = slot1.AbsolutePosition
-		local slotSize = slot1.AbsoluteSize
-
-		-- Click Slot_1
-		local slotClickPos = slotPos + (slotSize / 2)
-		virtualInput:SendMouseButtonEvent(slotClickPos.X, slotClickPos.Y + 65, 0, true, game, 0)
-		virtualInput:SendMouseButtonEvent(slotClickPos.X, slotClickPos.Y + 65, 0, false, game, 0)
-		wait(1)
-		-- Wait for Server List UI
-		local serverList = gui:WaitForChild("ServerList")
-		local mainFrame = serverList:WaitForChild("MainFrame")
-		local browser = mainFrame:WaitForChild("Browser")
-		local serverScrollFrame = browser:WaitForChild("ScrollingFrame")
-
-		-- Wait until at least 3 server entries exist with a timeout of 10 seconds
-		local startTime = tick()
-		while #serverScrollFrame:GetChildren() < 3 do
-			if tick() - startTime > 10 then
-				warn("Timeout: Not enough server entries found within 10 seconds")
-				-- Click QuickJoin button
-				local quickJoinButton = mainFrame:WaitForChild("QuickJoin")
-				local quickJoinPos = quickJoinButton.AbsolutePosition
-				local quickJoinSize = quickJoinButton.AbsoluteSize
-				local quickJoinClickPos = quickJoinPos + (quickJoinSize / 2)
-
-				virtualInput:SendMouseButtonEvent(quickJoinClickPos.X, quickJoinClickPos.Y + 65, 0, true, game, 0)
-				virtualInput:SendMouseButtonEvent(quickJoinClickPos.X, quickJoinClickPos.Y + 65, 0, false, game, 0)
-			end
-			wait()
+		-- Function to append content to a file
+		local function appendfile(path, contents)
+			writefile(path, (readfile(path) or "") .. contents .. "\n")
 		end
 
-		local count = 0
-		while true do
-			wait()
-			local children = serverScrollFrame:GetChildren()
-			if #children >= 3 then
-				local randomIndex = math.random(3, #children)
-				local randomChild = children[randomIndex]
-				local playerCountText = randomChild:FindFirstChild("PlayerCount")
+		-- Function to load settings from a file
+		local function LoadSettings(path)
+			local str = readfile(path)
+			return HttpService:JSONDecode(str)
+		end
 
-				if playerCountText and playerCountText:IsA("TextLabel") then
-					local currentPlayers = tonumber(playerCountText.Text:match("(%d+)/%d+"))
+		-- Function to write settings to a file
+		local function WriteSettings(path, settingsTable)
+			writefile(path, HttpService:JSONEncode(settingsTable))
+		end
 
-					if currentPlayers and currentPlayers <= 8 then
-						local searchBar = mainFrame:WaitForChild("SearchBar")
-						randomChild.Parent = searchBar
-						local childPos = randomChild.AbsolutePosition
-						local childSize = randomChild.AbsoluteSize
-						local childClickPos = childPos + (childSize / 2)
+		-- Generate filename based on the current date
+		local dateStr = tostring(game.Players.LocalPlayer.Name..os.date("%Y-%m-%d"))
+		local filename = dateStr .. ".lua"
 
-						-- Click on selected server
-						virtualInput:SendMouseButtonEvent(childClickPos.X, childClickPos.Y + 65, 0, true, game, 0)
-						wait()
-						virtualInput:SendMouseButtonEvent(childClickPos.X, childClickPos.Y + 65, 0, false, game, 0)
-						wait(0.5)
-						count += 1
-						if count >= 20 then
-							game:Shutdown()
+		-- Check if file exists
+		if not isfile(filename) then
+			local PlaceId = 99995671928896  -- Use game's actual PlaceId
+			local JobId = game.JobId  -- Use game's JobId
+
+			if not PlaceId then
+				warn("Error: PlaceId is nil!")
+				return
+			end
+
+			local servers = {}
+			local maxAttempts = 10
+			local req = syn and syn.request or (http and http.request) or request
+
+			if not req then
+				warn("HTTP Request function not found.")
+				return TeleportService:Teleport(10290054819, Players.LocalPlayer)
+			end
+
+			for attempt = 1, maxAttempts do
+				print("Attempting to fetch server list... Attempt " .. attempt)
+
+				local response = req({
+					Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true", PlaceId),
+					Method = "GET"
+				})
+
+				if response and response.Body then
+					local success, body = pcall(function()
+						return HttpService:JSONDecode(response.Body)
+					end)
+
+					if success and body and body.data then
+						for _, v in ipairs(body.data) do
+							if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing < v.maxPlayers and v.id ~= JobId then
+								table.insert(servers, 1, v.id)
+							end
 						end
-						randomChild.Parent = serverScrollFrame
-						wait(1)
-						game.GuiService:ClearError()
-						wait(.5)
 					end
 				end
+
+				if #servers > 0 then
+					break
+				end
+
+				if attempt < maxAttempts then
+					wait(5) -- Small delay before retrying
+				end
 			end
+
+			if #servers > 0 then
+				WriteSettings(filename, servers)
+			else
+				warn("No valid servers found.")
+			end
+		end
+		local dateStr = tostring(game.Players.LocalPlayer.Name..os.date("%Y-%m-%d"))
+		local _table = LoadSettings(dateStr..".lua")
+		if _table ~= nil and _table[1] ~= nil then
+			while #_table > 0 do
+				local B = math.random(1, #_table)
+				local A = _table[B]
+				game:GetService("TeleportService"):TeleportToPlaceInstance(99995671928896, tostring(A), game.Players.LocalPlayer)
+				table.remove(_table, B)
+				wait(3)
+			end
+
 		end
 	end
 end)
