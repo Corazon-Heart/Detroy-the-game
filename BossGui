@@ -267,6 +267,33 @@ Test1.CreateButton("Instant Heal", function()
 	end)
 end)
 
+Test1.CreateButton("Respawn", function()
+	spawn(function()
+		game.Players.LocalPlayer.Character.Humanoid.Health = 0
+		local VirtualInputManager = game:GetService("VirtualInputManager")
+		game.Players.LocalPlayer.PlayerGui.InfoOverlays:WaitForChild"ConfirmFrame"
+		game.Players.LocalPlayer.PlayerGui.InfoOverlays:WaitForChild"ConfirmFrame":WaitForChild"MainFrame"
+		game.Players.LocalPlayer.PlayerGui.InfoOverlays:WaitForChild"ConfirmFrame":WaitForChild"MainFrame":WaitForChild"ButtonFrame"
+		game.Players.LocalPlayer.PlayerGui.InfoOverlays:WaitForChild"ConfirmFrame":WaitForChild"MainFrame":WaitForChild"ButtonFrame":WaitForChild"ConfirmButton"
+		wait()
+		local player = game:GetService("Players").LocalPlayer
+		repeat
+			if player.PlayerGui.InfoOverlays:FindFirstChild("ConfirmFrame") then
+				local button = player.PlayerGui.InfoOverlays.ConfirmFrame.MainFrame.ButtonFrame.ConfirmButton
+				if button then
+					local absPos = button.AbsolutePosition
+					local absSize = button.AbsoluteSize
+
+					local clickPos = absPos + (absSize / 2)
+
+					VirtualInputManager:SendMouseButtonEvent(clickPos.X, clickPos.Y + 65, 0, true, game, 0) -- Mouse down
+					VirtualInputManager:SendMouseButtonEvent(clickPos.X, clickPos.Y + 65, 0, false, game, 0) -- Mouse up
+				end
+			end
+			wait()
+		until not player.PlayerGui.InfoOverlays:FindFirstChild("ConfirmFrame")
+	end)
+end)
 
 Test1.CreateButton("Server Hop", function()
 	game:GetService("StarterGui"):SetCore("SendNotification", { Title = "Server Hopping", Text = "Wait....", Duration = 30 })
