@@ -342,6 +342,10 @@ pcall(function()
 			repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart"
 			repeat wait() until workspace.InvisibleParts:FindFirstChild"ColosseumEntrance"
 			repeat wait() until workspace.InvisibleParts:FindFirstChild"ColosseumEntrance":FindFirstChild"InteractPrompt"
+			repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild("BoolValues")
+			repeat wait() until game.Players.LocalPlayer.Character.BoolValues:FindFirstChild"CombatTag"
+			repeat wait() until game.Players.LocalPlayer.Character.BoolValues.CombatTag.Value <= 1
+			repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild"Humanoid".Health > 0
 			checkAndTeleport()
 			function TP(Object) -- Object = part teleporting to.
 				local tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new((game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Object).magnitude/90,Enum.EasingStyle.Linear,Enum.EasingDirection.In,0,false,0)
