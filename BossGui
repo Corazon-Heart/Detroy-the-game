@@ -559,7 +559,7 @@ spawn(function()
 
 	-- Function to toggle noclip when pressing X
 	local function ToggleNoclip(input)
-		if input.KeyCode == Enum.KeyCode.G then
+		if input.KeyCode == Enum.KeyCode.C then
 			if Clip then
 				StartNC()
 			else
