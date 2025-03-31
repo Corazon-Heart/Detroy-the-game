@@ -295,6 +295,21 @@ Test1.CreateButton("Respawn", function()
 	end)
 end)
 
+Test1.CreateButton("TP to all NPC", function()
+for i,v in pairs(game.Workspace.Effects.NPCS:GetChildren()) do
+if v:FindFirstChild"HumanoidRootPart" and v:FindFirstChild"Quest1" then
+local NpcName = tostring(v.Name)
+repeat wait()
+fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
+until (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude < 10
+for i = 1,10 do
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Effects.NPCS[NpcName].HumanoidRootPart.CFrame
+end
+wait(1)
+end
+end
+end)
+
 Test1.CreateButton("Server Hop", function()
 	game:GetService("StarterGui"):SetCore("SendNotification", { Title = "Server Hopping", Text = "Wait....", Duration = 30 })
 	local PlaceID = 99995671928896
