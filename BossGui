@@ -182,7 +182,8 @@ fireProximityAndWait()
 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = A
 end)
 Test1.CreateButton("Instant Heal", function()
-local A = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+spawn(function()
+local B = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
 game.Players.LocalPlayer.Character.Humanoid.Health = 0
 local VirtualInputManager = game:GetService("VirtualInputManager")
 game.Players.LocalPlayer.PlayerGui.InfoOverlays:WaitForChild"ConfirmFrame"
@@ -215,8 +216,12 @@ repeat
 	game:GetService("RunService").Heartbeat:Wait()
 	game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode.E, false, nil)
 until (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude < 10
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = A
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = B
+print"Healed"
 end)
+end)
+
+
 Test1.CreateButton("Server Hop", function()
 	game:GetService("StarterGui"):SetCore("SendNotification", { Title = "Server Hopping", Text = "Wait....", Duration = 30 })
 local PlaceID = 99995671928896
