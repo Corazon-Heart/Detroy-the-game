@@ -1,25 +1,31 @@
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Corazon-Heart/Detroy-the-game/refs/heads/main/uilib"))()
 local Window = Library.Window('KR4K Library')
 local Test1 = Window.CreateTab('Welcome!')
-local rs = game:GetService("ReplicatedStorage")
-local plr = game:GetService("Players").LocalPlayer
-local netModule = require(rs.Modules.Network)
+-- NoFall
+local mt = getrawmetatable(game)
+local oldMeta = mt.__namecall
 
-local tradeData = {
-	Config = "WhistleCall",
-}
+-- Function to make metatables writeable (for bypassing the protection)
+setreadonly(mt, false)
 
-netModule.connect("MasterEvent", "FireServer", plr.Character, tradeData)
-wait()
-local rs = game:GetService("ReplicatedStorage")
-local plr = game:GetService("Players").LocalPlayer
-local netModule = require(rs.Modules.Network)
+mt.__namecall = newcclosure(function(self, ...)
+    local method = getnamecallmethod()
+    local args = {...}
 
-local tradeData = {
-	Config = "EquipWeapon",
-}
+    -- Check if method is "FireServer" and the arguments match our criteria
+    if method == "FireServer" and #args == 1 and typeof(args[1]) == "table" then
+        -- Check if Config is FallDamage
+        if args[1]["Config"] == "FallDamage" then
+            return false  -- Block the remote event
+        end
+    end
 
-netModule.connect("MasterEvent", "FireServer", plr.Character, tradeData)
+    -- Call the original method if the condition is not met
+    return oldMeta(self, ...)
+end)
+
+-- Make the metatable read-only again to avoid further modifications
+setreadonly(mt, true)
 for i,v in pairs(workspace:GetDescendants()) do
 	if (v.Name:find"Lava" or v.Name:find"lava") and v:IsA"Part" then
 		v.CFrame = CFrame.new(math.huge,math.huge,math.huge)
