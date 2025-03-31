@@ -355,6 +355,18 @@ pcall(function()
 			local startTime = tick()
 			while (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude >= 10 do
 				if tick() - startTime > 2 then
+					if game.Players.LocalPlayer.Character:FindFirstChild("BoolValues") then
+						if game.Players.LocalPlayer.Character.BoolValues:FindFirstChild"CombatTag" then
+							if game.Players.LocalPlayer.Character.BoolValues.CombatTag.Value >= 1 then
+								if game.Players.LocalPlayer.Character:FindFirstChild"Humanoid" and game.Players.LocalPlayer.Character:FindFirstChild"Humanoid".Health > 0 then
+									repeat wait()
+										game.Players.LocalPlayer.Character.Humanoid.Health = 0
+									until game.Players.LocalPlayer.Character.Humanoid.Health == 0
+								end
+								_G.Botting()
+							end
+						end
+					end
 					fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
 					startTime = tick()
 				end
@@ -402,6 +414,18 @@ pcall(function()
 				local startTime = tick()
 				while (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude >= 10 do
 					if tick() - startTime > 2 then
+						if game.Players.LocalPlayer.Character:FindFirstChild("BoolValues") then
+							if game.Players.LocalPlayer.Character.BoolValues:FindFirstChild"CombatTag" then
+								if game.Players.LocalPlayer.Character.BoolValues.CombatTag.Value >= 1 then
+									if game.Players.LocalPlayer.Character:FindFirstChild"Humanoid" and game.Players.LocalPlayer.Character:FindFirstChild"Humanoid".Health > 0 then
+										repeat wait()
+											game.Players.LocalPlayer.Character.Humanoid.Health = 0
+										until game.Players.LocalPlayer.Character.Humanoid.Health == 0
+									end
+									_G.Botting()
+								end
+							end
+						end
 						fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
 						startTime = tick()
 					end
@@ -460,11 +484,20 @@ pcall(function()
 				game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
 				fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
 
-				local startTime = tick()
 				while (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude >= 10 do
 					if tick() - startTime > 2 then
-						game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.DialogueEvent:FireServer()
-						wait(.2)
+						if game.Players.LocalPlayer.Character:FindFirstChild("BoolValues") then
+							if game.Players.LocalPlayer.Character.BoolValues:FindFirstChild"CombatTag" then
+								if game.Players.LocalPlayer.Character.BoolValues.CombatTag.Value >= 1 then
+									if game.Players.LocalPlayer.Character:FindFirstChild"Humanoid" and game.Players.LocalPlayer.Character:FindFirstChild"Humanoid".Health > 0 then
+										repeat wait()
+											game.Players.LocalPlayer.Character.Humanoid.Health = 0
+										until game.Players.LocalPlayer.Character.Humanoid.Health == 0
+									end
+									_G.Botting()
+								end
+							end
+						end
 						fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
 						startTime = tick()
 					end
@@ -615,6 +648,18 @@ pcall(function()
 				local startTime = tick()
 				while (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude >= 10 do
 					if tick() - startTime > 2 then
+						if game.Players.LocalPlayer.Character:FindFirstChild("BoolValues") then
+							if game.Players.LocalPlayer.Character.BoolValues:FindFirstChild"CombatTag" then
+								if game.Players.LocalPlayer.Character.BoolValues.CombatTag.Value >= 1 then
+									if game.Players.LocalPlayer.Character:FindFirstChild"Humanoid" and game.Players.LocalPlayer.Character:FindFirstChild"Humanoid".Health > 0 then
+										repeat wait()
+											game.Players.LocalPlayer.Character.Humanoid.Health = 0
+										until game.Players.LocalPlayer.Character.Humanoid.Health == 0
+									end
+									_G.Botting()
+								end
+							end
+						end
 						fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
 						startTime = tick()
 					end
