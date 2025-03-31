@@ -337,7 +337,7 @@ if game.PlaceId == 99995671928896 then
 	local player = game:GetService("Players").LocalPlayer
 	local character = player.Character or player.CharacterAdded:Wait()
 	local pickaxeBuff = character:WaitForChild("BoolValues"):WaitForChild("PickaxeBuff")
-	game.Players.LocalPlayer.Backpack:WaitForChild("Rocky Mountain Tonic",2)
+	game.Players.LocalPlayer.Backpack:WaitForChild("Rocky Mountain Tonic",0.5)
 	local mine = false
 	for i,v in pairs(game.Workspace.Harvestable:GetChildren()) do
 		if (v.Name:find"Mithril" or v.Name:find("Platinum")) and v:FindFirstChild"Icosphere" then
