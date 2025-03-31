@@ -1,5 +1,5 @@
 spawn(function()
-	task.wait(360)
+	task.wait(400)
 	game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
 end)
 repeat
@@ -31,64 +31,7 @@ if game.PlaceId == 99995671928896 then
 	-- Generate filename based on the current date
 	local dateStr = tostring(game.Players.LocalPlayer.Name..os.date("%Y-%m-%d"))
 	local filename = dateStr .. ".lua"
-	if isfile(filename) then
-		local _table = LoadSettings(dateStr..".lua")
-		if _table == nil or _table[1] == nil or #_table <= 5 then
-			local PlaceId = 99995671928896  -- Use game's actual PlaceId
-			local JobId = game.JobId  -- Use game's JobId
 
-			if not PlaceId then
-				warn("Error: PlaceId is nil!")
-				return
-			end
-
-			local servers = {}
-			local maxAttempts = 10
-			local req = syn and syn.request or (http and http.request) or request
-
-			if not req then
-				warn("HTTP Request function not found.")
-				return TeleportService:Teleport(10290054819, Players.LocalPlayer)
-			end
-
-			for attempt = 1, maxAttempts do
-				print("Attempting to fetch server list... Attempt " .. attempt)
-
-				local response = req({
-					Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true", PlaceId),
-					Method = "GET"
-				})
-
-				if response and response.Body then
-					local success, body = pcall(function()
-						return HttpService:JSONDecode(response.Body)
-					end)
-
-					if success and body and body.data then
-						for _, v in ipairs(body.data) do
-							if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing < v.maxPlayers and v.id ~= JobId then
-								table.insert(servers, 1, v.id)
-							end
-						end
-					end
-				end
-
-				if #servers > 0 then
-					break
-				end
-
-				if attempt < maxAttempts then
-					wait(5) -- Small delay before retrying
-				end
-			end
-
-			if #servers > 0 then
-				WriteSettings(filename, servers)
-			else
-				warn("No valid servers found.")
-			end
-		end
-	end
 	-- Check if file exists
 	if not isfile(filename) then
 		local PlaceId = 99995671928896  -- Use game's actual PlaceId
@@ -157,7 +100,7 @@ if game.PlaceId == 99995671928896 then
 		}
 
 		game:GetService("Players").LocalPlayer.ClientNetwork.MenuOptions:FireServer(unpack(args))
-		wait(1.5)
+		wait(1)
 		local args = {
 			[1] = {
 				["slot"] = "Slot_1",
@@ -182,7 +125,6 @@ if game.PlaceId == 99995671928896 then
 		wait(.5)
 		game.Players.LocalPlayer:Kick("Server Hopping....")
 		local dateStr = tostring(game.Players.LocalPlayer.Name..os.date("%Y-%m-%d"))
-		local filename = dateStr .. ".lua"
 		local _table = LoadSettings(dateStr..".lua")
 		if _table ~= nil and _table[1] ~= nil then
 			while #_table > 0 do
@@ -190,7 +132,6 @@ if game.PlaceId == 99995671928896 then
 				local A = _table[B]
 				game:GetService("TeleportService"):TeleportToPlaceInstance(99995671928896, tostring(A), game.Players.LocalPlayer)
 				table.remove(_table, B)
-				WriteSettings(filename, _table)
 				wait(3)
 			end
 
@@ -337,7 +278,7 @@ if game.PlaceId == 99995671928896 then
 	local player = game:GetService("Players").LocalPlayer
 	local character = player.Character or player.CharacterAdded:Wait()
 	local pickaxeBuff = character:WaitForChild("BoolValues"):WaitForChild("PickaxeBuff")
-	game.Players.LocalPlayer.Backpack:WaitForChild("Rocky Mountain Tonic",1)
+	game.Players.LocalPlayer.Backpack:WaitForChild("Rocky Mountain Tonic",2)
 	local mine = false
 	for i,v in pairs(game.Workspace.Harvestable:GetChildren()) do
 		if (v.Name:find"Mithril" or v.Name:find("Platinum")) and v:FindFirstChild"Icosphere" then
@@ -609,64 +550,10 @@ elseif game.PlaceId == 10290054819 then
 		writefile(path, HttpService:JSONEncode(settingsTable))
 	end
 
-	if isfile(filename) then
-		local _table = LoadSettings(dateStr..".lua")
-		if _table == nil or _table[1] == nil or #_table <= 5 then
-			local PlaceId = 99995671928896  -- Use game's actual PlaceId
-			local JobId = game.JobId  -- Use game's JobId
+	-- Generate filename based on the current date
+	local dateStr = tostring(game.Players.LocalPlayer.Name..os.date("%Y-%m-%d"))
+	local filename = dateStr .. ".lua"
 
-			if not PlaceId then
-				warn("Error: PlaceId is nil!")
-				return
-			end
-
-			local servers = {}
-			local maxAttempts = 10
-			local req = syn and syn.request or (http and http.request) or request
-
-			if not req then
-				warn("HTTP Request function not found.")
-				return TeleportService:Teleport(10290054819, Players.LocalPlayer)
-			end
-
-			for attempt = 1, maxAttempts do
-				print("Attempting to fetch server list... Attempt " .. attempt)
-
-				local response = req({
-					Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true", PlaceId),
-					Method = "GET"
-				})
-
-				if response and response.Body then
-					local success, body = pcall(function()
-						return HttpService:JSONDecode(response.Body)
-					end)
-
-					if success and body and body.data then
-						for _, v in ipairs(body.data) do
-							if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing < v.maxPlayers and v.id ~= JobId then
-								table.insert(servers, 1, v.id)
-							end
-						end
-					end
-				end
-
-				if #servers > 0 then
-					break
-				end
-
-				if attempt < maxAttempts then
-					wait(5) -- Small delay before retrying
-				end
-			end
-
-			if #servers > 0 then
-				WriteSettings(filename, servers)
-			else
-				warn("No valid servers found.")
-			end
-		end
-	end
 	-- Check if file exists
 	if not isfile(filename) then
 		local PlaceId = 99995671928896  -- Use game's actual PlaceId
@@ -724,7 +611,6 @@ elseif game.PlaceId == 10290054819 then
 		end
 	end
 	local dateStr = tostring(game.Players.LocalPlayer.Name..os.date("%Y-%m-%d"))
-	local filename = dateStr .. ".lua"
 	local _table = LoadSettings(dateStr..".lua")
 	if _table ~= nil and _table[1] ~= nil then
 		while #_table > 0 do
@@ -732,8 +618,8 @@ elseif game.PlaceId == 10290054819 then
 			local A = _table[B]
 			game:GetService("TeleportService"):TeleportToPlaceInstance(99995671928896, tostring(A), game.Players.LocalPlayer)
 			table.remove(_table, B)
-			WriteSettings(filename, _table)
 			wait(3)
 		end
+
 	end
 end
