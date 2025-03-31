@@ -4,21 +4,21 @@ local Test1 = Window.CreateTab('Welcome!')
 local rs = game:GetService("ReplicatedStorage")
 local plr = game:GetService("Players").LocalPlayer
 local netModule = require(rs.Modules.Network)
- 
+
 local tradeData = {
-    Config = "WhistleCall",
+	Config = "WhistleCall",
 }
- 
+
 netModule.connect("MasterEvent", "FireServer", plr.Character, tradeData)
 wait()
 local rs = game:GetService("ReplicatedStorage")
 local plr = game:GetService("Players").LocalPlayer
 local netModule = require(rs.Modules.Network)
- 
+
 local tradeData = {
-    Config = "EquipWeapon",
+	Config = "EquipWeapon",
 }
- 
+
 netModule.connect("MasterEvent", "FireServer", plr.Character, tradeData)
 for i,v in pairs(workspace:GetDescendants()) do
 	if (v.Name:find"Lava" or v.Name:find"lava") and v:IsA"Part" then
@@ -143,158 +143,159 @@ Test1.CreateButton("Goblin King", function()
 
 end)
 Test1.CreateButton("TP Blacksmith", function()
-local function fireProximityAndWait()
-    fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
+	local function fireProximityAndWait()
+		fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
 
-    local startTime = tick()
-    while (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude >= 10 do
-        if tick() - startTime > 2 then
-            fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
-            startTime = tick()
-        end
-        wait(0.1)
-    end
-end
-
-
-fireProximityAndWait()
--- Teleport once the condition is met
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Effects.NPCS.WinfridTheBlacksmith.HumanoidRootPart.CFrame
-end)
-Test1.CreateButton("TP Fiend", function()
-local A = CFrame.new(-618.617981, -62.6995506, -358.526367, -0.972720742, -3.17664082e-08, -0.231979266, -2.41212317e-09, 1, -1.26822059e-07, 0.231979266, -1.22802874e-07, -0.972720742)
-local function fireProximityAndWait()
-    fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
-
-    local startTime = tick()
-    while (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude >= 10 do
-        if tick() - startTime > 2 then
-            fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
-            startTime = tick()
-        end
-        wait(0.1)
-    end
-end
-
-
-fireProximityAndWait()
--- Teleport once the condition is met
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = A
-end)
-Test1.CreateButton("Instant Heal", function()
-spawn(function()
-local B = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-game.Players.LocalPlayer.Character.Humanoid.Health = 0
-local VirtualInputManager = game:GetService("VirtualInputManager")
-game.Players.LocalPlayer.PlayerGui.InfoOverlays:WaitForChild"ConfirmFrame"
-game.Players.LocalPlayer.PlayerGui.InfoOverlays:WaitForChild"ConfirmFrame":WaitForChild"MainFrame"
-game.Players.LocalPlayer.PlayerGui.InfoOverlays:WaitForChild"ConfirmFrame":WaitForChild"MainFrame":WaitForChild"ButtonFrame"
-game.Players.LocalPlayer.PlayerGui.InfoOverlays:WaitForChild"ConfirmFrame":WaitForChild"MainFrame":WaitForChild"ButtonFrame":WaitForChild"ConfirmButton"
-wait()
-local player = game:GetService("Players").LocalPlayer
-repeat
-	if player.PlayerGui.InfoOverlays:FindFirstChild("ConfirmFrame") then
-		local button = player.PlayerGui.InfoOverlays.ConfirmFrame.MainFrame.ButtonFrame.ConfirmButton
-
-		if button then
-			local absPos = button.AbsolutePosition
-			local absSize = button.AbsoluteSize
-
-			local clickPos = absPos + (absSize / 2)
-
-			VirtualInputManager:SendMouseButtonEvent(clickPos.X, clickPos.Y + 65, 0, true, game, 0) -- Mouse down
-			VirtualInputManager:SendMouseButtonEvent(clickPos.X, clickPos.Y + 65, 0, false, game, 0) -- Mouse up
+		local startTime = tick()
+		while (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude >= 10 do
+			if tick() - startTime > 2 then
+				fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
+				startTime = tick()
+			end
+			wait(0.1)
 		end
 	end
-	wait()
-until not player.PlayerGui.InfoOverlays:FindFirstChild("ConfirmFrame")
-repeat wait() until game.Players.LocalPlayer.Character:IsDescendantOf(game.Workspace.Alive)
-repeat 
-	game.Workspace.Camera.CFrame = CFrame.new(-830.033813, 194.463806, -1291.0896, -0.707096815, -0.15533042, 0.689845383, 7.4505806e-09, 0.97557497, 0.219667271, -0.707116842, 0.155326024, -0.689825892)
-	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-830.7783813476562, 192.71054077148438, -1290.3441162109375)
-	game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.E, false, nil)
-	game:GetService("RunService").Heartbeat:Wait()
-	game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode.E, false, nil)
-until (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude < 10
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = B
-print"Healed"
+
+
+	fireProximityAndWait()
+	-- Teleport once the condition is met
+	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Effects.NPCS.WinfridTheBlacksmith.HumanoidRootPart.CFrame
 end)
+Test1.CreateButton("TP Fiend", function()
+	local A = CFrame.new(-618.617981, -62.6995506, -358.526367, -0.972720742, -3.17664082e-08, -0.231979266, -2.41212317e-09, 1, -1.26822059e-07, 0.231979266, -1.22802874e-07, -0.972720742)
+	local function fireProximityAndWait()
+		fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
+
+		local startTime = tick()
+		while (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude >= 10 do
+			if tick() - startTime > 2 then
+				fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
+				startTime = tick()
+			end
+			wait(0.1)
+		end
+	end
+
+
+	fireProximityAndWait()
+	-- Teleport once the condition is met
+	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = A
+end)
+Test1.CreateButton("Instant Heal", function()
+	spawn(function()
+		local Last = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+		game.Players.LocalPlayer.Character.Humanoid.Health = 0
+		local VirtualInputManager = game:GetService("VirtualInputManager")
+		game.Players.LocalPlayer.PlayerGui.InfoOverlays:WaitForChild"ConfirmFrame"
+		game.Players.LocalPlayer.PlayerGui.InfoOverlays:WaitForChild"ConfirmFrame":WaitForChild"MainFrame"
+		game.Players.LocalPlayer.PlayerGui.InfoOverlays:WaitForChild"ConfirmFrame":WaitForChild"MainFrame":WaitForChild"ButtonFrame"
+		game.Players.LocalPlayer.PlayerGui.InfoOverlays:WaitForChild"ConfirmFrame":WaitForChild"MainFrame":WaitForChild"ButtonFrame":WaitForChild"ConfirmButton"
+		wait()
+		local player = game:GetService("Players").LocalPlayer
+		print"respawn"
+		repeat
+			if player.PlayerGui.InfoOverlays:FindFirstChild("ConfirmFrame") then
+				local button = player.PlayerGui.InfoOverlays.ConfirmFrame.MainFrame.ButtonFrame.ConfirmButton
+
+				if button then
+					local absPos = button.AbsolutePosition
+					local absSize = button.AbsoluteSize
+
+					local clickPos = absPos + (absSize / 2)
+
+					VirtualInputManager:SendMouseButtonEvent(clickPos.X, clickPos.Y + 65, 0, true, game, 0) -- Mouse down
+					VirtualInputManager:SendMouseButtonEvent(clickPos.X, clickPos.Y + 65, 0, false, game, 0) -- Mouse up
+				end
+			end
+			wait()
+		until not player.PlayerGui.InfoOverlays:FindFirstChild("ConfirmFrame")
+		repeat wait() until game.Players.LocalPlayer.Character:IsDescendantOf(game.Workspace.Alive)
+		repeat 
+			game.Workspace.Camera.CFrame = CFrame.new(-830.033813, 194.463806, -1291.0896, -0.707096815, -0.15533042, 0.689845383, 7.4505806e-09, 0.97557497, 0.219667271, -0.707116842, 0.155326024, -0.689825892)
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-830.7783813476562, 192.71054077148438, -1290.3441162109375)
+			game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.E, false, nil)
+			game:GetService("RunService").Heartbeat:Wait()
+			game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode.E, false, nil)
+		until (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude < 10
+		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Last
+		print"Healed"
+	end)
 end)
 
 
 Test1.CreateButton("Server Hop", function()
 	game:GetService("StarterGui"):SetCore("SendNotification", { Title = "Server Hopping", Text = "Wait....", Duration = 30 })
-local PlaceID = 99995671928896
-local AllIDs = {}
-local foundAnything = ""
-local actualHour = os.date("!*t").hour
-local Deleted = false
-local File = pcall(function()
-    AllIDs = game:GetService('HttpService'):JSONDecode(readfile("NotSameServers.json"))
-end)
-if not File then
-    table.insert(AllIDs, actualHour)
-    writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
-end
-function TPReturner()
-    local Site;
-    if foundAnything == "" then
-        Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100'))
-    else
-        Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100&cursor=' .. foundAnything))
-    end
-    local ID = ""
-    if Site.nextPageCursor and Site.nextPageCursor ~= "null" and Site.nextPageCursor ~= nil then
-        foundAnything = Site.nextPageCursor
-    end
-    local num = 0;
-    for i,v in pairs(Site.data) do
-        local Possible = true
-        ID = tostring(v.id)
-        if tonumber(v.maxPlayers) > tonumber(v.playing) then
-            for _,Existing in pairs(AllIDs) do
-                if num ~= 0 then
-                    if ID == tostring(Existing) then
-                        Possible = false
-                    end
-                else
-                    if tonumber(actualHour) ~= tonumber(Existing) then
-                        local delFile = pcall(function()
-                            delfile("NotSameServers.json")
-                            AllIDs = {}
-                            table.insert(AllIDs, actualHour)
-                        end)
-                    end
-                end
-                num = num + 1
-            end
-            if Possible == true then
-                table.insert(AllIDs, ID)
-                wait()
-                pcall(function()
-                    writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
-                    wait()
-                    game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
-                end)
-                wait(4)
-            end
-        end
-    end
-end
+	local PlaceID = 99995671928896
+	local AllIDs = {}
+	local foundAnything = ""
+	local actualHour = os.date("!*t").hour
+	local Deleted = false
+	local File = pcall(function()
+		AllIDs = game:GetService('HttpService'):JSONDecode(readfile("NotSameServers.json"))
+	end)
+	if not File then
+		table.insert(AllIDs, actualHour)
+		writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
+	end
+	function TPReturner()
+		local Site;
+		if foundAnything == "" then
+			Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100'))
+		else
+			Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100&cursor=' .. foundAnything))
+		end
+		local ID = ""
+		if Site.nextPageCursor and Site.nextPageCursor ~= "null" and Site.nextPageCursor ~= nil then
+			foundAnything = Site.nextPageCursor
+		end
+		local num = 0;
+		for i,v in pairs(Site.data) do
+			local Possible = true
+			ID = tostring(v.id)
+			if tonumber(v.maxPlayers) > tonumber(v.playing) then
+				for _,Existing in pairs(AllIDs) do
+					if num ~= 0 then
+						if ID == tostring(Existing) then
+							Possible = false
+						end
+					else
+						if tonumber(actualHour) ~= tonumber(Existing) then
+							local delFile = pcall(function()
+								delfile("NotSameServers.json")
+								AllIDs = {}
+								table.insert(AllIDs, actualHour)
+							end)
+						end
+					end
+					num = num + 1
+				end
+				if Possible == true then
+					table.insert(AllIDs, ID)
+					wait()
+					pcall(function()
+						writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
+						wait()
+						game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
+					end)
+					wait(4)
+				end
+			end
+		end
+	end
 
-function Teleport()
-    while wait() do
-        pcall(function()
-            TPReturner()
-            if foundAnything ~= "" then
-                TPReturner()
-            end
-        end)
-    end
-end
+	function Teleport()
+		while wait() do
+			pcall(function()
+				TPReturner()
+				if foundAnything ~= "" then
+					TPReturner()
+				end
+			end)
+		end
+	end
 
--- If you'd like to use a script before server hopping (Like a Automatic Chest collector you can put the Teleport() after it collected everything.
-Teleport()
+	-- If you'd like to use a script before server hopping (Like a Automatic Chest collector you can put the Teleport() after it collected everything.
+	Teleport()
 end)
 Test1.CreateKeybind("Toggle UI", Enum.KeyCode.LeftAlt, function()
 	Library:ToggleUI()
@@ -302,226 +303,226 @@ end)
 
 --end
 pcall(function()
-local speeds = 2
-local maxSpeed = 30
-local isFlying = false
-local tpwalking = false
-local isHovering = false -- เพิ่มตัวแปรสถานะการ Hover
-local speaker = game:GetService("Players").LocalPlayer
-local chr = speaker.Character
-local hum = chr and chr:FindFirstChildWhichIsA("Humanoid")
+	local speeds = 2
+	local maxSpeed = 30
+	local isFlying = false
+	local tpwalking = false
+	local isHovering = false -- เพิ่มตัวแปรสถานะการ Hover
+	local speaker = game:GetService("Players").LocalPlayer
+	local chr = speaker.Character
+	local hum = chr and chr:FindFirstChildWhichIsA("Humanoid")
 
-local isSpaceHeld = false
-local isCtrlHeld = false
-local currentUpwardVelocity = 0
-local currentDownwardVelocity = 0
+	local isSpaceHeld = false
+	local isCtrlHeld = false
+	local currentUpwardVelocity = 0
+	local currentDownwardVelocity = 0
 
--- ตัวแปรสถานะเปิด/ปิดสคริปต์
-local scriptEnabled = false
-function TP(Object) 
-    local tweenService = game:GetService("TweenService")
-    local rootPart = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-    
-    if not rootPart then return end
+	-- ตัวแปรสถานะเปิด/ปิดสคริปต์
+	local scriptEnabled = false
+	function TP(Object) 
+		local tweenService = game:GetService("TweenService")
+		local rootPart = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
 
-    local tweenInfo = TweenInfo.new(
-        (rootPart.Position - Object).magnitude / 70, 
-        Enum.EasingStyle.Linear, 
-        Enum.EasingDirection.In, 
-        0, false, 0
-    )
-    
-    local tween = tweenService:Create(rootPart, tweenInfo, {CFrame = CFrame.new(Object)})
-    tween:Play()
+		if not rootPart then return end
 
-    -- ตรวจสอบการยกเลิก Tween ทันทีเมื่อ Space หรือ Ctrl ไม่ถูกกด
-    spawn(function()
-        while tween.PlaybackState == Enum.PlaybackState.Playing do
-            if not isSpaceHeld and not isCtrlHeld then
-                tween:Cancel()
-                break
-            end
-            task.wait()
-        end
-    end)
+		local tweenInfo = TweenInfo.new(
+			(rootPart.Position - Object).magnitude / 70, 
+			Enum.EasingStyle.Linear, 
+			Enum.EasingDirection.In, 
+			0, false, 0
+		)
 
-    tween.Completed:Wait()
-end
-        
--- ฟังก์ชันการเริ่มต้นใหม่ของสคริปต์เมื่อรีสปาวน์ตัวละคร
-local function resetScript()
-    -- รีเซ็ตตัวแปร
-    isFlying = false
-    tpwalking = false
-    isHovering = false
-    isSpaceHeld = false
-    isCtrlHeld = false
-    currentUpwardVelocity = 0
-    currentDownwardVelocity = 0
+		local tween = tweenService:Create(rootPart, tweenInfo, {CFrame = CFrame.new(Object)})
+		tween:Play()
 
-    -- ปิด/เปิดการฟังก์ชันต่างๆ อีกครั้ง
-    speaker = game:GetService("Players").LocalPlayer
-    chr = speaker.Character
-    hum = chr and chr:FindFirstChildWhichIsA("Humanoid")
-end
+		-- ตรวจสอบการยกเลิก Tween ทันทีเมื่อ Space หรือ Ctrl ไม่ถูกกด
+		spawn(function()
+			while tween.PlaybackState == Enum.PlaybackState.Playing do
+				if not isSpaceHeld and not isCtrlHeld then
+					tween:Cancel()
+					break
+				end
+				task.wait()
+			end
+		end)
 
--- ฟังก์ชันเปิด/ปิดการบิน
-local function updateFlyState(enabled)
-    isFlying = enabled
-    if enabled then
-        for i = 0.1, speeds do
-            spawn(function()
-                local hb = game:GetService("RunService").Heartbeat
-                tpwalking = true
-                local chr = game.Players.LocalPlayer.Character
-                local hum = chr and chr:FindFirstChildWhichIsA("Humanoid")
-                while tpwalking and hb:Wait() and chr and hum and hum.Parent do
-                    if hum.MoveDirection.Magnitude > 0 then
-                        chr:TranslateBy(hum.MoveDirection)
-                    end
-                end
-            end)
-        end
-        speaker.Character.Animate.Disabled = true
-        isHovering = true
-    else
-        tpwalking = false
-        isHovering = false
-        speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Climbing, true)
-    end
-end
+		tween.Completed:Wait()
+	end
 
-local heartbeatConnection
-local inputBeganConnection
-local inputEndedConnection
-local stateChangedConnection
+	-- ฟังก์ชันการเริ่มต้นใหม่ของสคริปต์เมื่อรีสปาวน์ตัวละคร
+	local function resetScript()
+		-- รีเซ็ตตัวแปร
+		isFlying = false
+		tpwalking = false
+		isHovering = false
+		isSpaceHeld = false
+		isCtrlHeld = false
+		currentUpwardVelocity = 0
+		currentDownwardVelocity = 0
 
-local function toggleScript(state)
-    if state then
-        -- เปิดสคริปต์
-        scriptEnabled = true
-        updateFlyState(true)
+		-- ปิด/เปิดการฟังก์ชันต่างๆ อีกครั้ง
+		speaker = game:GetService("Players").LocalPlayer
+		chr = speaker.Character
+		hum = chr and chr:FindFirstChildWhichIsA("Humanoid")
+	end
 
-        -- เชื่อมต่อเหตุการณ์
-        stateChangedConnection = speaker.Character:FindFirstChild("Humanoid").StateChanged:Connect(function() end)
-        heartbeatConnection = game:GetService("RunService").Heartbeat:Connect(function() end)
-        inputBeganConnection = game:GetService("UserInputService").InputBegan:Connect(function() end)
-        inputEndedConnection = game:GetService("UserInputService").InputEnded:Connect(function() end)
+	-- ฟังก์ชันเปิด/ปิดการบิน
+	local function updateFlyState(enabled)
+		isFlying = enabled
+		if enabled then
+			for i = 0.1, speeds do
+				spawn(function()
+					local hb = game:GetService("RunService").Heartbeat
+					tpwalking = true
+					local chr = game.Players.LocalPlayer.Character
+					local hum = chr and chr:FindFirstChildWhichIsA("Humanoid")
+					while tpwalking and hb:Wait() and chr and hum and hum.Parent do
+						if hum.MoveDirection.Magnitude > 0 then
+							chr:TranslateBy(hum.MoveDirection)
+						end
+					end
+				end)
+			end
+			speaker.Character.Animate.Disabled = true
+			isHovering = true
+		else
+			tpwalking = false
+			isHovering = false
+			speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Climbing, true)
+		end
+	end
 
-    else
-        -- ปิดสคริปต์
-        scriptEnabled = false
-        updateFlyState(false)
+	local heartbeatConnection
+	local inputBeganConnection
+	local inputEndedConnection
+	local stateChangedConnection
 
-        -- ตรวจสอบและยกเลิกการเชื่อมต่ออย่างปลอดภัย
-        if stateChangedConnection then stateChangedConnection:Disconnect() end
-        if heartbeatConnection then heartbeatConnection:Disconnect() end
-        if inputBeganConnection then inputBeganConnection:Disconnect() end
-        if inputEndedConnection then inputEndedConnection:Disconnect() end
-    end
-end
+	local function toggleScript(state)
+		if state then
+			-- เปิดสคริปต์
+			scriptEnabled = true
+			updateFlyState(true)
+
+			-- เชื่อมต่อเหตุการณ์
+			stateChangedConnection = speaker.Character:FindFirstChild("Humanoid").StateChanged:Connect(function() end)
+			heartbeatConnection = game:GetService("RunService").Heartbeat:Connect(function() end)
+			inputBeganConnection = game:GetService("UserInputService").InputBegan:Connect(function() end)
+			inputEndedConnection = game:GetService("UserInputService").InputEnded:Connect(function() end)
+
+		else
+			-- ปิดสคริปต์
+			scriptEnabled = false
+			updateFlyState(false)
+
+			-- ตรวจสอบและยกเลิกการเชื่อมต่ออย่างปลอดภัย
+			if stateChangedConnection then stateChangedConnection:Disconnect() end
+			if heartbeatConnection then heartbeatConnection:Disconnect() end
+			if inputBeganConnection then inputBeganConnection:Disconnect() end
+			if inputEndedConnection then inputEndedConnection:Disconnect() end
+		end
+	end
 
 
--- ฟังก์ชันที่เชื่อมต่อกับ InputBegan และ InputEnded เพื่อรับข้อมูลจากผู้เล่น
-game:GetService("UserInputService").InputBegan:Connect(function(input, gameProcessedEvent)
-    if not gameProcessedEvent then
-        if input.KeyCode == Enum.KeyCode.Z then
-            -- เมื่อกด Z ให้ toggle การบิน
-            toggleScript(not scriptEnabled)
-        elseif input.KeyCode == Enum.KeyCode.Space and isFlying then
-            isSpaceHeld = true
-            isHovering = false
-        elseif input.KeyCode == Enum.KeyCode.LeftControl and isFlying then
-            isCtrlHeld = true
-            isHovering = false
-        end
-    end
-end)
+	-- ฟังก์ชันที่เชื่อมต่อกับ InputBegan และ InputEnded เพื่อรับข้อมูลจากผู้เล่น
+	game:GetService("UserInputService").InputBegan:Connect(function(input, gameProcessedEvent)
+		if not gameProcessedEvent then
+			if input.KeyCode == Enum.KeyCode.Z then
+				-- เมื่อกด Z ให้ toggle การบิน
+				toggleScript(not scriptEnabled)
+			elseif input.KeyCode == Enum.KeyCode.Space and isFlying then
+				isSpaceHeld = true
+				isHovering = false
+			elseif input.KeyCode == Enum.KeyCode.LeftControl and isFlying then
+				isCtrlHeld = true
+				isHovering = false
+			end
+		end
+	end)
 
-game:GetService("UserInputService").InputEnded:Connect(function(input, gameProcessedEvent)
-    if not gameProcessedEvent then
-        if input.KeyCode == Enum.KeyCode.Space then
-            isSpaceHeld = false
-        elseif input.KeyCode == Enum.KeyCode.LeftControl then
-            isCtrlHeld = false
-        end
-    end
-end)
+	game:GetService("UserInputService").InputEnded:Connect(function(input, gameProcessedEvent)
+		if not gameProcessedEvent then
+			if input.KeyCode == Enum.KeyCode.Space then
+				isSpaceHeld = false
+			elseif input.KeyCode == Enum.KeyCode.LeftControl then
+				isCtrlHeld = false
+			end
+		end
+	end)
 
--- ฟังก์ชันในการคำนวณความเร็วการบินตามที่กดปุ่ม
-game:GetService("RunService").Heartbeat:Connect(function()
-    if isFlying then
-        if isSpaceHeld then
-            currentUpwardVelocity = math.min(currentUpwardVelocity + 2, 150)  -- จำกัดความเร็วสูงสุดที่ 50
-            if hum and hum.RootPart then
-                TP(hum.RootPart.Position+Vector3.new(0,5,0))
-                hum.RootPart.Velocity = Vector3.new(0,0,0)
-            end
-        elseif isCtrlHeld then
-            currentDownwardVelocity = math.min(currentDownwardVelocity + 2, 150)  -- จำกัดความเร็วสูงสุดที่ 50
-            if hum and hum.RootPart then
-                TP(hum.RootPart.Position+Vector3.new(0,-5,0))
-                hum.RootPart.Velocity = Vector3.new(0,0,0)
-            end
-        else
-            -- ถ้าไม่ได้กดปุ่ม Space หรือ Left Control ให้ตั้งค่า Velocity เป็น 0 (Hover)
-            currentUpwardVelocity = 0
-            currentDownwardVelocity = 0
-            if hum and hum.RootPart then
-                hum.RootPart.Velocity = Vector3.new(hum.RootPart.Velocity.X, 0, hum.RootPart.Velocity.Z)
-            end
-        end
-    end
-end)
+	-- ฟังก์ชันในการคำนวณความเร็วการบินตามที่กดปุ่ม
+	game:GetService("RunService").Heartbeat:Connect(function()
+		if isFlying then
+			if isSpaceHeld then
+				currentUpwardVelocity = math.min(currentUpwardVelocity + 2, 150)  -- จำกัดความเร็วสูงสุดที่ 50
+				if hum and hum.RootPart then
+					TP(hum.RootPart.Position+Vector3.new(0,5,0))
+					hum.RootPart.Velocity = Vector3.new(0,0,0)
+				end
+			elseif isCtrlHeld then
+				currentDownwardVelocity = math.min(currentDownwardVelocity + 2, 150)  -- จำกัดความเร็วสูงสุดที่ 50
+				if hum and hum.RootPart then
+					TP(hum.RootPart.Position+Vector3.new(0,-5,0))
+					hum.RootPart.Velocity = Vector3.new(0,0,0)
+				end
+			else
+				-- ถ้าไม่ได้กดปุ่ม Space หรือ Left Control ให้ตั้งค่า Velocity เป็น 0 (Hover)
+				currentUpwardVelocity = 0
+				currentDownwardVelocity = 0
+				if hum and hum.RootPart then
+					hum.RootPart.Velocity = Vector3.new(hum.RootPart.Velocity.X, 0, hum.RootPart.Velocity.Z)
+				end
+			end
+		end
+	end)
 
--- ตรวจสอบเมื่อ Character ถูกสร้างใหม่และรีเซ็ตสคริปต์
-speaker.CharacterAdded:Connect(function()
-    wait(1)  -- รอให้ Character ใหม่ถูกสร้างเสร็จ
-    resetScript()
-end)
+	-- ตรวจสอบเมื่อ Character ถูกสร้างใหม่และรีเซ็ตสคริปต์
+	speaker.CharacterAdded:Connect(function()
+		wait(1)  -- รอให้ Character ใหม่ถูกสร้างเสร็จ
+		resetScript()
+	end)
 end)
 --
 spawn(function()
-local UserInputService = game:GetService("UserInputService")
-local RunService = game:GetService("RunService")
-local speaker = game.Players.LocalPlayer
-local Clip = true
-local Noclipping
+	local UserInputService = game:GetService("UserInputService")
+	local RunService = game:GetService("RunService")
+	local speaker = game.Players.LocalPlayer
+	local Clip = true
+	local Noclipping
 
--- Function to start noclip
-local function StartNC()
-    Clip = false
-    local function NoclipLoop()
-        if Clip == false and speaker.Character ~= nil then
-            for _, child in pairs(speaker.Character:GetDescendants()) do
-                if child:IsA("BasePart") and child.CanCollide == true then
-                    child.CanCollide = false
-                end
-            end
-        end
-    end
-    Noclipping = RunService.Stepped:Connect(NoclipLoop)
-end
+	-- Function to start noclip
+	local function StartNC()
+		Clip = false
+		local function NoclipLoop()
+			if Clip == false and speaker.Character ~= nil then
+				for _, child in pairs(speaker.Character:GetDescendants()) do
+					if child:IsA("BasePart") and child.CanCollide == true then
+						child.CanCollide = false
+					end
+				end
+			end
+		end
+		Noclipping = RunService.Stepped:Connect(NoclipLoop)
+	end
 
--- Function to stop noclip
-local function StopNC()
-    if Noclipping then
-        Noclipping:Disconnect()
-        Clip = true
-    end
-end
+	-- Function to stop noclip
+	local function StopNC()
+		if Noclipping then
+			Noclipping:Disconnect()
+			Clip = true
+		end
+	end
 
--- Function to toggle noclip when pressing X
-local function ToggleNoclip(input)
-    if input.KeyCode == Enum.KeyCode.G then
-        if Clip then
-            StartNC()
-        else
-            StopNC()
-        end
-    end
-end
+	-- Function to toggle noclip when pressing X
+	local function ToggleNoclip(input)
+		if input.KeyCode == Enum.KeyCode.G then
+			if Clip then
+				StartNC()
+			else
+				StopNC()
+			end
+		end
+	end
 
--- Listen for keypresses
-UserInputService.InputBegan:Connect(ToggleNoclip)
+	-- Listen for keypresses
+	UserInputService.InputBegan:Connect(ToggleNoclip)
 end)
