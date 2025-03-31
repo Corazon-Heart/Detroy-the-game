@@ -1106,12 +1106,6 @@ pcall(function()
 							repeat wait() until game.Players.LocalPlayer.Character:IsDescendantOf(game.Workspace.Alive)
 							game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart",15)
 							wait(0.3)
-							while true do
-								local deltaTime = RunService.Heartbeat:Wait()
-								if deltaTime < 0.5 then 
-									break
-								end
-							end
 							_G.Botting()
 						end
 					end
