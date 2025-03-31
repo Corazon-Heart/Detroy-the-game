@@ -38,10 +38,8 @@ local function monitorHumanoids(parent)
         local hrp = humanoid.Parent:FindFirstChild("HumanoidRootPart")
         
         if hrp and isnetworkowner(hrp) and humanoid.Health < humanoid.MaxHealth * 0.9 then
-            local owner = game:GetService("Players"):GetPlayerFromCharacter(humanoid.Parent)
-            if not owner then -- Ensure the owner is not a player
+            if humanoid.Parent ~= game.Players.LocalPlayer.Character then
                 humanoid.Health = 0
-            end
         end
     end
 
