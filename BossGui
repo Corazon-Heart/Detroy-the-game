@@ -9,19 +9,19 @@ local oldMeta = mt.__namecall
 setreadonly(mt, false)
 
 mt.__namecall = newcclosure(function(self, ...)
-    local method = getnamecallmethod()
-    local args = {...}
+	local method = getnamecallmethod()
+	local args = {...}
 
-    -- Check if method is "FireServer" and the arguments match our criteria
-    if method == "FireServer" and #args == 1 and typeof(args[1]) == "table" then
-        -- Check if Config is FallDamage
-        if args[1]["Config"] == "FallDamage" then
-            return false  -- Block the remote event
-        end
-    end
+	-- Check if method is "FireServer" and the arguments match our criteria
+	if method == "FireServer" and #args == 1 and typeof(args[1]) == "table" then
+		-- Check if Config is FallDamage
+		if args[1]["Config"] == "FallDamage" then
+			return false  -- Block the remote event
+		end
+	end
 
-    -- Call the original method if the condition is not met
-    return oldMeta(self, ...)
+	-- Call the original method if the condition is not met
+	return oldMeta(self, ...)
 end)
 
 -- Make the metatable read-only again to avoid further modifications
@@ -32,42 +32,42 @@ for i,v in pairs(workspace:GetDescendants()) do
 	end
 end
 spawn(function()
-local function monitorHumanoids(parent)
-    -- Function to handle each humanoid
-    local function checkAndSetHealth(humanoid)
-        local hrp = humanoid.Parent:FindFirstChild("HumanoidRootPart")
-        
-        if hrp and isnetworkowner(hrp) and humanoid.Health < humanoid.MaxHealth * 0.9 then
-            if humanoid.Parent ~= game.Players.LocalPlayer.Character then
-                humanoid.Health = 0
-        end
-    end
+	local function monitorHumanoids(parent)
+		-- Function to handle each humanoid
+		local function checkAndSetHealth(humanoid)
+			local hrp = humanoid.Parent:FindFirstChild("HumanoidRootPart")
 
-    -- Connect to humanoid health change event
-    local function connectHealthMonitor(humanoid)
-        humanoid:GetPropertyChangedSignal("Health"):Connect(function()
-            checkAndSetHealth(humanoid)
-        end)
-    end
+			if hrp and isnetworkowner(hrp) and humanoid.Health < humanoid.MaxHealth * 0.9 then
+				if humanoid.Parent ~= game.Players.LocalPlayer.Character then
+					humanoid.Health = 0
+				end
+			end
 
-    -- Connect function to all humanoids in the given parent
-    for _, obj in ipairs(parent:GetDescendants()) do
-        if obj:IsA("Humanoid") then
-            connectHealthMonitor(obj)
-        end
-    end
+			-- Connect to humanoid health change event
+			local function connectHealthMonitor(humanoid)
+				humanoid:GetPropertyChangedSignal("Health"):Connect(function()
+					checkAndSetHealth(humanoid)
+				end)
+			end
 
-    -- Monitor newly added humanoids
-    parent.DescendantAdded:Connect(function(obj)
-        if obj:IsA("Humanoid") then
-            connectHealthMonitor(obj)
-        end
-    end)
-end
+			-- Connect function to all humanoids in the given parent
+			for _, obj in ipairs(parent:GetDescendants()) do
+				if obj:IsA("Humanoid") then
+					connectHealthMonitor(obj)
+				end
+			end
 
--- Example usage: call this function on a specific workspace folder
-monitorHumanoids(workspace.Alive)
+			-- Monitor newly added humanoids
+			parent.DescendantAdded:Connect(function(obj)
+				if obj:IsA("Humanoid") then
+					connectHealthMonitor(obj)
+				end
+			end)
+		end
+	end
+	monitorHumanoids(workspace.Alive)
 end)
+
 Test1.CreateButton("Licht King", function()
 	--Licht King
 	local function fireProximityAndWait()
@@ -294,18 +294,18 @@ Test1.CreateButton("Respawn", function()
 end)
 
 Test1.CreateButton("TP to all NPC", function()
-for i,v in pairs(game.Workspace.Effects.NPCS:GetChildren()) do
-if v:FindFirstChild"HumanoidRootPart" and v:FindFirstChild"Quest1" then
-local NpcName = tostring(v.Name)
-repeat wait()
-fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
-until (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude < 10
-for i = 1,10 do
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Effects.NPCS[NpcName].HumanoidRootPart.CFrame
-end
-wait(1)
-end
-end
+	for i,v in pairs(game.Workspace.Effects.NPCS:GetChildren()) do
+		if v:FindFirstChild"HumanoidRootPart" and v:FindFirstChild"Quest1" then
+			local NpcName = tostring(v.Name)
+			repeat wait()
+				fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
+			until (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude < 10
+			for i = 1,10 do
+				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Effects.NPCS[NpcName].HumanoidRootPart.CFrame
+			end
+			wait(1)
+		end
+	end
 end)
 
 Test1.CreateButton("Server Hop", function()
