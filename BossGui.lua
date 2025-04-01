@@ -130,14 +130,14 @@ spawn(function()
 		end
 	end
 
-	for i,v in pairs(workspace.Alive:GetDescendants()) do
+	for i,v in pairs(game.Workspace:GetDescendants()) do
 		local Hum = v:FindFirstChild("Humanoid")
 		if Hum then
 			MakeConnection(v)
 		end
 	end
 
-	workspace.Alive.DescendantAdded:Connect(function(Child)
+	game.Workspace.DescendantAdded:Connect(function(Child)
 		local Hum = Child:FindFirstChild("Humanoid") or Child:WaitForChild("Humanoid", 10)
 		if Hum then
 			MakeConnection(Child)
