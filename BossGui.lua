@@ -315,7 +315,6 @@ Test1.CreateButton("Instant Heal", function()
 		game.Players.LocalPlayer.PlayerGui.InfoOverlays:WaitForChild"ConfirmFrame":WaitForChild"MainFrame":WaitForChild"ButtonFrame":WaitForChild"ConfirmButton"
 		wait()
 		local player = game:GetService("Players").LocalPlayer
-		print"respawn"
 		repeat
 			if player.PlayerGui.InfoOverlays:FindFirstChild("ConfirmFrame") then
 				local button = player.PlayerGui.InfoOverlays.ConfirmFrame.MainFrame.ButtonFrame.ConfirmButton
@@ -341,7 +340,6 @@ Test1.CreateButton("Instant Heal", function()
 			game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode.E, false, nil)
 		until (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude < 10
 		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Last
-		print"Healed"
 	end)
 end)
 
