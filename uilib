@@ -102,7 +102,7 @@ function Lib.Window(Title)
 	TabNavigator.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	TabNavigator.BorderSizePixel = 0
 	TabNavigator.Position = UDim2.new(0.00733371312, 0, 0, 0)
-	TabNavigator.Size = UDim2.new(0, 932, 0, 275)
+	TabNavigator.Size = UDim2.new(0, 132, 0, 275)
 	TabNavigator.ZIndex = 4
 	TabNavigator.CanvasSize = UDim2.new(0, 0, 0, 0)
 
@@ -185,7 +185,8 @@ function Lib.Window(Title)
 	Extension.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	Extension.BorderSizePixel = 0
 	Extension.Position = UDim2.new(0.00652175443, -3, 0.994062245, 0)
-	Extension.Size = UDim2.new(0, 454, 0, -23)
+	--Extension.Size = UDim2.new(0, 454, 0, -23)
+	Extension.Size = UDim2.new(0, 454, 0, 100)
 	Extension.ZIndex = 4
 
 	ExtensionCorner.CornerRadius = UDim.new(0, 7)
@@ -214,7 +215,8 @@ function Lib.Window(Title)
 		TabSwitcher.BorderColor3 = Color3.fromRGB(0, 0, 0)
 		TabSwitcher.BorderSizePixel = 0
 		TabSwitcher.Position = UDim2.new(0, 0, 0.101818189, 0)
-		TabSwitcher.Size = UDim2.new(0, 114, 0, 25)
+		--TabSwitcher.Size = UDim2.new(0, 114, 0, 25)
+		TabSwitcher.Size = UDim2.new(0, 114, 0, 250)
 		TabSwitcher.ZIndex = 4
 		TabSwitcher.FontFace = Font.new([[rbxasset://fonts/families/Nunito.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal);
 		TabSwitcher.Text = TabTitle
