@@ -45,7 +45,7 @@ pcall(function()
 
 	local function getNearestEntity()
 		local closestEntity = nil
-		local shortestDistance = 50
+		local shortestDistance = 40
 
 		for _, entity in pairs(workspace.Alive:GetChildren()) do
 			if entity:IsA("Model") and entity ~= Character then
