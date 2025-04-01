@@ -470,7 +470,7 @@ Test1.CreateKeybind("Toggle UI", Enum.KeyCode.LeftAlt, function()
 	Library:ToggleUI()
 end)
 
---end
+--flyscript
 pcall(function()
 	local speeds = 2
 	local maxSpeed = 30
@@ -648,6 +648,8 @@ pcall(function()
 	speaker.CharacterAdded:Connect(function()
 		repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart"
 		resetScript()
+		toggleScript(not scriptEnabled)
+		toggleScript(not scriptEnabled)
 	end)
 end)
 --ESP
