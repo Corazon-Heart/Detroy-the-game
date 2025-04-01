@@ -113,7 +113,7 @@ spawn(function()
 				end
 			end
 			Connections[Mob] = Mob.Humanoid:GetPropertyChangedSignal("Health"):Connect(function()
-				if Mob:FindFirstChild"HumanoidRootPart" and isnetworkowner(Mob.HumanoidRootPart) then
+				if Mob:FindFirstChild"HumanoidRootPart" and Mob.Humanoid.Health <= Mob.Humanoid.MaxHealth*0.9 and isnetworkowner(Mob.HumanoidRootPart) then
 					for i = 1, 20 do
 						Mob.Humanoid.Health = 0
 					end
