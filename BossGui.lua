@@ -67,19 +67,17 @@ pcall(function()
 				local target = getNearestEntity()
 				if target and not target.Parent:FindFirstChild"Grabbing" then
 					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = target.CFrame * CFrame.new(0, 0, 7)
-					spawn(function()
-						local rs = game:GetService("ReplicatedStorage")
-						local plr = game:GetService("Players").LocalPlayer
-						local netModule = require(rs.Modules.Network)
-						local tradeData = {
-							Config = "Button1Down",
-						}
-						netModule.connect("MasterEvent", "FireServer", plr.Character, tradeData)
-						local tradeData = {
-							Config = "Button1Up",
-						}
-						netModule.connect("MasterEvent", "FireServer", plr.Character, tradeData)
-					end)
+					local rs = game:GetService("ReplicatedStorage")
+					local plr = game:GetService("Players").LocalPlayer
+					local netModule = require(rs.Modules.Network)
+					local tradeData = {
+						Config = "Button1Down",
+					}
+					netModule.connect("MasterEvent", "FireServer", plr.Character, tradeData)
+					local tradeData = {
+						Config = "Button1Up",
+					}
+					netModule.connect("MasterEvent", "FireServer", plr.Character, tradeData)
 				end
 			end)
 		end
