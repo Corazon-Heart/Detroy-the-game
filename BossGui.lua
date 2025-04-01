@@ -105,6 +105,11 @@ spawn(function()
 		game.Lighting.Ambient = Color3.new(1,1,1)
 		game.Lighting.FogStart = 0
 		game.Lighting.FogEnd = 100000
+		for i,v in pairs(game.Lighting:GetChildren()) do
+			if v.Parent ~= nil then
+				v:Destroy()
+			end
+		end
 	end
 end)
 --Instant Kill
