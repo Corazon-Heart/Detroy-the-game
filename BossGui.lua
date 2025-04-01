@@ -1,3 +1,7 @@
+repeat wait() until game:IsLoaded()
+repeat wait() until game.Players.LocalPlayer ~= nil
+repeat wait() until game.Players.LocalPlayer.Character ~= nil
+game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Corazon-Heart/Detroy-the-game/refs/heads/main/uilib"))()
 local Window = Library.Window('KR4K Library')
 local Test1 = Window.CreateTab('Main')
