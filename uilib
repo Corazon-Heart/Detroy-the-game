@@ -1035,7 +1035,7 @@ function Lib.Window(Title)
 			DropdownContainer.Position = UDim2.new(0.177704751, 0, 0.28498134, 0)
 			DropdownContainer.Size = UDim2.new(0, 150, 0, 76)
 			DropdownContainer.ZIndex = 5
-			DropdownContainer.CanvasSize = UDim2.new(0, 0, 1, 0)
+			DropdownContainer.CanvasSize = UDim2.new(0, 0, 5, 0)
 			DropdownContainer.Visible = false
 
 			ContentLayout.Name = "ContentLayout"
