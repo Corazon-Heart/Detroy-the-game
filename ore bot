@@ -726,7 +726,10 @@ elseif game.PlaceId == 10290054819 then
 			game:GetService("TeleportService"):TeleportToPlaceInstance(99995671928896, tostring(A), game.Players.LocalPlayer)
 			table.remove(_table, B)
 			WriteSettings(filename, _table)
-			wait(3)
+			for i = 1,30 do
+				game.GuiService:ClearError()
+				wait(.1)
+			end
 		end
 	end
 end
