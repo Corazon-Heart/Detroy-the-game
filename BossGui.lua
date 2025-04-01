@@ -106,7 +106,7 @@ spawn(function()
 		game.Lighting.FogStart = 0
 		game.Lighting.FogEnd = 100000
 		for i,v in pairs(game.Lighting:GetChildren()) do
-			if v.Parent ~= nil then
+			if v.Parent == game.Lighting then
 				v:Destroy()
 			end
 		end
