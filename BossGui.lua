@@ -340,6 +340,14 @@ Test1.CreateButton("Instant Heal", function()
 			game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode.E, false, nil)
 		until (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude < 10
 		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Last
+		wait()
+		local rs = game:GetService("ReplicatedStorage")
+		local plr = game:GetService("Players").LocalPlayer
+		local netModule = require(rs.Modules.Network)
+		local tradeData = {
+			Config = "EquipWeapon",
+		}
+		netModule.connect("MasterEvent", "FireServer", plr.Character, tradeData)
 	end)
 end)
 
