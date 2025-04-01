@@ -566,7 +566,6 @@ pcall(function()
 	speaker.CharacterAdded:Connect(function()
 		repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart"
 		resetScript()
-		toggleScript(not scriptEnabled)
 	end)
 end)
 --ESP
