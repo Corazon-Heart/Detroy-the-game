@@ -2,7 +2,7 @@ local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Coraz
 local Window = Library.Window('KR4K Library')
 local Test1 = Window.CreateTab('Main')
 local Boss = Window.CreateTab('TP Boss')
-local Ingredient = Window.CreateTab('TP Ingredient')
+local Ingredient = Window.CreateTab('Item')
 -- NoFall
 local mt = getrawmetatable(game)
 local oldMeta = mt.__namecall
@@ -388,10 +388,6 @@ Test1.CreateKeybind("Toggle UI", Enum.KeyCode.LeftAlt, function()
 	Library:ToggleUI()
 end)
 
-ESP.CreateButton("TP to all NPC", function()
-	
-end)
-
 --end
 pcall(function()
 	local speeds = 2
@@ -713,3 +709,48 @@ spawn(function()
 	-- Listen for keypresses
 	UserInputService.InputBegan:Connect(ToggleNoclip)
 end)
+local createdButtons = {}
+
+local function fireProximityAndWait(part)
+	local prompt = workspace.InvisibleParts.ColosseumEntrance.InteractPrompt
+	fireproximityprompt(prompt)
+
+	local startTime = tick()
+	local targetPos = Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)
+
+	while (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - targetPos).magnitude >= 10 do
+		if tick() - startTime > 2 then
+			fireproximityprompt(prompt)
+			startTime = tick()
+		end
+		wait(0.1)
+	end
+
+	local harvestables = game.Workspace.Harvestable:GetChildren()
+	local matchingParts = {}
+
+	for _, v in ipairs(harvestables) do
+		if v.Name:find(tostring(part.Name)) then
+			table.insert(matchingParts, v)
+		end
+	end
+
+	if #matchingParts > 0 then
+		local randomPart = matchingParts[math.random(1, #matchingParts)]
+		if randomPart:IsA("Model") and #randomPart:GetChildren() >= 2 then
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = randomPart:GetChildren()[2].CFrame
+		else
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = randomPart.CFrame
+		end
+	end
+end
+
+
+for i, harvest in pairs(game.Workspace.Harvestable:GetChildren()) do
+	if not createdButtons[harvest.Name] then
+		Ingredient.CreateButton(harvest.Name, function()
+			fireProximityAndWait(harvest)
+		end)
+		createdButtons[harvest.Name] = true
+	end
+end
