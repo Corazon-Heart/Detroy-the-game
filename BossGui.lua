@@ -659,11 +659,7 @@ pcall(function()
 	-- ตรวจสอบเมื่อ Character ถูกสร้างใหม่และรีเซ็ตสคริปต์
 	speaker.CharacterAdded:Connect(function()
 		repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart"
-		wait(.1)
 		resetScript()
-		wait(.1)
-		toggleScript(not scriptEnabled)
-		wait()
 		toggleScript(not scriptEnabled)
 	end)
 end)
