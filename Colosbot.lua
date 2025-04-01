@@ -1,5 +1,5 @@
 spawn(function()
-	task.wait(1800)
+	task.wait(2400)
 	game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
 end)
 pcall(function()
@@ -366,60 +366,61 @@ pcall(function()
 									repeat wait()
 										game.Players.LocalPlayer.Character.Humanoid.Health = 0
 									until game.Players.LocalPlayer.Character.Humanoid.Health == 0
-								end
-								local VirtualInputManager = game:GetService("VirtualInputManager")
-								local Players = game:GetService("Players")
+									local VirtualInputManager = game:GetService("VirtualInputManager")
+									local Players = game:GetService("Players")
 
-								local player = Players.LocalPlayer
-								local gui = player:WaitForChild("PlayerGui"):WaitForChild("InfoOverlays", 5) -- Wait for InfoOverlays with a timeout
+									local player = Players.LocalPlayer
+									local gui = player:WaitForChild("PlayerGui"):WaitForChild("InfoOverlays", 5) -- Wait for InfoOverlays with a timeout
 
-								if not gui then
-									warn("InfoOverlays not found")
-									return shop()
-								end
-
-								local confirmFrame = gui:WaitForChild("ConfirmFrame", 5)
-								if not confirmFrame then
-									warn("ConfirmFrame not found")
-									return shop()
-								end
-
-								local mainFrame = confirmFrame:WaitForChild("MainFrame", 5)
-								if not mainFrame then
-									warn("MainFrame not found")
-									return shop()
-								end
-
-								local buttonFrame = mainFrame:WaitForChild("ButtonFrame", 5)
-								if not buttonFrame then
-									warn("ButtonFrame not found")
-									return shop()
-								end
-
-								local confirmButton = buttonFrame:WaitForChild("ConfirmButton", 5)
-								if not confirmButton then
-									warn("ConfirmButton not found")
-									return shop()
-								end
-
-								repeat
-									if confirmButton then
-										local absPos = confirmButton.AbsolutePosition
-										local absSize = confirmButton.AbsoluteSize
-
-										-- Calculate the center of the button
-										local clickPos = absPos + (absSize / 2)
-
-										-- Simulate a left mouse click at the button's position
-										VirtualInputManager:SendMouseButtonEvent(clickPos.X, clickPos.Y + 65, 0, true, game, 0) -- Mouse down
-										VirtualInputManager:SendMouseButtonEvent(clickPos.X, clickPos.Y + 65, 0, false, game, 0) -- Mouse up
+									if not gui then
+										warn("InfoOverlays not found")
+										return shop()
 									end
-									task.wait()
-								until not gui:FindFirstChild("ConfirmFrame")
 
-								repeat wait() until game.Players.LocalPlayer.Character:IsDescendantOf(game.Workspace.Alive)
-								wait(0.5)
-								_G.Botting()
+									local confirmFrame = gui:WaitForChild("ConfirmFrame", 5)
+									if not confirmFrame then
+										warn("ConfirmFrame not found")
+										return shop()
+									end
+
+									local mainFrame = confirmFrame:WaitForChild("MainFrame", 5)
+									if not mainFrame then
+										warn("MainFrame not found")
+										return shop()
+									end
+
+									local buttonFrame = mainFrame:WaitForChild("ButtonFrame", 5)
+									if not buttonFrame then
+										warn("ButtonFrame not found")
+										return shop()
+									end
+
+									local confirmButton = buttonFrame:WaitForChild("ConfirmButton", 5)
+									if not confirmButton then
+										warn("ConfirmButton not found")
+										return shop()
+									end
+
+									repeat
+										if confirmButton then
+											local absPos = confirmButton.AbsolutePosition
+											local absSize = confirmButton.AbsoluteSize
+
+											-- Calculate the center of the button
+											local clickPos = absPos + (absSize / 2)
+
+											-- Simulate a left mouse click at the button's position
+											VirtualInputManager:SendMouseButtonEvent(clickPos.X, clickPos.Y + 65, 0, true, game, 0) -- Mouse down
+											VirtualInputManager:SendMouseButtonEvent(clickPos.X, clickPos.Y + 65, 0, false, game, 0) -- Mouse up
+										end
+										task.wait()
+									until not gui:FindFirstChild("ConfirmFrame")
+
+									repeat wait() until game.Players.LocalPlayer.Character:IsDescendantOf(game.Workspace.Alive)
+									wait(0.5)
+									_G.Botting()
+								end
+
 							end
 						end
 					end
@@ -477,60 +478,60 @@ pcall(function()
 										repeat wait()
 											game.Players.LocalPlayer.Character.Humanoid.Health = 0
 										until game.Players.LocalPlayer.Character.Humanoid.Health == 0
-									end
-									local VirtualInputManager = game:GetService("VirtualInputManager")
-									local Players = game:GetService("Players")
+										local VirtualInputManager = game:GetService("VirtualInputManager")
+										local Players = game:GetService("Players")
 
-									local player = Players.LocalPlayer
-									local gui = player:WaitForChild("PlayerGui"):WaitForChild("InfoOverlays", 5) -- Wait for InfoOverlays with a timeout
+										local player = Players.LocalPlayer
+										local gui = player:WaitForChild("PlayerGui"):WaitForChild("InfoOverlays", 5) -- Wait for InfoOverlays with a timeout
 
-									if not gui then
-										warn("InfoOverlays not found")
-										return shop()
-									end
-
-									local confirmFrame = gui:WaitForChild("ConfirmFrame", 5)
-									if not confirmFrame then
-										warn("ConfirmFrame not found")
-										return shop()
-									end
-
-									local mainFrame = confirmFrame:WaitForChild("MainFrame", 5)
-									if not mainFrame then
-										warn("MainFrame not found")
-										return shop()
-									end
-
-									local buttonFrame = mainFrame:WaitForChild("ButtonFrame", 5)
-									if not buttonFrame then
-										warn("ButtonFrame not found")
-										return shop()
-									end
-
-									local confirmButton = buttonFrame:WaitForChild("ConfirmButton", 5)
-									if not confirmButton then
-										warn("ConfirmButton not found")
-										return shop()
-									end
-
-									repeat
-										if confirmButton then
-											local absPos = confirmButton.AbsolutePosition
-											local absSize = confirmButton.AbsoluteSize
-
-											-- Calculate the center of the button
-											local clickPos = absPos + (absSize / 2)
-
-											-- Simulate a left mouse click at the button's position
-											VirtualInputManager:SendMouseButtonEvent(clickPos.X, clickPos.Y + 65, 0, true, game, 0) -- Mouse down
-											VirtualInputManager:SendMouseButtonEvent(clickPos.X, clickPos.Y + 65, 0, false, game, 0) -- Mouse up
+										if not gui then
+											warn("InfoOverlays not found")
+											return shop()
 										end
-										task.wait()
-									until not gui:FindFirstChild("ConfirmFrame")
 
-									repeat wait() until game.Players.LocalPlayer.Character:IsDescendantOf(game.Workspace.Alive)
-									wait(0.5)
-									_G.Botting()
+										local confirmFrame = gui:WaitForChild("ConfirmFrame", 5)
+										if not confirmFrame then
+											warn("ConfirmFrame not found")
+											return shop()
+										end
+
+										local mainFrame = confirmFrame:WaitForChild("MainFrame", 5)
+										if not mainFrame then
+											warn("MainFrame not found")
+											return shop()
+										end
+
+										local buttonFrame = mainFrame:WaitForChild("ButtonFrame", 5)
+										if not buttonFrame then
+											warn("ButtonFrame not found")
+											return shop()
+										end
+
+										local confirmButton = buttonFrame:WaitForChild("ConfirmButton", 5)
+										if not confirmButton then
+											warn("ConfirmButton not found")
+											return shop()
+										end
+
+										repeat
+											if confirmButton then
+												local absPos = confirmButton.AbsolutePosition
+												local absSize = confirmButton.AbsoluteSize
+
+												-- Calculate the center of the button
+												local clickPos = absPos + (absSize / 2)
+
+												-- Simulate a left mouse click at the button's position
+												VirtualInputManager:SendMouseButtonEvent(clickPos.X, clickPos.Y + 65, 0, true, game, 0) -- Mouse down
+												VirtualInputManager:SendMouseButtonEvent(clickPos.X, clickPos.Y + 65, 0, false, game, 0) -- Mouse up
+											end
+											task.wait()
+										until not gui:FindFirstChild("ConfirmFrame")
+
+										repeat wait() until game.Players.LocalPlayer.Character:IsDescendantOf(game.Workspace.Alive)
+										wait(0.5)
+										_G.Botting()
+									end
 								end
 							end
 						end
@@ -601,60 +602,60 @@ pcall(function()
 										repeat wait()
 											game.Players.LocalPlayer.Character.Humanoid.Health = 0
 										until game.Players.LocalPlayer.Character.Humanoid.Health == 0
-									end
-									local VirtualInputManager = game:GetService("VirtualInputManager")
-									local Players = game:GetService("Players")
+										local VirtualInputManager = game:GetService("VirtualInputManager")
+										local Players = game:GetService("Players")
 
-									local player = Players.LocalPlayer
-									local gui = player:WaitForChild("PlayerGui"):WaitForChild("InfoOverlays", 5) -- Wait for InfoOverlays with a timeout
+										local player = Players.LocalPlayer
+										local gui = player:WaitForChild("PlayerGui"):WaitForChild("InfoOverlays", 5) -- Wait for InfoOverlays with a timeout
 
-									if not gui then
-										warn("InfoOverlays not found")
-										return shop()
-									end
-
-									local confirmFrame = gui:WaitForChild("ConfirmFrame", 5)
-									if not confirmFrame then
-										warn("ConfirmFrame not found")
-										return shop()
-									end
-
-									local mainFrame = confirmFrame:WaitForChild("MainFrame", 5)
-									if not mainFrame then
-										warn("MainFrame not found")
-										return shop()
-									end
-
-									local buttonFrame = mainFrame:WaitForChild("ButtonFrame", 5)
-									if not buttonFrame then
-										warn("ButtonFrame not found")
-										return shop()
-									end
-
-									local confirmButton = buttonFrame:WaitForChild("ConfirmButton", 5)
-									if not confirmButton then
-										warn("ConfirmButton not found")
-										return shop()
-									end
-
-									repeat
-										if confirmButton then
-											local absPos = confirmButton.AbsolutePosition
-											local absSize = confirmButton.AbsoluteSize
-
-											-- Calculate the center of the button
-											local clickPos = absPos + (absSize / 2)
-
-											-- Simulate a left mouse click at the button's position
-											VirtualInputManager:SendMouseButtonEvent(clickPos.X, clickPos.Y + 65, 0, true, game, 0) -- Mouse down
-											VirtualInputManager:SendMouseButtonEvent(clickPos.X, clickPos.Y + 65, 0, false, game, 0) -- Mouse up
+										if not gui then
+											warn("InfoOverlays not found")
+											return shop()
 										end
-										task.wait()
-									until not gui:FindFirstChild("ConfirmFrame")
 
-									repeat wait() until game.Players.LocalPlayer.Character:IsDescendantOf(game.Workspace.Alive)
-									wait(0.5)
-									_G.Botting()
+										local confirmFrame = gui:WaitForChild("ConfirmFrame", 5)
+										if not confirmFrame then
+											warn("ConfirmFrame not found")
+											return shop()
+										end
+
+										local mainFrame = confirmFrame:WaitForChild("MainFrame", 5)
+										if not mainFrame then
+											warn("MainFrame not found")
+											return shop()
+										end
+
+										local buttonFrame = mainFrame:WaitForChild("ButtonFrame", 5)
+										if not buttonFrame then
+											warn("ButtonFrame not found")
+											return shop()
+										end
+
+										local confirmButton = buttonFrame:WaitForChild("ConfirmButton", 5)
+										if not confirmButton then
+											warn("ConfirmButton not found")
+											return shop()
+										end
+
+										repeat
+											if confirmButton then
+												local absPos = confirmButton.AbsolutePosition
+												local absSize = confirmButton.AbsoluteSize
+
+												-- Calculate the center of the button
+												local clickPos = absPos + (absSize / 2)
+
+												-- Simulate a left mouse click at the button's position
+												VirtualInputManager:SendMouseButtonEvent(clickPos.X, clickPos.Y + 65, 0, true, game, 0) -- Mouse down
+												VirtualInputManager:SendMouseButtonEvent(clickPos.X, clickPos.Y + 65, 0, false, game, 0) -- Mouse up
+											end
+											task.wait()
+										until not gui:FindFirstChild("ConfirmFrame")
+
+										repeat wait() until game.Players.LocalPlayer.Character:IsDescendantOf(game.Workspace.Alive)
+										wait(0.5)
+										_G.Botting()
+									end
 								end
 							end
 						end
@@ -815,60 +816,60 @@ pcall(function()
 										repeat wait()
 											game.Players.LocalPlayer.Character.Humanoid.Health = 0
 										until game.Players.LocalPlayer.Character.Humanoid.Health == 0
-									end
-									local VirtualInputManager = game:GetService("VirtualInputManager")
-									local Players = game:GetService("Players")
+										local VirtualInputManager = game:GetService("VirtualInputManager")
+										local Players = game:GetService("Players")
 
-									local player = Players.LocalPlayer
-									local gui = player:WaitForChild("PlayerGui"):WaitForChild("InfoOverlays", 5) -- Wait for InfoOverlays with a timeout
+										local player = Players.LocalPlayer
+										local gui = player:WaitForChild("PlayerGui"):WaitForChild("InfoOverlays", 5) -- Wait for InfoOverlays with a timeout
 
-									if not gui then
-										warn("InfoOverlays not found")
-										return shop()
-									end
-
-									local confirmFrame = gui:WaitForChild("ConfirmFrame", 5)
-									if not confirmFrame then
-										warn("ConfirmFrame not found")
-										return shop()
-									end
-
-									local mainFrame = confirmFrame:WaitForChild("MainFrame", 5)
-									if not mainFrame then
-										warn("MainFrame not found")
-										return shop()
-									end
-
-									local buttonFrame = mainFrame:WaitForChild("ButtonFrame", 5)
-									if not buttonFrame then
-										warn("ButtonFrame not found")
-										return shop()
-									end
-
-									local confirmButton = buttonFrame:WaitForChild("ConfirmButton", 5)
-									if not confirmButton then
-										warn("ConfirmButton not found")
-										return shop()
-									end
-
-									repeat
-										if confirmButton then
-											local absPos = confirmButton.AbsolutePosition
-											local absSize = confirmButton.AbsoluteSize
-
-											-- Calculate the center of the button
-											local clickPos = absPos + (absSize / 2)
-
-											-- Simulate a left mouse click at the button's position
-											VirtualInputManager:SendMouseButtonEvent(clickPos.X, clickPos.Y + 65, 0, true, game, 0) -- Mouse down
-											VirtualInputManager:SendMouseButtonEvent(clickPos.X, clickPos.Y + 65, 0, false, game, 0) -- Mouse up
+										if not gui then
+											warn("InfoOverlays not found")
+											return shop()
 										end
-										task.wait()
-									until not gui:FindFirstChild("ConfirmFrame")
 
-									repeat wait() until game.Players.LocalPlayer.Character:IsDescendantOf(game.Workspace.Alive)
-									wait(0.5)
-									_G.Botting()
+										local confirmFrame = gui:WaitForChild("ConfirmFrame", 5)
+										if not confirmFrame then
+											warn("ConfirmFrame not found")
+											return shop()
+										end
+
+										local mainFrame = confirmFrame:WaitForChild("MainFrame", 5)
+										if not mainFrame then
+											warn("MainFrame not found")
+											return shop()
+										end
+
+										local buttonFrame = mainFrame:WaitForChild("ButtonFrame", 5)
+										if not buttonFrame then
+											warn("ButtonFrame not found")
+											return shop()
+										end
+
+										local confirmButton = buttonFrame:WaitForChild("ConfirmButton", 5)
+										if not confirmButton then
+											warn("ConfirmButton not found")
+											return shop()
+										end
+
+										repeat
+											if confirmButton then
+												local absPos = confirmButton.AbsolutePosition
+												local absSize = confirmButton.AbsoluteSize
+
+												-- Calculate the center of the button
+												local clickPos = absPos + (absSize / 2)
+
+												-- Simulate a left mouse click at the button's position
+												VirtualInputManager:SendMouseButtonEvent(clickPos.X, clickPos.Y + 65, 0, true, game, 0) -- Mouse down
+												VirtualInputManager:SendMouseButtonEvent(clickPos.X, clickPos.Y + 65, 0, false, game, 0) -- Mouse up
+											end
+											task.wait()
+										until not gui:FindFirstChild("ConfirmFrame")
+
+										repeat wait() until game.Players.LocalPlayer.Character:IsDescendantOf(game.Workspace.Alive)
+										wait(0.5)
+										_G.Botting()
+									end
 								end
 							end
 						end
