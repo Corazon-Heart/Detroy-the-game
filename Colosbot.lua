@@ -906,14 +906,14 @@ pcall(function()
 						wait(.15)
 					until game.Players.LocalPlayer.PlayerGui.ChatGui.MainFrame.Visible == false
 				end
-				local maintick = tick()
+				local waitdrogartick = tick()
 				repeat wait()
 					for i,v in pairs(workspace.Alive:GetChildren()) do
 						if v.Name:find"Drogar" then
 							Drogar = v
 						end
 					end
-					if tick() - maintick >= 10 then
+					if tick() - waitdrogartick >= 10 then
 						shop()
 					end
 				until Drogar ~= nil
