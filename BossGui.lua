@@ -33,6 +33,7 @@ for i,v in pairs(workspace:GetDescendants()) do
 		v.CFrame = CFrame.new(math.huge,math.huge,math.huge)
 	end
 end
+
 pcall(function()
 	local UserInputService = game:GetService("UserInputService")
 	local RunService = game:GetService("RunService")
@@ -62,27 +63,33 @@ pcall(function()
 		teleporting = not teleporting
 
 		if teleporting then
-			RunService.RenderStepped:Connect(function()
-				if not teleporting then return end
+			local renderConnection
+			renderConnection = RunService.RenderStepped:Connect(function()
+				if not teleporting then
+					renderConnection:Disconnect()
+					return
+				end
+
 				local target = getNearestEntity()
-				if target and not target.Parent:FindFirstChild"Grabbing" then
-					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = target.CFrame * CFrame.new(0, 0, 7)
-					local rs = game:GetService("ReplicatedStorage")
-					local plr = game:GetService("Players").LocalPlayer
-					local netModule = require(rs.Modules.Network)
-					local tradeData = {
-						Config = "Button1Down",
-					}
-					netModule.connect("MasterEvent", "FireServer", plr.Character, tradeData)
-					local tradeData = {
-						Config = "Button1Up",
-					}
-					netModule.connect("MasterEvent", "FireServer", plr.Character, tradeData)
+				if target and not target.Parent:FindFirstChild("Grabbing") then
+					if game.Players.LocalPlayer.LocalPlayer.Character and game.Players.LocalPlayer.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+						game.Players.LocalPlayer.LocalPlayer.Character.HumanoidRootPart.CFrame = target.CFrame * CFrame.new(0, 0, 7)
+					end
+				end
+			end)
+
+			task.spawn(function()
+				local netModule = require(game.ReplicatedStorage.Modules.Network)
+
+				while teleporting do
+					netModule.connect("MasterEvent", "FireServer", game.Players.LocalPlayer.Character, { Config = "Button1Down" })
+					task.wait(0.05)
+					netModule.connect("MasterEvent", "FireServer", game.Players.LocalPlayer.Character, { Config = "Button1Up" })
+					task.wait(0.05)
 				end
 			end)
 		end
 	end
-
 	UserInputService.InputBegan:Connect(function(input, gameProcessed)
 		if gameProcessed then return end
 		if input.KeyCode == Enum.KeyCode.G then
@@ -90,6 +97,7 @@ pcall(function()
 		end
 	end)
 end)
+
 spawn(function()
 	while wait() do
 		game.Lighting.Brightness = 0.7
@@ -97,11 +105,6 @@ spawn(function()
 		game.Lighting.Ambient = Color3.new(1,1,1)
 		game.Lighting.FogStart = 0
 		game.Lighting.FogEnd = 100000
-		for i,v in pairs(game.Lighting:GetChildren()) do
-			if v.Parent == game.Lighting then
-				v:Destroy()
-			end
-		end
 	end
 end)
 --Instant Kill
@@ -649,7 +652,7 @@ pcall(function()
 		repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart"
 		wait(.1)
 		resetScript()
-		wait()
+		wait(.1)
 		toggleScript(not scriptEnabled)
 		wait()
 		toggleScript(not scriptEnabled)
