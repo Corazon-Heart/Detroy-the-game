@@ -236,6 +236,7 @@ function Lib.Window(Title)
 		TabContent.Size = UDim2.new(0, 295, 0, 275)
 		TabContent.ZIndex = 4
 		TabContent.ClipsDescendants = true
+		TabContent.CanvasSize = UDim2.new(0, 295, 0, 1000)
 
 		ContentPadding.Name = "ContentPadding"
 		ContentPadding.Parent = TabContent
@@ -245,7 +246,7 @@ function Lib.Window(Title)
 		ContentLayout.Parent = TabContent
 		ContentLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 		ContentLayout.SortOrder = Enum.SortOrder.LayoutOrder
-		ContentLayout.Padding = UDim.new(0,20)
+		ContentLayout.Padding = UDim.new(0,12)
 
 		if first then
 			first = false
