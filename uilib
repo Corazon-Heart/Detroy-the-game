@@ -67,7 +67,7 @@ function Lib.Window(Title)
 	UiLib.Name = "UiLib"
 	UiLib.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 	UiLib.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-  UiLib.ResetOnSpawn = false
+  	UiLib.ResetOnSpawn = false
 
 	Main.Name = "Main"
 	Main.Parent = UiLib
