@@ -181,20 +181,7 @@ pcall(function()
 		end)
 		local shop = function()
 			wait(.5)
-			game.Players.LocalPlayer:Kick("Server Hopping....")
-			local dateStr = tostring(game.Players.LocalPlayer.Name..os.date("%Y-%m-%d"))
-			local filename = dateStr .. ".lua"
-			local _table = LoadSettings(dateStr..".lua")
-			if _table ~= nil and _table[1] ~= nil then
-				while #_table > 0 do
-					local B = math.random(1, #_table)
-					local A = _table[B]
-					game:GetService("TeleportService"):TeleportToPlaceInstance(99995671928896, tostring(A), game.Players.LocalPlayer)
-					table.remove(_table, B)
-					WriteSettings(filename, _table)
-					wait(3)
-				end
-			end
+			game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
 		end
 		local CurrentCheck = 0
 		for _,v in pairs(game.Players:GetPlayers()) do
