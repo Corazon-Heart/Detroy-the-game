@@ -652,7 +652,7 @@ pcall(function()
 end)
 --ESP
 pcall(function()
-	local esp_lib = "https://raw.githubusercontent.com/misanthropic2005/DaHood/main/library(s)/KiriotEsp.lua"
+	local esp_lib = "https://raw.githubusercontent.com/Corazon-Heart/Detroy-the-game/refs/heads/main/esplibboss.lua"
 	local esp_lib_init = loadstring(game:HttpGet(esp_lib))()
 
 	-- ESP Settings
