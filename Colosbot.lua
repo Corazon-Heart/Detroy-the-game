@@ -773,7 +773,7 @@ pcall(function()
 					wait(2)
 				end
 			end
-			wait()
+			wait(.15)
 			local rs = game:GetService("ReplicatedStorage")
 			local plr = game:GetService("Players").LocalPlayer
 			local netModule = require(rs.Modules.Network)
@@ -783,6 +783,7 @@ pcall(function()
 			}
 
 			netModule.connect("MasterEvent", "FireServer", plr.Character, tradeData)
+			wait()
 			game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.DialogueEvent:FireServer()
 			local Drogar = nil
 			local endscript = false
