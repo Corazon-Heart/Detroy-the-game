@@ -72,8 +72,8 @@ pcall(function()
 
 				local target = getNearestEntity()
 				if target and not target.Parent:FindFirstChild("Grabbing") then
-					if game.Players.LocalPlayer.LocalPlayer.Character and game.Players.LocalPlayer.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-						game.Players.LocalPlayer.LocalPlayer.Character.HumanoidRootPart.CFrame = target.CFrame * CFrame.new(0, 0, 7)
+					if game.Players.LocalPlayer.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = target.CFrame * CFrame.new(0, 0, 7)
 					end
 				end
 			end)
