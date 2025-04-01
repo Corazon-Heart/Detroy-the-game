@@ -720,6 +720,10 @@ pcall(function()
 
 	-- Detect new entities and apply ESP
 	AliveFolder.ChildAdded:Connect(function(entity)
+		local startTime = tick()  -- Store the current time
+		repeat wait()
+			if tick() - startTime > 5 then return print("Failed to ESP", tostring(entity.Name)) end
+		until entity:FindFirstChild("HumanoidRootPart")
 		if entity:FindFirstChild("HumanoidRootPart") and entity:FindFirstChild("Humanoid") then
 			AddEntityESP(entity)
 		end
