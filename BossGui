@@ -98,41 +98,43 @@ spawn(function()
 		end
 	end
 end)
+--Instant Kill
 spawn(function()
-	local function monitorHumanoids(parent)
-		-- Function to handle each humanoid
-		local function checkAndSetHealth(humanoid)
-			local hrp = humanoid.Parent:FindFirstChild("HumanoidRootPart")
+	local Player = game.Players.LocalPlayer
 
-			if hrp and isnetworkowner(hrp) and humanoid.Health < humanoid.MaxHealth * 0.9 then
-				if humanoid.Parent ~= game.Players.LocalPlayer.Character then
-					humanoid.Health = 0
+	local Connections = {}
+
+	local function MakeConnection(Mob)
+		if not Connections[Mob] and Mob:FindFirstChildOfClass("Humanoid") then
+			local tbl = game.Players:GetPlayers()
+			for i,v in pairs(tbl) do
+				if Mob == v.Character then
+					return
 				end
 			end
-
-			-- Connect to humanoid health change event
-			local function connectHealthMonitor(humanoid)
-				humanoid:GetPropertyChangedSignal("Health"):Connect(function()
-					checkAndSetHealth(humanoid)
-				end)
-			end
-
-			-- Connect function to all humanoids in the given parent
-			for _, obj in ipairs(parent:GetDescendants()) do
-				if obj:IsA("Humanoid") then
-					connectHealthMonitor(obj)
-				end
-			end
-
-			-- Monitor newly added humanoids
-			parent.DescendantAdded:Connect(function(obj)
-				if obj:IsA("Humanoid") then
-					connectHealthMonitor(obj)
+			Connections[Mob] = Mob.Humanoid:GetPropertyChangedSignal("Health"):Connect(function()
+				if Mob:FindFirstChild"HumanoidRootPart" and isnetworkowner(Mob.HumanoidRootPart) then
+					for i = 1, 20 do
+						Mob.Humanoid.Health = 0
+					end
 				end
 			end)
 		end
 	end
-	monitorHumanoids(workspace.Alive)
+
+	for i,v in pairs(workspace.Alive:GetDescendants()) do
+		local Hum = v:FindFirstChild("Humanoid")
+		if Hum then
+			MakeConnection(v)
+		end
+	end
+
+	workspace.Alive.DescendantAdded:Connect(function(Child)
+		local Hum = Child:FindFirstChild("Humanoid") or Child:WaitForChild("Humanoid", 10)
+		if Hum then
+			MakeConnection(Child)
+		end
+	end)
 end)
 
 Boss.CreateButton("Licht King", function()
