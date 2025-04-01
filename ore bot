@@ -501,8 +501,7 @@ if game.PlaceId == 99995671928896 then
 			"Platinum Ore",
 			"Platinum Bar",
 			"Mithril Ore",
-			"Mithril Bar",
-			"Ruby"
+			"Mithril Bar"
 		}
 		for i = 1,10 do
 			for _, itemName in ipairs(itemsToSell) do
