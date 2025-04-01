@@ -1509,14 +1509,20 @@ local function fireProximityAndWait(part)
 	end
 end
 
-
--- Create buttons sorted alphabetically
+-- Collect and sort harvestables
 local harvestables = game.Workspace.Harvestable:GetChildren()
-table.sort(harvestables, function(a, b)
-	return a.Name < b.Name
-end)
+local sortedHarvestables = {}
 
 for _, harvest in ipairs(harvestables) do
+	table.insert(sortedHarvestables, harvest)
+end
+
+table.sort(sortedHarvestables, function(a, b)
+	return a.Name:lower() < b.Name:lower()  -- Sorting in case-sensitive A-Z order
+end)
+
+-- Create buttons in sorted order
+for _, harvest in ipairs(sortedHarvestables) do
 	if not createdButtons[harvest.Name] then
 		Ingredient.CreateButton(harvest.Name, function()
 			fireProximityAndWait(harvest)
