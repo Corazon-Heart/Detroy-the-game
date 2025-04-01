@@ -301,6 +301,9 @@ Test1.CreateButton("TP Fiend", function()
 	-- Teleport once the condition is met
 	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = A
 end)
+Test1.CreateButton("TP Drogar", function()
+	fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
+end)
 Test1.CreateButton("Instant Heal", function()
 	spawn(function()
 		local Last = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
