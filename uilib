@@ -236,7 +236,7 @@ function Lib.Window(Title)
 		TabContent.Size = UDim2.new(0, 295, 0, 275)
 		TabContent.ZIndex = 4
 		TabContent.ClipsDescendants = true
-		TabContent.CanvasSize = UDim2.new(0, 295, 0, 5000)
+		TabContent.CanvasSize = UDim2.new(0, 295, 0, 3000)
 
 		ContentPadding.Name = "ContentPadding"
 		ContentPadding.Parent = TabContent
