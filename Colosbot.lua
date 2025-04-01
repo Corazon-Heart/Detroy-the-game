@@ -334,6 +334,15 @@ pcall(function()
 			repeat wait() until game.Players.LocalPlayer.Character.BoolValues.CombatTag.Value <= 1
 			repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild"Humanoid".Health > 0
 			checkAndTeleport()
+			for i,v in pairs(game.Workspace.Alive:GetChildren()) do
+				if v.Name:find"Lycanthar" or v.Name:find"Drogar" then
+					if v:FindFirstChild"Humanoid" then
+						if v.Humanoid.Health >= v.Humanoid.MaxHealth*0.95 then
+							shop()
+						end
+					end
+				end
+			end
 			function TP(Object) -- Object = part teleporting to.
 				local tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new((game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Object).magnitude/90,Enum.EasingStyle.Linear,Enum.EasingDirection.In,0,false,0)
 				local tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = CFrame.new(Object + Vector3.new(0,0,0))})
