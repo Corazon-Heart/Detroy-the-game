@@ -660,7 +660,13 @@ pcall(function()
 	speaker.CharacterAdded:Connect(function()
 		repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart"
 		resetScript()
-		toggleScript(not scriptEnabled)
+		scriptEnabled = false
+		updateFlyState(false)
+
+		if stateChangedConnection then stateChangedConnection:Disconnect() end
+		if heartbeatConnection then heartbeatConnection:Disconnect() end
+		if inputBeganConnection then inputBeganConnection:Disconnect() end
+		if inputEndedConnection then inputEndedConnection:Disconnect() end
 	end)
 end)
 --ESP
