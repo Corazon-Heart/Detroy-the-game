@@ -34,55 +34,55 @@ for i,v in pairs(workspace:GetDescendants()) do
 	end
 end
 pcall(function()
-local UserInputService = game:GetService("UserInputService")
-local RunService = game:GetService("RunService")
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
-local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
+	local UserInputService = game:GetService("UserInputService")
+	local RunService = game:GetService("RunService")
+	local Players = game:GetService("Players")
+	local LocalPlayer = Players.LocalPlayer
+	local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+	local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
 
-local teleporting = false
+	local teleporting = false
 
-local function getNearestEntity()
-    local closestEntity = nil
-    local shortestDistance = 50
-    
-    for _, entity in pairs(workspace.Alive:GetChildren()) do
-        if entity:IsA("Model") and entity ~= Character then
-            local rootPart = entity:FindFirstChild("HumanoidRootPart")
-            if rootPart then
-                local distance = (HumanoidRootPart.Position - rootPart.Position).Magnitude
-                if distance < shortestDistance then
-                    shortestDistance = distance
-                    closestEntity = rootPart
-                end
-            end
-        end
-    end
-    
-    return closestEntity
-end
+	local function getNearestEntity()
+		local closestEntity = nil
+		local shortestDistance = 50
 
-local function toggleTeleport()
-    teleporting = not teleporting
-    
-    if teleporting then
-        RunService.RenderStepped:Connect(function()
-            if not teleporting then return end
-            local target = getNearestEntity()
-            if target and not target.Parent:FindFirstChild"Grabbing" then
-                HumanoidRootPart.CFrame = target.CFrame * CFrame.new(0, 0, 7)
-            end
-        end)
-    end
-end
+		for _, entity in pairs(workspace.Alive:GetChildren()) do
+			if entity:IsA("Model") and entity ~= Character then
+				local rootPart = entity:FindFirstChild("HumanoidRootPart")
+				if rootPart then
+					local distance = (HumanoidRootPart.Position - rootPart.Position).Magnitude
+					if distance < shortestDistance then
+						shortestDistance = distance
+						closestEntity = rootPart
+					end
+				end
+			end
+		end
 
-UserInputService.InputBegan:Connect(function(input, gameProcessed)
-    if gameProcessed then return end
-    if input.KeyCode == Enum.KeyCode.G then
-        toggleTeleport()
-    end
-end)
+		return closestEntity
+	end
+
+	local function toggleTeleport()
+		teleporting = not teleporting
+
+		if teleporting then
+			RunService.RenderStepped:Connect(function()
+				if not teleporting then return end
+				local target = getNearestEntity()
+				if target and not target.Parent:FindFirstChild"Grabbing" then
+					HumanoidRootPart.CFrame = target.CFrame * CFrame.new(0, 0, 7)
+				end
+			end)
+		end
+	end
+
+	UserInputService.InputBegan:Connect(function(input, gameProcessed)
+		if gameProcessed then return end
+		if input.KeyCode == Enum.KeyCode.G then
+			toggleTeleport()
+		end
+	end)
 end)
 spawn(function()
 	while wait() do
