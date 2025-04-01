@@ -34,6 +34,20 @@ for i,v in pairs(workspace:GetDescendants()) do
 	end
 end
 spawn(function()
+	while wait() do
+		game.Lighting.Brightness = 0.7
+		game.Lighting.GlobalShadows = false
+		game.Lighting.Ambient = Color3.new(1,1,1)
+		game.Lighting.FogStart = 0
+		game.Lighting.FogEnd = 100000
+		for i,v in pairs(game.Lighting:GetChildren()) do
+			if v.Parent == game.Lighting then
+				v:Destroy()
+			end
+		end
+	end
+end
+spawn(function()
 	local function monitorHumanoids(parent)
 		-- Function to handle each humanoid
 		local function checkAndSetHealth(humanoid)
