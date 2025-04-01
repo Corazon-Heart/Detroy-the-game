@@ -1,6 +1,8 @@
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Corazon-Heart/Detroy-the-game/refs/heads/main/uilib"))()
 local Window = Library.Window('KR4K Library')
-local Test1 = Window.CreateTab('Welcome!')
+local Test1 = Window.CreateTab('Main')
+local Boss = Window.CreateTab('TP Boss')
+local Ingredient = Window.CreateTab('TP Ingredient')
 -- NoFall
 local mt = getrawmetatable(game)
 local oldMeta = mt.__namecall
@@ -68,7 +70,7 @@ spawn(function()
 	monitorHumanoids(workspace.Alive)
 end)
 
-Test1.CreateButton("Licht King", function()
+Boss.CreateButton("Licht King", function()
 	--Licht King
 	local function fireProximityAndWait()
 		fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
@@ -89,7 +91,7 @@ Test1.CreateButton("Licht King", function()
 	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1721.454345703125, 422.90582275390625, -3894.0126953125)
 
 end)
-Test1.CreateButton("Elder Treant Location", function()
+Boss.CreateButton("Elder Treant Location", function()
 	--Elder Treant
 	local function fireProximityAndWait()
 		fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
@@ -110,7 +112,7 @@ Test1.CreateButton("Elder Treant Location", function()
 	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1028.5682373046875, 155.67971801757812, -1482.1468505859375)
 
 end)
-Test1.CreateButton("Elder Treant (Body)", function()
+Boss.CreateButton("Elder Treant (Body)", function()
 	for i,v in pairs(game.Workspace.Alive:GetChildren()) do
 
 		if v.Name:find"Elder T"then
@@ -137,7 +139,7 @@ Test1.CreateButton("Elder Treant (Body)", function()
 	-- Teleport once the condition is met
 	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = A
 end)
-Test1.CreateButton("Rune Golem", function()
+Boss.CreateButton("Rune Golem", function()
 	for i,v in pairs(game.Workspace.Alive:GetChildren()) do
 
 		if v.Name:find"Rune Golem"then
@@ -164,7 +166,7 @@ Test1.CreateButton("Rune Golem", function()
 	-- Teleport once the condition is met
 	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = A
 end)
-Test1.CreateButton("Goblin King", function()
+Boss.CreateButton("Goblin King", function()
 	--Goblin King
 	local function fireProximityAndWait()
 		fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
@@ -386,6 +388,10 @@ Test1.CreateKeybind("Toggle UI", Enum.KeyCode.LeftAlt, function()
 	Library:ToggleUI()
 end)
 
+ESP.CreateButton("TP to all NPC", function()
+	
+end)
+
 --end
 pcall(function()
 	local speeds = 2
@@ -562,11 +568,107 @@ pcall(function()
 
 	-- ตรวจสอบเมื่อ Character ถูกสร้างใหม่และรีเซ็ตสคริปต์
 	speaker.CharacterAdded:Connect(function()
-		wait(1)  -- รอให้ Character ใหม่ถูกสร้างเสร็จ
+		repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart"
 		resetScript()
+		toggleScript(not scriptEnabled)
 	end)
 end)
---
+--ESP
+pcall(function()
+	local esp_lib = "https://raw.githubusercontent.com/misanthropic2005/DaHood/main/library(s)/KiriotEsp.lua"
+	local esp_lib_init = loadstring(game:HttpGet(esp_lib))()
+
+	-- ESP Settings
+	esp_lib_init.Players = false
+	esp_lib_init.Boxes = false
+	esp_lib_init.AutoRemove = true
+	esp_lib_init.FaceCamera = true
+
+	local AliveFolder = workspace:FindFirstChild("Alive")
+	if not AliveFolder then
+		warn("Workspace.Alive folder not found!")
+		return
+	end
+
+	local Players = game:GetService("Players")
+	local LocalPlayer = Players.LocalPlayer
+	local espEnabled = true -- ESP is enabled by default
+	local entityESP = {} -- Store ESP objects for updating
+
+	local function ToggleESP()
+		espEnabled = not espEnabled
+		esp_lib_init:Toggle(espEnabled)
+	end
+
+	local function CleanName(name)
+		return name:gsub("%d", "") -- Remove all numbers from non-player names
+	end
+
+	local function AddEntityESP(entity)
+		if entity:IsA("Model") and entity:FindFirstChild("HumanoidRootPart") and entity:FindFirstChild("Humanoid") then
+			local isPlayer = Players:GetPlayerFromCharacter(entity) ~= nil
+
+			if isPlayer and entity == LocalPlayer.Character then
+				return
+			end
+
+			local color = isPlayer and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(255, 105, 180)
+			local entityName = isPlayer and entity.Name or CleanName(entity.Name)
+			local humanoid = entity.Humanoid
+
+			local espObject = esp_lib_init:Add(
+				entity.HumanoidRootPart,
+				{
+					Name = entityName .. " [" .. math.floor(humanoid.Health) .. "]", 
+					Color = color
+				}
+			)
+
+			entityESP[entity] = {espObject = espObject, humanoid = humanoid}
+		end
+	end
+
+	local function UpdateEntityESP()
+		for entity, data in pairs(entityESP) do
+			if entity and data.humanoid and data.espObject then
+				data.espObject.Name = CleanName(entity.Name) .. " [" .. math.floor(data.humanoid.Health) .. "]"
+			end
+		end
+	end
+
+	-- Apply ESP to existing entities
+	for _, entity in pairs(AliveFolder:GetChildren()) do
+		AddEntityESP(entity)
+	end
+
+	-- Detect new entities and apply ESP
+	AliveFolder.ChildAdded:Connect(function(entity)
+		if entity:FindFirstChild("HumanoidRootPart") and entity:FindFirstChild("Humanoid") then
+			AddEntityESP(entity)
+		end
+	end)
+
+	-- Update ESP every 0.1 seconds instead of every frame to reduce lag
+	local RunService = game:GetService("RunService")
+	task.spawn(function()
+		while true do
+			UpdateEntityESP()
+			task.wait(0.1) -- Update every 0.1 seconds to reduce lag
+		end
+	end)
+
+	esp_lib_init:Toggle(true) -- Enable ESP by default
+
+	-- Create a button to toggle ESP
+	local UserInputService = game:GetService("UserInputService")
+	UserInputService.InputBegan:Connect(function(input, gameProcessed)
+		if not gameProcessed and input.KeyCode == Enum.KeyCode.F3 then -- Press 'E' to toggle ESP
+			ToggleESP()
+		end
+	end)
+
+end)
+--NOCLIP
 spawn(function()
 	local UserInputService = game:GetService("UserInputService")
 	local RunService = game:GetService("RunService")
