@@ -36,11 +36,6 @@ end
 pcall(function()
 	local UserInputService = game:GetService("UserInputService")
 	local RunService = game:GetService("RunService")
-	local Players = game:GetService("Players")
-	local LocalPlayer = Players.LocalPlayer
-	local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-	local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
-
 	local teleporting = false
 
 	local function getNearestEntity()
@@ -48,10 +43,10 @@ pcall(function()
 		local shortestDistance = 20
 
 		for _, entity in pairs(workspace.Alive:GetChildren()) do
-			if entity:IsA("Model") and entity ~= Character then
+			if entity:IsA("Model") and entity ~= game.Players.LocalPlayer.Character then
 				local rootPart = entity:FindFirstChild("HumanoidRootPart")
 				if rootPart then
-					local distance = (HumanoidRootPart.Position - rootPart.Position).Magnitude
+					local distance = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - rootPart.Position).Magnitude
 					if distance < shortestDistance then
 						shortestDistance = distance
 						closestEntity = rootPart
@@ -71,7 +66,7 @@ pcall(function()
 				if not teleporting then return end
 				local target = getNearestEntity()
 				if target and not target.Parent:FindFirstChild"Grabbing" then
-					HumanoidRootPart.CFrame = target.CFrame * CFrame.new(0, 0, 7)
+					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = target.CFrame * CFrame.new(0, 0, 7)
 				end
 			end)
 		end
