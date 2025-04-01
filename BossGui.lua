@@ -837,7 +837,7 @@ local function fireProximityAndWait(part)
 	if #matchingParts > 0 then
 		local randomPart = matchingParts[math.random(1, #matchingParts)]
 		if randomPart:IsA("Model") and #randomPart:GetChildren() >= 2 then
-			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = randomPart:GetChildren()[2].CFrame
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = randomPart:GetChildren()[3].CFrame
 		else
 			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = randomPart.CFrame
 		end
