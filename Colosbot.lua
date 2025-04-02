@@ -877,56 +877,42 @@ pcall(function()
 				end
 				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(937.6810913085938, -217.88751220703125, 1686.1224365234375)
 				repeat wait() until (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375)).magnitude < 5
-				wait(.5)
-				repeat
+				wait()
+				local waitdrogartick = tick()
+				while Drogar == nil do
 					if game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart" then
 						TP(Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375));
 					end
-					local args = {
-						[1] = {
-							["player"] = game:GetService("Players").LocalPlayer,
-							["Object"] = workspace.Effects.NPCS.Drakonar,
-							["Action"] = "NPC"
+					repeat wait()
+						local args = {
+							[1] = {
+								["player"] = game:GetService("Players").LocalPlayer,
+								["Object"] = workspace.Effects.NPCS.Drakonar,
+								["Action"] = "NPC"
+							}
 						}
-					}
 
-					game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.Interact:FireServer(unpack(args))
-					wait(.65)
-					game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.D, false, game)
-					wait(0.1)
-					game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode.D, false, game)
-				until game.Players.LocalPlayer.PlayerGui.ChatGui.MainFrame.Visible == true
-				wait(.25)
-				repeat
-					local args = {
-						[1] = "Challenge The Demon Claw, Drogar."
-					}
-
-					game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.DialogueEvent:FireServer(unpack(args))
-					wait(.15)
-				until game.Players.LocalPlayer.PlayerGui.ChatGui.MainFrame.Visible == false
-				wait(.15)
-				if game.Players.LocalPlayer.PlayerGui.ChatGui.MainFrame.Visible == true then
-					repeat
+						game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.Interact:FireServer(unpack(args))
+					until game.Players.LocalPlayer.PlayerGui.ChatGui.MainFrame.Visible == true
+					for i = 1,30 do
 						local args = {
 							[1] = "Challenge The Demon Claw, Drogar."
 						}
 
 						game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.DialogueEvent:FireServer(unpack(args))
-						wait(.15)
-					until game.Players.LocalPlayer.PlayerGui.ChatGui.MainFrame.Visible == false
-				end
-				local waitdrogartick = tick()
-				repeat wait()
+					end
 					for i,v in pairs(workspace.Alive:GetChildren()) do
 						if v.Name:find"Drogar" then
 							Drogar = v
 						end
 					end
-					if tick() - waitdrogartick >= 10 then
+					if tick() - waitdrogartick >= 30 then
 						shop()
 					end
-				until Drogar ~= nil
+				end
+			end
+			if Drogar.Parent == nil then
+				return shop()
 			end
 			Drogar:WaitForChild("HumanoidRootPart",10)
 			if Drogar:FindFirstChild"HumanoidRootPart" then
