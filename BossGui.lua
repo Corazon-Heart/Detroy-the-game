@@ -682,6 +682,14 @@ pcall(function()
 		if heartbeatConnection then heartbeatConnection:Disconnect() end
 		if inputBeganConnection then inputBeganConnection:Disconnect() end
 		if inputEndedConnection then inputEndedConnection:Disconnect() end
+		wait(.1)
+		scriptEnabled = true
+		updateFlyState(true)
+
+		stateChangedConnection = speaker.Character:FindFirstChild("Humanoid").StateChanged:Connect(function() end)
+		heartbeatConnection = game:GetService("RunService").Heartbeat:Connect(function() end)
+		inputBeganConnection = game:GetService("UserInputService").InputBegan:Connect(function() end)
+		inputEndedConnection = game:GetService("UserInputService").InputEnded:Connect(function() end)
 	end)
 end)
 --ESP
