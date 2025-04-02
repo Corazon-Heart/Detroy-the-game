@@ -8,6 +8,7 @@ local Test1 = Window.CreateTab('Main')
 local Boss = Window.CreateTab('TP Boss')
 local Ingredient = Window.CreateTab('Item')
 local NPC = Window.CreateTab('NPC')
+local MOB = Window.CreateTab('Entity')
 -- NoFall
 local mt = getrawmetatable(game)
 local oldMeta = mt.__namecall
@@ -908,7 +909,6 @@ local function tppart(part)
 	end
 end
 
--- Collect and sort harvestables
 local npcsort = workspace.Effects.NPCS:GetChildren()
 local npcalphabet = {}
 
@@ -917,7 +917,7 @@ for _, harvest in ipairs(npcsort) do
 end
 
 table.sort(npcalphabet, function(a, b)
-	return a.Name:lower() < b.Name:lower()  -- Sorting in case-sensitive A-Z order
+	return a.Name:lower() < b.Name:lower()
 end)
 
 -- Create buttons in sorted order
@@ -927,5 +927,83 @@ for _, npc in ipairs(npcalphabet) do
 			tppart(npc)
 		end)
 		NPCButton[npc.Name] = true
+	end
+end
+
+local createdButtons = {}  -- Store already created buttons to avoid duplicates
+
+function extractText(inputString)
+	-- Remove the period from the input string
+	local extracted = inputString:match("([%a%s]+)")  -- Match only alphabets and spaces
+	extracted = extracted:gsub("%.$", "")  -- Remove the period at the end, if present
+	return extracted
+end
+
+-- TPEN
+local function TPEN(keyword)
+	local prompt = workspace.InvisibleParts.ColosseumEntrance.InteractPrompt
+	fireproximityprompt(prompt)
+
+	local startTime = tick()
+	local targetPos = Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)
+
+	while (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - targetPos).magnitude >= 10 do
+		if tick() - startTime > 2 then
+			fireproximityprompt(prompt)
+			startTime = tick()
+		end
+		wait(0.1)
+	end
+
+	local candidates = {}
+	for _, model in pairs(game.Workspace.Alive:GetChildren()) do
+		if model:IsA("Model") and model.Name:find(keyword) then
+			print("Found: " .. model.Name)
+			table.insert(candidates, model)
+		end
+	end
+
+	-- Choose a random model from the list
+	if #candidates > 0 then
+		local chosenModel = candidates[math.random(1, #candidates)]
+		local TPING = chosenModel:FindFirstChildOfClass("Part")
+		local TPIN = chosenModel:FindFirstChildOfClass("MeshPart")
+
+		for i = 1, 5 do
+			if TPING then
+				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = TPING.CFrame
+			elseif TPIN then
+				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = TPIN.CFrame
+			end
+			task.wait()
+		end
+	else
+		game:GetService("StarterGui"):SetCore("SendNotification", { Title = "Not Found", Text = keyword, Duration = 2 })
+	end
+end
+
+-- Create a function to handle new children added to workspace.Alive
+local function onModelAdded(model)
+	-- Skip the local player's character and any other player's character
+	if model:IsA("Model") and not game.Players:GetPlayerFromCharacter(model) then
+		local mobname = extractText(model.Name)
+		-- Check if the button for this model already exists
+		if not createdButtons[mobname] then
+			MOB.CreateButton(mobname, function()
+				TPEN(mobname)
+			end)
+			createdButtons[mobname] = true  -- Mark this mobname as having a button created
+		end
+	end
+end
+
+-- Connect the ChildAdded event to detect new models
+workspace.Alive.ChildAdded:Connect(onModelAdded)
+
+-- Also, handle existing models (if any) in workspace.Alive when the script starts
+for _, model in pairs(workspace.Alive:GetChildren()) do
+	-- Skip the local player's character and any other player's character
+	if model:IsA("Model") and not game.Players:GetPlayerFromCharacter(model) then
+		onModelAdded(model)  -- Ensure any pre-existing models in workspace.Alive also get buttons created
 	end
 end
