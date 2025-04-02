@@ -722,7 +722,7 @@ pcall(function()
 				end
 			end
 			game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.DialogueEvent:FireServer()
-			task.wait()
+			task.wait(.1)
 			local rs = game:GetService("ReplicatedStorage")
 			local plr = game:GetService("Players").LocalPlayer
 			local netModule = require(rs.Modules.Network)
