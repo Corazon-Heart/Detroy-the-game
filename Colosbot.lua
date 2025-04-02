@@ -686,6 +686,15 @@ pcall(function()
 							if obj and obj.Name:find("Drogar") then
 								Detected = true
 							end
+							local args = {
+								[1] = {
+									["player"] = game:GetService("Players").LocalPlayer,
+									["Object"] = workspace.Effects.NPCS:FindFirstChild("Drakonar"),
+									["Action"] = "NPC"
+								}
+							}
+
+							game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.Interact:FireServer(unpack(args))
 						end
 						local args = {
 							[1] = {
