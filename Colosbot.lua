@@ -879,6 +879,7 @@ pcall(function()
 						game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode.D, false, game)
 						TP(Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375));
 					end
+					local Drogar = nil
 					for i = 1,30 do
 						local args = {
 							[1] = {
