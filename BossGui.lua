@@ -47,7 +47,7 @@ pcall(function()
 
 	local function getNearestEntity()
 		local closestEntity = nil
-		local shortestDistance = 30
+		local shortestDistance = 70
 
 		for _, entity in pairs(workspace.Alive:GetChildren()) do
 			if entity:IsA("Model") and entity ~= game.Players.LocalPlayer.Character then
@@ -79,7 +79,16 @@ pcall(function()
 				local target = getNearestEntity()
 				if target and not target.Parent:FindFirstChild("Grabbing") then
 					if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = target.CFrame * CFrame.new(0, 0, 7)
+                        if game.Players.LocalPlayer.Character:FindFirstChild"M1CoolDown" then
+                            local A = game.Players.LocalPlayer.Character:FindFirstChild"M1CoolDown"
+					    	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = target.CFrame * CFrame.new(0, 25, 7)
+                            repeat wait() until A.Parent == nil
+                        else
+                            for i = 1,8 do
+                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = target.CFrame * CFrame.new(0, 0, 6)
+                                task.wait()
+                            end
+                        end
 					end
 				end
 			end)
