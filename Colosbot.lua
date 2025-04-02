@@ -876,13 +876,12 @@ pcall(function()
 				while Drogar == nil do
 					if game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart" then
 						TP(Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375));
-						checkAndTeleport()
 					end
 					for i = 1,30 do
 						local args = {
 							[1] = {
 								["player"] = game:GetService("Players").LocalPlayer,
-								["Object"] = workspace.Effects.NPCS.Drakonar,
+								["Object"] = workspace.Effects.NPCS:FindFirstChild("Drakonar"),
 								["Action"] = "NPC"
 							}
 						}
