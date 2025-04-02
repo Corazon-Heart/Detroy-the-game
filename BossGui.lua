@@ -939,26 +939,30 @@ function extractText(inputString)
 	return extracted
 end
 
--- TPEN
-local function TPEN(keyword)
-	local prompt = workspace.InvisibleParts.ColosseumEntrance.InteractPrompt
-	fireproximityprompt(prompt)
+local function tpnewpos(newpos)
+	fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
 
 	local startTime = tick()
-	local targetPos = Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)
-
-	while (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - targetPos).magnitude >= 10 do
+	while (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude >= 10 do
 		if tick() - startTime > 2 then
-			fireproximityprompt(prompt)
+			fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
 			startTime = tick()
 		end
 		wait(0.1)
 	end
+	for i = 1,5 do
+		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = newpos
+		task.wait()	
+	end
+end
+
+
+-- TPEN
+local function TPEN(keyword)
 
 	local candidates = {}
 	for _, model in pairs(game.Workspace.Alive:GetChildren()) do
-		if model:IsA("Model") and model.Name:find(keyword) then
-			print("Found: " .. model.Name)
+		if model:IsA("Model") and model.Name:find(keyword) and (model:FindFirstChildOfClass("Part") or model:FindFirstChildOfClass("MeshPart")) then
 			table.insert(candidates, model)
 		end
 	end
@@ -968,17 +972,70 @@ local function TPEN(keyword)
 		local chosenModel = candidates[math.random(1, #candidates)]
 		local TPING = chosenModel:FindFirstChildOfClass("Part")
 		local TPIN = chosenModel:FindFirstChildOfClass("MeshPart")
+		if TPIN or TPING then
+			fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
 
-		for i = 1, 5 do
-			if TPING then
-				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = TPING.CFrame
-			elseif TPIN then
-				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = TPIN.CFrame
+			local startTime = tick()
+			local targetPos = Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)
+
+			while (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - targetPos).magnitude >= 10 do
+				if tick() - startTime > 2 then
+					fireproximityprompt(prompt)
+					startTime = tick()
+				end
+				wait(0.1)
 			end
-			task.wait()
+			for i = 1, 5 do
+				if TPING then
+					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = TPING.CFrame
+				elseif TPIN then
+					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = TPIN.CFrame
+				end
+				task.wait()
+			end
 		end
 	else
-		game:GetService("StarterGui"):SetCore("SendNotification", { Title = "Not Found", Text = keyword, Duration = 2 })
+		fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
+
+		local startTime = tick()
+		local targetPos = Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)
+
+		while (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - targetPos).magnitude >= 10 do
+			if tick() - startTime > 2 then
+				fireproximityprompt(prompt)
+				startTime = tick()
+			end
+			wait(0.1)
+		end
+		if keyword:find"Banshee" or keyword:find"Braelor" or keyword:find"Gralthar" then
+			tpnewpos(CFrame.new(-806.375732421875, 243.05555725097656, -983.061767578125))
+		elseif keyword:find"Mandrake King" then
+			tpnewpos(CFrame.new(1220.371337890625, -134.1096649169922, 246.6413116455078))
+		elseif keyword:find"Mandrake" and not keyword:find"King" then
+			tpnewpos(CFrame.new(1288.796875, 115.93772888183594, 160.29010009765625))
+		elseif keyword:find"Deer" then
+			tpnewpos(CFrame.new(1584.0882568359375, 127.94346618652344, 590.7007446289062))
+		elseif keyword:find"Goblin" then
+			tpnewpos(CFrame.new(1670.3717041015625, 116.17381286621094, 35.1649284362793))
+		elseif keyword:find"Wolf" or keyword:find"Boar" then
+			tpnewpos(CFrame.new(249.7513885498047, 127.84239959716797, 1068.0750732421875))
+		elseif keyword:find"Bear" then
+			tpnewpos(CFrame.new(-348.0965270996094, 134.1508331298828, 745.5266723632812))
+		elseif keyword:find"Serpent" then
+			tpnewpos(CFrame.new(429.8319091796875, 163.46481323242188, -1087.7958984375))
+		elseif keyword:find"Panther" then
+			tpnewpos(CFrame.new(408.46112060546875, 161.25692749023438, -1055.7154541015625))
+		elseif keyword:find"Amphi" then
+			tpnewpos(CFrame.new(944.6209716796875, 152.2188720703125, -1501.6416015625))
+		elseif keyword:find"Mud C" or keyword:find"Croc" then
+			tpnewpos(CFrame.new(2304.920166015625, 167.76004028320312, -1398.9019775390625))
+		elseif keyword:find"Spider" then
+			tpnewpos(CFrame.new(1926.3221435546875, 182.06520080566406, -852.291259765625))
+		elseif keyword:find"Rat" then
+			tpnewpos(CFrame.new(-574.9901123046875, 173.21730041503906, 1116.95361328125))
+		else
+			game:GetService("StarterGui"):SetCore("SendNotification", { Title = "Invalid Database", Text = keyword, Duration = 2 })
+		end
 	end
 end
 
