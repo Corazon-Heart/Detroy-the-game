@@ -666,6 +666,7 @@ pcall(function()
 			local start = false
 			local starttime = tick()
 			local Drogar = nil
+			local Detected = false
 			local waitdrogartick = tick()
 			while Drogar == nil do
 				for i,v in pairs(workspace.Alive:GetChildren()) do
@@ -681,6 +682,11 @@ pcall(function()
 						TP(Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375));
 					end
 					repeat wait()
+						for _, obj in pairs(game.Workspace.Alive:GetChildren()) do
+							if obj and obj.Name:find("Drogar") then
+								Detected = true
+							end
+						end
 						local args = {
 							[1] = {
 								["player"] = game:GetService("Players").LocalPlayer,
@@ -690,13 +696,15 @@ pcall(function()
 						}
 
 						game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.Interact:FireServer(unpack(args))
-					until game.Players.LocalPlayer.PlayerGui.ChatGui.MainFrame.Visible == true
-					for i = 1,30 do
-						local args = {
-							[1] = "Challenge The Demon Claw, Drogar."
-						}
+					until game.Players.LocalPlayer.PlayerGui.ChatGui.MainFrame.Visible == true or Detected == true
+					if Detected == false then
+						for i = 1,30 do
+							local args = {
+								[1] = "Challenge The Demon Claw, Drogar."
+							}
 
-						game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.DialogueEvent:FireServer(unpack(args))
+							game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.DialogueEvent:FireServer(unpack(args))
+						end
 					end
 				end
 				if tick() - waitdrogartick >= 30 then
