@@ -232,22 +232,16 @@ pcall(function()
 			return oldMeta(self, ...)
 		end)
 
-		-- Make the metatable read-only again to avoid further modifications
 		setreadonly(mt, true)
 		local TeleportService = game:GetService("TeleportService")
 		local Players = game:GetService("Players")
 
-		-- Target position
-		local targetPosition = Vector3.new(1013.8218383789062, -239.08447265625, 1572.6201171875)
-		local teleportRadius = 500
-
-		-- Function to check and teleport other players
 		local function checkAndTeleport()
 			for _, player in pairs(Players:GetPlayers()) do
 				if player ~= game.Players.LocalPlayer and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
 					local playerPosition = player.Character.HumanoidRootPart.Position
-					local distance = (playerPosition - targetPosition).magnitude
-					if distance <= teleportRadius then
+					local distance = (playerPosition - Vector3.new(1013.8218383789062, -239.08447265625, 1572.6201171875)).magnitude
+					if distance <= 500 then
 						shop()
 					end
 				end
@@ -882,6 +876,7 @@ pcall(function()
 				while Drogar == nil do
 					if game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart" then
 						TP(Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375));
+						checkAndTeleport()
 					end
 					repeat wait()
 					for i = 1,30 do
