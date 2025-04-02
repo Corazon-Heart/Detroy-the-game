@@ -174,8 +174,10 @@ Boss.CreateButton("Licht King", function()
 
 
 	fireProximityAndWait()
-	-- Teleport once the condition is met
-	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1721.454345703125, 422.90582275390625, -3894.0126953125)
+	for i = 1,5 do
+		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1721.454345703125, 422.90582275390625, -3894.0126953125)
+		task.wait()
+	end
 
 end)
 Boss.CreateButton("Elder Treant Location", function()
@@ -195,9 +197,10 @@ Boss.CreateButton("Elder Treant Location", function()
 
 
 	fireProximityAndWait()
-	-- Teleport once the condition is met
-	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1028.5682373046875, 155.67971801757812, -1482.1468505859375)
-
+	for i = 1,5 do
+		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1028.5682373046875, 155.67971801757812, -1482.1468505859375)
+		task.wait()
+	end
 end)
 Boss.CreateButton("Elder Treant (Body)", function()
 	for i,v in pairs(game.Workspace.Alive:GetChildren()) do
@@ -223,8 +226,10 @@ Boss.CreateButton("Elder Treant (Body)", function()
 
 
 	fireProximityAndWait()
-	-- Teleport once the condition is met
-	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = A
+	for i = 1,5 do
+		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = A
+		task.wait()
+	end
 end)
 Boss.CreateButton("Rune Golem", function()
 	for i,v in pairs(game.Workspace.Alive:GetChildren()) do
@@ -250,8 +255,10 @@ Boss.CreateButton("Rune Golem", function()
 
 
 	fireProximityAndWait()
-	-- Teleport once the condition is met
-	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = A
+	for i = 1,5 do
+		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = A
+		task.wait()
+	end
 end)
 Boss.CreateButton("Goblin King", function()
 	--Goblin King
@@ -270,8 +277,10 @@ Boss.CreateButton("Goblin King", function()
 
 
 	fireProximityAndWait()
-	-- Teleport once the condition is met
-	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1416.1436767578125, -5.341595649719238, -1903.239013671875)
+	for i = 1,5 do
+		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1416.1436767578125, -5.341595649719238, -1903.239013671875)
+		task.wait()
+	end
 
 end)
 Test1.CreateButton("TP Blacksmith", function()
@@ -290,8 +299,10 @@ Test1.CreateButton("TP Blacksmith", function()
 
 
 	fireProximityAndWait()
-	-- Teleport once the condition is met
-	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Effects.NPCS.WinfridTheBlacksmith.HumanoidRootPart.CFrame
+	for i = 1,5 do
+		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Effects.NPCS.WinfridTheBlacksmith.HumanoidRootPart.CFrame
+		task.wait()
+	end
 end)
 Test1.CreateButton("TP Fiend", function()
 	local A = CFrame.new(-618.617981, -62.6995506, -358.526367, -0.972720742, -3.17664082e-08, -0.231979266, -2.41212317e-09, 1, -1.26822059e-07, 0.231979266, -1.22802874e-07, -0.972720742)
@@ -310,8 +321,10 @@ Test1.CreateButton("TP Fiend", function()
 
 
 	fireProximityAndWait()
-	-- Teleport once the condition is met
-	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = A
+	for i = 1,5 do
+		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = A
+		task.wait()
+	end
 end)
 Test1.CreateButton("TP Drogar", function()
 	fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
@@ -351,8 +364,10 @@ Test1.CreateButton("Instant Heal", function()
 			game:GetService("RunService").Heartbeat:Wait()
 			game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode.E, false, nil)
 		until (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude < 10
-		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Last
-		wait()
+		for i = 1,5 do
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Last
+			task.wait()
+		end
 		local rs = game:GetService("ReplicatedStorage")
 		local plr = game:GetService("Players").LocalPlayer
 		local netModule = require(rs.Modules.Network)
@@ -400,6 +415,7 @@ Test1.CreateButton("TP to all NPC", function()
 			until (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude < 10
 			for i = 1,10 do
 				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Effects.NPCS[NpcName].HumanoidRootPart.CFrame
+				task.wait()
 			end
 			wait(1)
 		end
