@@ -7,6 +7,7 @@ local Window = Library.Window('KR4K Library')
 local Test1 = Window.CreateTab('Main')
 local Boss = Window.CreateTab('TP Boss')
 local Ingredient = Window.CreateTab('Item')
+local NPC = Window.CreateTab('NPC')
 -- NoFall
 local mt = getrawmetatable(game)
 local oldMeta = mt.__namecall
@@ -843,9 +844,15 @@ local function fireProximityAndWait(part)
 	if #matchingParts > 0 then
 		local randomPart = matchingParts[math.random(1, #matchingParts)]
 		if randomPart:IsA("Model") and #randomPart:GetChildren() >= 2 then
-			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = randomPart:GetChildren()[3].CFrame
+			for i = 1,5 do
+				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = randomPart:GetChildren()[3].CFrame
+				task.wait()
+			end
 		else
-			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = randomPart.CFrame
+			for i = 1,5 do
+				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = randomPart.CFrame
+				task.wait()
+			end
 		end
 	end
 end
@@ -869,5 +876,56 @@ for _, harvest in ipairs(sortedHarvestables) do
 			fireProximityAndWait(harvest)
 		end)
 		createdButtons[harvest.Name] = true
+	end
+end
+
+--UINPC
+local NPCButton = {}
+
+local function tppart(part)
+	local prompt = workspace.InvisibleParts.ColosseumEntrance.InteractPrompt
+	fireproximityprompt(prompt)
+
+	local startTime = tick()
+	local targetPos = Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)
+
+	while (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - targetPos).magnitude >= 10 do
+		if tick() - startTime > 2 then
+			fireproximityprompt(prompt)
+			startTime = tick()
+		end
+		wait(0.1)
+	end
+	local TPING = part:FindFirstChildOfClass"Part"
+	local TPIN = part:FindFirstChildOfClass"MeshPart"
+	for i = 1,5 do
+		if part:IsA("Model") and TPING then
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = TPING.CFrame
+		elseif part:IsA("Model") and TPIN then
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = TPIN.CFrame
+		end
+		task.wait()
+	end
+end
+
+-- Collect and sort harvestables
+local npcsort = workspace.Effects.NPCS:GetChildren()
+local npcalphabet = {}
+
+for _, harvest in ipairs(npcsort) do
+	table.insert(npcalphabet, harvest)
+end
+
+table.sort(npcalphabet, function(a, b)
+	return a.Name:lower() < b.Name:lower()  -- Sorting in case-sensitive A-Z order
+end)
+
+-- Create buttons in sorted order
+for _, npc in ipairs(npcalphabet) do
+	if not NPCButton[npc.Name] then
+		NPC.CreateButton(npc.Name, function()
+			tppart(npc)
+		end)
+		NPCButton[npc.Name] = true
 	end
 end
