@@ -79,23 +79,13 @@ pcall(function()
 				local target = getNearestEntity()
 				if target and not target.Parent:FindFirstChild("Grabbing") then
 					if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                        if game.Players.LocalPlayer.Character:FindFirstChild"M1CoolDown" then
-				local Z = game.Players.LocalPlayer.Character:FindFirstChild"M1CoolDown"
-				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = target.CFrame * CFrame.new(0, -30, 6.5)
-				repeat wait() until Z.Parent == nil
-                        elseif not target.Parent:FindFirstChild"UsingAbility" then
-				for i = 1,9 do
-                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = target.CFrame * CFrame.new(0, 0, 6.5)
-                                task.wait()
-				end
-                        end
+						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = target.CFrame * CFrame.new(0, 0, 7)
 					end
 				end
 			end)
 
 			task.spawn(function()
 				local netModule = require(game.ReplicatedStorage.Modules.Network)
-
 				while teleporting do
 					netModule.connect("MasterEvent", "FireServer", game.Players.LocalPlayer.Character, { Config = "Button1Down" })
 					task.wait(0.05)
