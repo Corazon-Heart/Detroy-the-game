@@ -419,6 +419,57 @@ Test1.CreateButton("TP to all NPC", function()
 	end
 end)
 
+Test1.CreateButton("Auto Instant Heal", function()
+	spawn(function()
+		while wait(.5) do
+			game.Players.LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("InfoOverlays")
+			if game.Players.LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("InfoOverlays"):FindFirstChild"ConfirmFrame" then
+				local Last = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+				game.Players.LocalPlayer.Character.Humanoid.Health = 0
+				local VirtualInputManager = game:GetService("VirtualInputManager")
+				game.Players.LocalPlayer.PlayerGui.InfoOverlays:WaitForChild"ConfirmFrame"
+				game.Players.LocalPlayer.PlayerGui.InfoOverlays:WaitForChild"ConfirmFrame":WaitForChild"MainFrame"
+				game.Players.LocalPlayer.PlayerGui.InfoOverlays:WaitForChild"ConfirmFrame":WaitForChild"MainFrame":WaitForChild"ButtonFrame"
+				game.Players.LocalPlayer.PlayerGui.InfoOverlays:WaitForChild"ConfirmFrame":WaitForChild"MainFrame":WaitForChild"ButtonFrame":WaitForChild"ConfirmButton"
+				wait()
+				local player = game:GetService("Players").LocalPlayer
+				repeat
+					if player.PlayerGui.InfoOverlays:FindFirstChild("ConfirmFrame") then
+						local button = player.PlayerGui.InfoOverlays.ConfirmFrame.MainFrame.ButtonFrame.ConfirmButton
+
+						if button then
+							local absPos = button.AbsolutePosition
+							local absSize = button.AbsoluteSize
+
+							local clickPos = absPos + (absSize / 2)
+
+							VirtualInputManager:SendMouseButtonEvent(clickPos.X, clickPos.Y + 65, 0, true, game, 0) -- Mouse down
+							VirtualInputManager:SendMouseButtonEvent(clickPos.X, clickPos.Y + 65, 0, false, game, 0) -- Mouse up
+						end
+					end
+					wait()
+				until not player.PlayerGui.InfoOverlays:FindFirstChild("ConfirmFrame")
+				repeat wait() until game.Players.LocalPlayer.Character:IsDescendantOf(game.Workspace.Alive)
+				repeat 
+					fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
+					wait(.1)
+				until (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude < 10
+				for i = 1,5 do
+					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Last
+					task.wait()
+				end
+				local rs = game:GetService("ReplicatedStorage")
+				local plr = game:GetService("Players").LocalPlayer
+				local netModule = require(rs.Modules.Network)
+				local tradeData = {
+					Config = "EquipWeapon",
+				}
+				netModule.connect("MasterEvent", "FireServer", plr.Character, tradeData)
+			end
+		end
+	end)
+end)
+
 Test1.CreateButton("Server Hop", function()
 	game:GetService("StarterGui"):SetCore("SendNotification", { Title = "Server Hopping", Text = "Wait....", Duration = 30 })
 	local PlaceID = 99995671928896
