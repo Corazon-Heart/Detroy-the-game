@@ -674,7 +674,6 @@ pcall(function()
 					task.wait()
 					TP(Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375));
 				end
-				local Drogar = nil
 				repeat wait()
 					local args = {
 						[1] = {
