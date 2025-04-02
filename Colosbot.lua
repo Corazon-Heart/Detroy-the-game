@@ -668,10 +668,10 @@ pcall(function()
 			local Drogar = nil
 			local waitdrogartick = tick()
 			while Drogar == nil do
+				task.wait()
 				game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.D, false, game)
 				game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode.D, false, game)
 				if game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart" and (game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart".Position - Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375)).magnitude > 10 then
-					task.wait()
 					TP(Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375));
 				end
 				repeat wait()
