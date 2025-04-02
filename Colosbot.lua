@@ -878,7 +878,6 @@ pcall(function()
 						TP(Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375));
 						checkAndTeleport()
 					end
-					repeat wait()
 					for i = 1,30 do
 						local args = {
 							[1] = {
@@ -889,7 +888,7 @@ pcall(function()
 						}
 
 						game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.Interact:FireServer(unpack(args))
-							end
+					end
 					for i = 1,30 do
 						local args = {
 							[1] = "Challenge The Demon Claw, Drogar."
