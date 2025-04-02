@@ -419,7 +419,10 @@ pcall(function()
 				end
 				wait(0.1)
 			end
-			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(937.6810913085938, -217.88751220703125, 1686.1224365234375)
+			for i = 1,5 do
+				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(937.6810913085938, -217.88751220703125, 1686.1224365234375)
+				task.wait()
+			end
 			repeat wait() until (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375)).magnitude < 5
 			local statValue = game:GetService("Players").LocalPlayer.PlayerGui.InventoryGui.MainBackpack.SearchBar.Weight.StatValue.Text
 
@@ -654,8 +657,12 @@ pcall(function()
 					end
 					wait(0.1)
 				end
-				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(937.6810913085938, -217.88751220703125, 1686.1224365234375)
+				for i = 1,5 do
+					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(937.6810913085938, -217.88751220703125, 1686.1224365234375)
+					task.wait()
+				end
 				repeat wait() until (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375)).magnitude < 5
+				
 			end
 
 			wait(.5)
@@ -874,11 +881,12 @@ pcall(function()
 				wait()
 				local waitdrogartick = tick()
 				while Drogar == nil do
-					if game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart" then
+					--if game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart" then
 						game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.D, false, game)
 						game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode.D, false, game)
-						TP(Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375));
-					end
+						task.wait()
+						--TP(Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375));
+					--end
 					local Drogar = nil
 					for i = 1,30 do
 						local args = {
