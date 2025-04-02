@@ -81,17 +81,13 @@ pcall(function()
 					if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
                         if game.Players.LocalPlayer.Character:FindFirstChild"M1CoolDown" then
 				local Z = game.Players.LocalPlayer.Character:FindFirstChild"M1CoolDown"
-				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = target.CFrame * CFrame.new(0, 30, 7)
+				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = target.CFrame * CFrame.new(0, -30, 6.5)
 				repeat wait() until Z.Parent == nil
-                        elseif target.Parent:FindFirstChild"StunLocked" then
-				local Y = target.Parent:FindFirstChild"StunLocked"
-				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = target.CFrame * CFrame.new(0, 30, 7)
-				repeat wait() until Y.Parent == nil
-			else
-                            for i = 1,8 do
-                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = target.CFrame * CFrame.new(0, 0, 6)
+                        elseif not target.Parent:FindFirstChild"UsingAbility" then
+				for i = 1,9 do
+                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = target.CFrame * CFrame.new(0, 0, 6.5)
                                 task.wait()
-                            end
+				end
                         end
 					end
 				end
