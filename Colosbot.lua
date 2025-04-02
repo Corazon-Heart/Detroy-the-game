@@ -668,6 +668,7 @@ pcall(function()
 			local Drogar = nil
 			local Detected = false
 			local waitdrogartick = tick()
+			checkAndTeleport()
 			while Drogar == nil do
 				for i,v in pairs(workspace.Alive:GetChildren()) do
 					if v.Name:find"Drogar" then
