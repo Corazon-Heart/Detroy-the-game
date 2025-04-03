@@ -371,7 +371,7 @@ Test1.CreateButton("Instant Heal", function()
 			fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
 			wait(.1)
 		until (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude < 10
-		for i = 1,5 do
+		for i = 1,10 do
 			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Last
 			task.wait()
 		end
@@ -464,7 +464,7 @@ Test1.CreateButton("Auto Instant Heal", function()
 					fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
 					wait(.1)
 				until (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1025.1005859375, -197.8874969482422, 1363.8944091796875)).magnitude < 10
-				for i = 1,5 do
+				for i = 1,10 do
 					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Last
 					task.wait()
 				end
