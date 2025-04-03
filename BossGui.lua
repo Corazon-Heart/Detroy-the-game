@@ -86,6 +86,12 @@ pcall(function()
 					if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
 						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = target.CFrame * CFrame.new(0, 0, 7)
 					end
+				elseif target and target.Parent:FindFirstChild("Grabbing") and not target.Parent:FindFirstChild"IFrames" then
+					local A = target.Parent:FindFirstChild("Grabbing")
+					if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = target.CFrame * CFrame.new(0, 10, 7)
+						repeat wait() until A.Parent == nil
+					end
 				end
 			end)
 
