@@ -1,6 +1,11 @@
 repeat wait() until game:IsLoaded()
 if game.PlaceId == 99995671928896 then
 	repeat wait() until game.Players.LocalPlayer ~= nil
+	game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
+	repeat wait() until game.Players.LocalPlayer.Character ~= nil or game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild"Menu"
+	if game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild"Menu" then
+		game:GetService("Players").LocalPlayer.PlayerGui.Menu:WaitForChild("CosmeticButton", 8)
+	end
 	if game.Players.LocalPlayer.Character == nil then
 		game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Menu",60)
 		game:GetService("Players").LocalPlayer.PlayerGui.Menu:WaitForChild("CosmeticButton", 30)
