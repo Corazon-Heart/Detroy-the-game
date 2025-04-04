@@ -173,7 +173,8 @@ pcall(function()
 		local beforeTick = tick()
 		while not game:GetService("Players").LocalPlayer.Character do
 			spawnCharacter()
-			wait(2)
+			local waitfor = tick()
+			repeat wait() until (tick() - waitfor) >= 5 or game:GetService("Players").LocalPlayer.Character ~= nil
 			if game:GetService("Players").LocalPlayer.Character or (tick() - beforeTick) >= 15 then
 				if game:GetService("Players").LocalPlayer.Character ~= nil then
 					break
