@@ -116,15 +116,19 @@ if game.PlaceId == 99995671928896 then
 
 			local priorityTargets = {}
 			local others = {}
+			local MAX_DISTANCE = 500  -- Limit entities to 500 studs range
 
 			for _, entity in pairs(workspace.Alive:GetChildren()) do
 				if entity:IsA("Model") and entity ~= char and not game.Players:GetPlayerFromCharacter(entity) then
 					local rootPart = entity:FindFirstChild("HumanoidRootPart")
 					if rootPart then
-						if entity.Name:find("Gralthar") or entity.Name:find("Braelor") then
-							table.insert(priorityTargets, rootPart)
-						else
-							table.insert(others, rootPart)
+						local distance = (hrp.Position - rootPart.Position).Magnitude
+						if distance <= MAX_DISTANCE then  -- Only consider entities within 500 studs
+							if entity.Name:find("Gralthar") or entity.Name:find("Braelor") then
+								table.insert(priorityTargets, rootPart)
+							else
+								table.insert(others, rootPart)
+							end
 						end
 					end
 				end
@@ -135,13 +139,9 @@ if game.PlaceId == 99995671928896 then
 				local closest, shortestDistance = nil, math.huge
 				for _, rootPart in pairs(list) do
 					local distance = (hrp.Position - rootPart.Position).Magnitude
-					if distance < 500 then
-						if distance < shortestDistance then
-							shortestDistance = distance
-							closest = rootPart
-						end
-					else
-						return nil
+					if distance < shortestDistance then
+						shortestDistance = distance
+						closest = rootPart
 					end
 				end
 				return closest
@@ -151,7 +151,7 @@ if game.PlaceId == 99995671928896 then
 			local closestPriority = findClosest(priorityTargets)
 			if closestPriority then return closestPriority end
 
-			-- Otherwise fallback to closest other target
+			-- Otherwise, fallback to closest other target
 			return findClosest(others)
 		end
 
