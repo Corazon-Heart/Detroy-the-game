@@ -466,7 +466,7 @@ pcall(function()
 			local Found = false
 			local SellItem = {
 				["Intellect Rune"] = true,
-				--["Agility Rune"] = true,
+				["Agility Rune"] = true,
 				["Spirit Rune"] = true,
 				["Stamina Rune"] = true,
 				["Strength Rune"] = true,
@@ -576,7 +576,7 @@ pcall(function()
 				local sellEvent = player.Character.CharacterHandler.Input.Events.SellEvent
 				local itemsToSell = {
 					"Intellect Rune",
-					--"Agility Rune",
+					"Agility Rune",
 					"Spirit Rune",
 					"Stamina Rune",
 					"Strength Rune",
