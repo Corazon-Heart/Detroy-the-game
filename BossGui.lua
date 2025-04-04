@@ -1,35 +1,37 @@
 repeat wait() until game:IsLoaded()
 if game.PlaceId == 99995671928896 then
 	repeat wait() until game.Players.LocalPlayer ~= nil
-	game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Menu",60)
-	game:GetService("Players").LocalPlayer.PlayerGui.Menu:WaitForChild("CosmeticButton", 30)
-	local function spawnCharacter()
-		if game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Menu") and game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Menu"):FindFirstChild("CosmeticButton") then
-			task.wait(1.5)
+	if game.Player.LocalPlayer.Character == nil then
+		game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Menu",60)
+		game:GetService("Players").LocalPlayer.PlayerGui.Menu:WaitForChild("CosmeticButton", 30)
+		local function spawnCharacter()
 			if game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Menu") and game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Menu"):FindFirstChild("CosmeticButton") then
-				game:GetService("Players").LocalPlayer.ClientNetwork.MenuOptions:FireServer({
-					["config"] = "start_screen"
-				})
-			end
-			task.wait(1.5)
-			if game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Menu") and game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Menu"):FindFirstChild("CosmeticButton") then
-				game:GetService("Players").LocalPlayer.ClientNetwork.MenuOptions:FireServer({
-					["slot"] = "Slot_1",
-					["config"] = "slots"
-				})
+				task.wait(1.5)
+				if game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Menu") and game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Menu"):FindFirstChild("CosmeticButton") then
+					game:GetService("Players").LocalPlayer.ClientNetwork.MenuOptions:FireServer({
+						["config"] = "start_screen"
+					})
+				end
+				task.wait(1.5)
+				if game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Menu") and game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Menu"):FindFirstChild("CosmeticButton") then
+					game:GetService("Players").LocalPlayer.ClientNetwork.MenuOptions:FireServer({
+						["slot"] = "Slot_1",
+						["config"] = "slots"
+					})
+				end
 			end
 		end
-	end
 
-	local beforeTick = tick()
-	while not game:GetService("Players").LocalPlayer.Character do
-		spawnCharacter()
-		wait(2)
-		if game:GetService("Players").LocalPlayer.Character or (tick() - beforeTick) >= 15 then
-			if game:GetService("Players").LocalPlayer.Character ~= nil then
-				break
-			else
-				return shop()
+		local beforeTick = tick()
+		while not game:GetService("Players").LocalPlayer.Character do
+			spawnCharacter()
+			wait(2)
+			if game:GetService("Players").LocalPlayer.Character or (tick() - beforeTick) >= 15 then
+				if game:GetService("Players").LocalPlayer.Character ~= nil then
+					break
+				else
+					return shop()
+				end
 			end
 		end
 	end
