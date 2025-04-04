@@ -146,28 +146,34 @@ if game.PlaceId == 99995671928896 then
 		end
 	end
 
-	game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Menu",15)
-	if game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild"Menu" then
-		game:GetService("Players").LocalPlayer.PlayerGui.Menu:WaitForChild("CosmeticButton",15)
-		wait(1.5)
-		local args = {
-			[1] = {
-				["config"] = "start_screen"
-			}
-		}
-
-		game:GetService("Players").LocalPlayer.ClientNetwork.MenuOptions:FireServer(unpack(args))
-		wait(1.5)
-		local args = {
-			[1] = {
-				["slot"] = "Slot_1",
-				["config"] = "slots"
-			}
-		}
-
-		game:GetService("Players").LocalPlayer.ClientNetwork.MenuOptions:FireServer(unpack(args))
+	local shop = function()
+		wait(.5)
+		game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
 	end
-	repeat wait() until game.Players.LocalPlayer.Character ~= nil
+	game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Menu",60)
+	local function spawnCharacter()
+		game:GetService("Players").LocalPlayer.PlayerGui.Menu:WaitForChild("CosmeticButton", 30)
+		task.wait(1.5)
+
+		game:GetService("Players").LocalPlayer.ClientNetwork.MenuOptions:FireServer({
+			["config"] = "start_screen"
+		})
+		task.wait(1.5)
+
+		game:GetService("Players").LocalPlayer.ClientNetwork.MenuOptions:FireServer({
+			["slot"] = "Slot_1",
+			["config"] = "slots"
+		})
+	end
+
+	local beforeTick = tick()
+	while not game:GetService("Players").LocalPlayer.Character do
+		spawnCharacter()
+		wait()
+		if game:GetService("Players").LocalPlayer.Character or (tick() - beforeTick) >= 7.5 then
+			return shop()
+		end
+	end
 	repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart"
 	repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild"CharacterHandler"
 	repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild"CharacterHandler":FindFirstChild"Input"
@@ -179,10 +185,6 @@ if game.PlaceId == 99995671928896 then
 		game:GetService("VirtualUser"):CaptureController()
 		game:GetService("VirtualUser"):ClickButton2(Vector2.new(math.random(10, 50), math.random(10, 50)))
 	end)
-	local shop = function()
-		wait(.5)
-		game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
-	end
 	local CurrentCheck = 0
 	pcall(function()
 		for _,v in pairs(game.Players:GetChildren()) do
