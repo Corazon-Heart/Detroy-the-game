@@ -75,7 +75,7 @@ if game.PlaceId == 99995671928896 then
 	end
 
 	pcall(function()
-		function TPNEW(Object) -- Object = part teleporting to.
+		function TP(Object) -- Object = part teleporting to.
 			local tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new((game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Object).magnitude/120, Enum.EasingStyle.Linear, Enum.EasingDirection.In, 0, false, 0)
 			local tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = CFrame.new(Object + Vector3.new(0,0,0))})
 			tween:Play()
@@ -170,7 +170,7 @@ if game.PlaceId == 99995671928896 then
 						if dist < instantDistance then
 							hrp.CFrame = target.CFrame * CFrame.new(0, adjustY, adjust)
 						else
-							TPNEW(targetPos + Vector3.new(0, 0, 7))
+							TP(targetPos + Vector3.new(0, 0, 7))
 						end
 					elseif target and target.Parent:FindFirstChild("Grabbing") and not target.Parent:FindFirstChild("IFrames") then
 						local A = target.Parent:FindFirstChild("Grabbing")
@@ -182,7 +182,7 @@ if game.PlaceId == 99995671928896 then
 								timeout = timeout - wait()
 							end
 						else
-							TPNEW(targetPos + Vector3.new(0, 0, 7))
+							TP(targetPos + Vector3.new(0, 0, 7))
 						end
 					end
 				end)
@@ -679,7 +679,7 @@ if game.PlaceId == 99995671928896 then
 			if not rootPart then return end
 
 			local tweenInfo = TweenInfo.new(
-				(rootPart.Position - Object).magnitude / 70, 
+				(rootPart.Position - Object).magnitude / 90, 
 				Enum.EasingStyle.Linear, 
 				Enum.EasingDirection.In, 
 				0, false, 0
