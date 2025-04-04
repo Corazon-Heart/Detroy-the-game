@@ -336,6 +336,10 @@ if game.PlaceId == 99995671928896 then
 	local pickaxeBuff = character:WaitForChild("BoolValues"):WaitForChild("PickaxeBuff")
 	game.Players.LocalPlayer.Backpack:WaitForChild("Rocky Mountain Tonic",0.5)
 	local mine = false
+	local statValue = game:GetService("Players").LocalPlayer.PlayerGui.InventoryGui.MainBackpack.SearchBar.Weight.StatValue.Text
+	local currentWeight, maxWeight = string.match(statValue, "(%d+)/(%d+)")
+	currentWeight = tonumber(currentWeight)
+	maxWeight = tonumber(maxWeight)
 	for i,v in pairs(game.Workspace.Harvestable:GetChildren()) do
 		if (v.Name:find"Mithril" or v.Name:find("Platinum")) and v:FindFirstChild"Icosphere" then
 			if v:FindFirstChild"Icosphere".Transparency == 0 then
@@ -346,7 +350,7 @@ if game.PlaceId == 99995671928896 then
 	if mine == false then
 		shop()
 	end
-	if pickaxeBuff.Value < 60 then
+	if pickaxeBuff.Value < 60 and currentWeight < maxWeight then
 		if not game.Players.LocalPlayer.Backpack:FindFirstChild("Rocky Mountain Tonic") and not game.Players.LocalPlayer.Character:FindFirstChild("Rocky Mountain Tonic") then
 			local args = {
 				[1] = {
