@@ -85,8 +85,10 @@ pcall(function()
 				local target = getNearestEntity()
 				if not target then return end
 				local adjust = 7
+				local adjustY = 0
 				if target.Name:find"Braelor" or target.Name:find"Gralthar" then
-					adjust = 9
+					adjust = 10
+					adjustY = 5
 				elseif target.Name:find"Banshee" then
 					adjust = 6
 				end
@@ -94,7 +96,7 @@ pcall(function()
 				if target and not target.Parent:FindFirstChild("Grabbing") and not target.Parent:FindFirstChild"IFrames" then
 					if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
 						if (game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Position - target.Position).magnitude < instantDistance then
-							game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = target.CFrame * CFrame.new(0, 0, adjust)
+							game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = target.CFrame * CFrame.new(0, adjustY, adjust)
 						else
 							TP(target.Position+Vector3.new(0,0,7))
 						end
@@ -103,7 +105,7 @@ pcall(function()
 					local A = target.Parent:FindFirstChild("Grabbing")
 					if (game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Position - target.Position).magnitude < instantDistance then
 						if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-							game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = target.CFrame * CFrame.new(0, 0, adjust)
+							game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = target.CFrame * CFrame.new(0, adjustY+10, adjust)
 							repeat wait() until A.Parent == nil
 						else
 							TP(target.Position+Vector3.new(0,0,7))
