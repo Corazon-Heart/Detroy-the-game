@@ -110,8 +110,8 @@ pcall(function()
 				local target = getNearestEntity()
 				if not target then return end
 				local adjustValues = {
-					Braelor = {8.5, 7},
-					Gralthar = {8.5, 7},
+					Braelor = {8, 6},
+					Gralthar = {8, 6},
 					Banshee = {6, 0}
 				}
 
