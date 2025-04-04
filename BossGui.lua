@@ -84,34 +84,50 @@ pcall(function()
 
 				local target = getNearestEntity()
 				if not target then return end
-				local adjust = 7
-				local adjustY = 0
-				if target.Name:find"Braelor" or target.Name:find"Gralthar" then
-					adjust = 10
-					adjustY = 5
-				elseif target.Name:find"Banshee" then
-					adjust = 6
+				local adjustValues = {
+					Braelor = {10, 7},
+					Gralthar = {10, 7},
+					Banshee = {6, 0}
+				}
+
+				local adjust, adjustY = 7, 0
+				for name, values in pairs(adjustValues) do
+					if target.Name:find(name) then
+						adjust, adjustY = values[1], values[2]
+						break
+					end
 				end
+
+				local player = game.Players.LocalPlayer
+				local char = player.Character
+				local hrp = char and char:FindFirstChild("HumanoidRootPart")
+
 				if target and game.Players:FindFirstChild(target.Parent.Name) then return end
-				if target and not target.Parent:FindFirstChild("Grabbing") and not target.Parent:FindFirstChild"IFrames" then
-					if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-						if (game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Position - target.Position).magnitude < instantDistance then
-							game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = target.CFrame * CFrame.new(0, adjustY, adjust)
-						else
-							TP(target.Position+Vector3.new(0,0,7))
-						end
+				if not hrp then return end
+
+				local targetPos = target.Position
+				local dist = (hrp.Position - targetPos).magnitude
+
+				if target and not target.Parent:FindFirstChild("Grabbing") and not target.Parent:FindFirstChild("IFrames") then
+					if dist < instantDistance then
+						hrp.CFrame = target.CFrame * CFrame.new(0, adjustY, adjust)
+					else
+						TP(targetPos + Vector3.new(0, 0, 7))
 					end
-				elseif target and target.Parent:FindFirstChild("Grabbing") and not target.Parent:FindFirstChild"IFrames" then
+				elseif target and target.Parent:FindFirstChild("Grabbing") and not target.Parent:FindFirstChild("IFrames") then
 					local A = target.Parent:FindFirstChild("Grabbing")
-					if (game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Position - target.Position).magnitude < instantDistance then
-						if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-							game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = target.CFrame * CFrame.new(0, adjustY+10, adjust)
-							repeat wait() until A.Parent == nil
-						else
-							TP(target.Position+Vector3.new(0,0,7))
+					if dist < instantDistance then
+						hrp.CFrame = target.CFrame * CFrame.new(0, adjustY + 10, adjust)
+						local timeout = 5
+						while A.Parent and timeout > 0 do
+							wait()
+							timeout = timeout - wait()
 						end
+					else
+						TP(targetPos + Vector3.new(0, 0, 7))
 					end
 				end
+
 			end)
 
 			task.spawn(function()
