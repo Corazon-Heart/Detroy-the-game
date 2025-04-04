@@ -151,25 +151,29 @@ pcall(function()
 			game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
 		end
 		game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Menu",60)
+		game:GetService("Players").LocalPlayer.PlayerGui.Menu:WaitForChild("CosmeticButton", 30)
 		local function spawnCharacter()
-			game:GetService("Players").LocalPlayer.PlayerGui.Menu:WaitForChild("CosmeticButton", 30)
-			task.wait(1.5)
-
-			game:GetService("Players").LocalPlayer.ClientNetwork.MenuOptions:FireServer({
-				["config"] = "start_screen"
-			})
-			task.wait(1.5)
-
-			game:GetService("Players").LocalPlayer.ClientNetwork.MenuOptions:FireServer({
-				["slot"] = "Slot_1",
-				["config"] = "slots"
-			})
+			if game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Menu") then
+				task.wait(1.5)
+				if game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Menu") then
+					game:GetService("Players").LocalPlayer.ClientNetwork.MenuOptions:FireServer({
+						["config"] = "start_screen"
+					})
+				end
+				task.wait(1.5)
+				if game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Menu") then
+					game:GetService("Players").LocalPlayer.ClientNetwork.MenuOptions:FireServer({
+						["slot"] = "Slot_1",
+						["config"] = "slots"
+					})
+				end
+			end
 		end
 
 		local beforeTick = tick()
 		while not game:GetService("Players").LocalPlayer.Character do
 			spawnCharacter()
-			wait()
+			wait(2)
 			if game:GetService("Players").LocalPlayer.Character or (tick() - beforeTick) >= 7.5 then
 				return shop()
 			end
