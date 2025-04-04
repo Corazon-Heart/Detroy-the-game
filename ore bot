@@ -150,39 +150,32 @@ if game.PlaceId == 99995671928896 then
 		wait(.5)
 		game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
 	end
-	game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Menu",60)
-	game:GetService("Players").LocalPlayer.PlayerGui.Menu:WaitForChild("CosmeticButton", 30)
-	local function spawnCharacter()
-		if game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Menu") and game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Menu"):FindFirstChild("CosmeticButton") then
-			task.wait(1.5)
-			if game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Menu") and game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Menu"):FindFirstChild("CosmeticButton") then
-				game:GetService("Players").LocalPlayer.ClientNetwork.MenuOptions:FireServer({
-					["config"] = "start_screen"
-				})
-			end
-			task.wait(1.5)
-			if game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Menu") and game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Menu"):FindFirstChild("CosmeticButton") then
-				game:GetService("Players").LocalPlayer.ClientNetwork.MenuOptions:FireServer({
-					["slot"] = "Slot_1",
-					["config"] = "slots"
-				})
-			end
-		end
-	end
-
-	local beforeTick = tick()
-	while not game:GetService("Players").LocalPlayer.Character do
-		spawnCharacter()
-		local waitfor = tick()
-		repeat wait() until (tick() - waitfor) >= 5 or game:GetService("Players").LocalPlayer.Character ~= nil
-		if game:GetService("Players").LocalPlayer.Character or (tick() - beforeTick) >= 15 then
-			if game:GetService("Players").LocalPlayer.Character ~= nil then
-				break
-			else
-				return shop()
-			end
-		end
-	end
+	repeat wait() until game:GetService("Players").LocalPlayer:FindFirstChild"PlayerGui"
+	repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild"Menu"
+	repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui.Menu:FindFirstChild"ButtonFrame"
+	repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui.Menu.ButtonFrame:FindFirstChild"PlayButton"
+	local playButton = game:GetService("Players").LocalPlayer.PlayerGui.Menu.ButtonFrame.PlayButton
+	local position = playButton.AbsolutePosition
+	local size = playButton.AbsoluteSize
+	local centerX = position.X + size.X / 2
+	local centerY = position.Y + size.Y / 2
+	repeat wait(.25)
+		game:GetService("VirtualInputManager"):SendMouseButtonEvent(centerX, centerY+65, 0, true, game, 0)
+		game:GetService("VirtualInputManager"):SendMouseButtonEvent(centerX, centerY+65, 0, false, game, 0)
+	until game:GetService("Players").LocalPlayer:FindFirstChild("PlayerGui") and game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Slots")
+	wait()
+	repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui.Slots:FindFirstChild"CharacterSlots"
+	repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui.Slots.CharacterSlots:FindFirstChild"ScrollingFrame"
+	repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui.Slots.CharacterSlots.ScrollingFrame:FindFirstChild"Slot_1"
+	local slotbutton = game:GetService("Players").LocalPlayer.PlayerGui.Slots.CharacterSlots.ScrollingFrame.Slot_1
+	local positionslot = slotbutton.AbsolutePosition
+	local sizeslot = slotbutton.AbsoluteSize
+	local centerslotX = positionslot.X + sizeslot.X / 2
+	local centerslotY = positionslot.Y + sizeslot.Y / 2
+	repeat wait(.25)
+		game:GetService("VirtualInputManager"):SendMouseButtonEvent(centerslotX, centerslotY + 65, 0, true, game, 0)
+		game:GetService("VirtualInputManager"):SendMouseButtonEvent(centerslotX, centerslotY + 65, 0, false, game, 0)
+	until game.Players.LocalPlayer.Character ~= nil
 	repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart"
 	repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild"CharacterHandler"
 	repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild"CharacterHandler":FindFirstChild"Input"
