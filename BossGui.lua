@@ -177,7 +177,8 @@ if game.PlaceId == 99995671928896 then
 					local adjustValues = {
 						Braelor = {7, 3},
 						Gralthar = {7, 3},
-						Banshee = {6, 0}
+						Banshee = {6, 0},
+						Mandrakes = {6, 0}
 					}
 
 					local adjust, adjustY = 7, 0
