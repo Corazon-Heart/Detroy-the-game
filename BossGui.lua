@@ -92,7 +92,7 @@ pcall(function()
 				elseif target.Name:find"Banshee" then
 					adjust = 6
 				end
-				if target and target.Parent ~= nil and Pla ~= nil and game.Players:FindFirstChild(tostring(target.Parent.Name)) then return end
+				if target and game.Players:FindFirstChild(target.Parent.Name) then return end
 				if target and not target.Parent:FindFirstChild("Grabbing") and not target.Parent:FindFirstChild"IFrames" then
 					if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
 						if (game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Position - target.Position).magnitude < instantDistance then
