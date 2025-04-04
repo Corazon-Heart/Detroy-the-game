@@ -710,9 +710,9 @@ if game.PlaceId == 99995671928896 then
 			task.wait()
 			if Drogar == nil then
 				game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.D, false, game)
-				task.wait(.05)
+				task.wait(.25)
 				game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode.D, false, game)
-				task.wait(.15)
+				task.wait(.25)
 				TPNormal(Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375))
 				local maintain = tick()
 				local found = false
