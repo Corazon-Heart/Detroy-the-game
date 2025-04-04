@@ -135,9 +135,13 @@ if game.PlaceId == 99995671928896 then
 				local closest, shortestDistance = nil, math.huge
 				for _, rootPart in pairs(list) do
 					local distance = (hrp.Position - rootPart.Position).Magnitude
-					if distance < shortestDistance then
-						shortestDistance = distance
-						closest = rootPart
+					if distance < 500 then
+						if distance < shortestDistance then
+							shortestDistance = distance
+							closest = rootPart
+						end
+					else
+						return nil
 					end
 				end
 				return closest
