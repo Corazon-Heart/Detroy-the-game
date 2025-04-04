@@ -30,7 +30,7 @@ pcall(function()
 		end
 
 		-- Generate filename based on the current date
-		local dateStr = tostring(game.Players.LocalPlayer.Name..os.date("%Y-%m-%d"))
+		local dateStr = tostring(os.date("%Y-%m-%d"))
 		local filename = dateStr .. ".lua"
 		if isfile(filename) then
 			local _table = LoadSettings(dateStr..".lua")
@@ -56,7 +56,7 @@ pcall(function()
 					print("Attempting to fetch server list... Attempt " .. attempt)
 
 					local response = req({
-						Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=25&excludeFullGames=true", PlaceId),
+						Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true", PlaceId),
 						Method = "GET"
 					})
 
@@ -113,7 +113,7 @@ pcall(function()
 				print("Attempting to fetch server list... Attempt " .. attempt)
 
 				local response = req({
-					Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=25&excludeFullGames=true", PlaceId),
+					Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true", PlaceId),
 					Method = "GET"
 				})
 
@@ -973,7 +973,7 @@ pcall(function()
 		end
 
 		-- Generate filename based on the current date
-		local dateStr = tostring(game.Players.LocalPlayer.Name..os.date("%Y-%m-%d"))
+		local dateStr = tostring(os.date("%Y-%m-%d"))
 		local filename = dateStr .. ".lua"
 
 		if isfile(filename) then
@@ -1000,7 +1000,7 @@ pcall(function()
 					print("Attempting to fetch server list... Attempt " .. attempt)
 
 					local response = req({
-						Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=25&excludeFullGames=true", PlaceId),
+						Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true", PlaceId),
 						Method = "GET"
 					})
 
@@ -1058,7 +1058,7 @@ pcall(function()
 				print("Attempting to fetch server list... Attempt " .. attempt)
 
 				local response = req({
-					Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=25&excludeFullGames=true", PlaceId),
+					Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true", PlaceId),
 					Method = "GET"
 				})
 
@@ -1091,7 +1091,7 @@ pcall(function()
 				warn("No valid servers found.")
 			end
 		end
-		local dateStr = tostring(game.Players.LocalPlayer.Name..os.date("%Y-%m-%d"))
+		local dateStr = tostring(os.date("%Y-%m-%d"))
 		local filename = dateStr .. ".lua"
 		local _table = LoadSettings(dateStr..".lua")
 		if _table ~= nil and _table[1] ~= nil then
@@ -1101,9 +1101,9 @@ pcall(function()
 				game:GetService("TeleportService"):TeleportToPlaceInstance(99995671928896, tostring(A), game.Players.LocalPlayer)
 				table.remove(_table, B)
 				WriteSettings(filename, _table)
-				for i = 1,15 do
+				for i = 1,10 do
 					game.GuiService:ClearError()
-					wait(.2)
+					wait(.3)
 				end
 			end
 		end
