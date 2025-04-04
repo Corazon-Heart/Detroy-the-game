@@ -168,6 +168,7 @@ if game.PlaceId == 99995671928896 then
 					["config"] = "slots"
 				})
 			end
+			task.wait(5)
 		end
 	until game.Players.LocalPlayer.Character ~= nil or tick() - Ending >= 15
 	if tick() - Ending >= 15 then
