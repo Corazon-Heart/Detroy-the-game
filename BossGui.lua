@@ -71,7 +71,7 @@ pcall(function()
 	end
 
 	local function toggleTeleport()
-		local instantDistance = 30
+		local instantDistance = 15
 		teleporting = not teleporting
 
 		if teleporting then
