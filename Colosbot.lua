@@ -335,7 +335,6 @@ pcall(function()
 			repeat wait() until workspace.InvisibleParts:FindFirstChild"ColosseumEntrance":FindFirstChild"InteractPrompt"
 			repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild("BoolValues")
 			repeat wait() until game.Players.LocalPlayer.Character.BoolValues:FindFirstChild"CombatTag"
-			repeat wait() until game.Players.LocalPlayer.Character.BoolValues.CombatTag.Value <= 1
 			repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild"Humanoid".Health > 0
 			checkAndTeleport()
 			for i,v in pairs(game.Workspace.Alive:GetChildren()) do
@@ -690,8 +689,16 @@ pcall(function()
 					game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.D, false, game)
 					wait(0.05)
 					game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode.D, false, game)
-					if game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart" and (game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart".Position - Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375)).magnitude > 10 and (game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart".Position - Vector3.new(1022.8795776367188, -239.4728240966797, 1610.608642578125)).magnitude > 10 then
-						TP(Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375));
+
+					if game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart" then
+						local rootPartPos = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Position
+						local dist1 = (rootPartPos - Vector3.new(937.6811, -217.8875, 1686.1224)).magnitude
+						local dist2 = (rootPartPos - Vector3.new(1022.8796, -239.4728, 1610.6086)).magnitude
+						if dist1 > 10 and dist2 > 10 then
+							TP(Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375));
+						elseif dist2 < 10 and game.Players.LocalPlayer.Character.BoolValues.CombatTag.Value >= 1 then
+							break
+						end
 					end
 					repeat wait()
 						for _, obj in pairs(game.Workspace.Alive:GetChildren()) do
@@ -743,6 +750,9 @@ pcall(function()
 			}
 
 			netModule.connect("MasterEvent", "FireServer", plr.Character, tradeData)
+			if Drogar == nil then
+				return shop()
+			end
 			if Drogar.Parent == nil then
 				return shop()
 			end
