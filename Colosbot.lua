@@ -12,7 +12,6 @@ pcall(function()
 		local TeleportService = game:GetService("TeleportService")
 		local Players = game:GetService("Players")
 
-
 		-- Function to append content to a file
 		local function appendfile(path, contents)
 			writefile(path, (readfile(path) or "") .. contents .. "\n")
@@ -712,16 +711,21 @@ pcall(function()
 				end
 				task.wait()
 				if Drogar == nil then
+					local Old = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
 					game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.D, false, game)
 					task.wait(.25)
 					game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode.D, false, game)
 					task.wait(.25)
+					if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Old).magnitude < 50 then
+						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(Old.X,Old.Y,Old.Z)
+					end
 					TPNormal(Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375))
 					local maintain = tick()
 					local found = false
 					repeat
 						local check = tick()
 						local got = false
+						fireproximityprompt(workspace.Effects.NPCS.Drakonar.InteractPrompt)
 						fireproximityprompt(workspace.Effects.NPCS.Drakonar.InteractPrompt)
 						repeat wait() 
 							if game.Players.LocalPlayer.PlayerGui.ChatGui.MainFrame.Visible == true then
