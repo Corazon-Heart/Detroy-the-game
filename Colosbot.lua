@@ -690,10 +690,8 @@ pcall(function()
 					game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.D, false, game)
 					wait(0.05)
 					game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode.D, false, game)
-					if game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart" and (game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart".Position - Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375)).magnitude > 10 and not (game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart".Position - Vector3.new(1022.8795776367188, -239.4728240966797, 1610.608642578125)).magnitude < 10 then
-						if game.Players.LocalPlayer.Character.BoolValues:FindFirstChild"CombatTag" and game.Players.LocalPlayer.Character.BoolValues:FindFirstChild"CombatTag".Value < 1 then
-							TP(Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375));
-						end
+					if game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart" and (game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart".Position - Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375)).magnitude > 10 and (game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart".Position - Vector3.new(1022.8795776367188, -239.4728240966797, 1610.608642578125)).magnitude > 10 then
+						TP(Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375));
 					end
 					repeat wait()
 						for _, obj in pairs(game.Workspace.Alive:GetChildren()) do
