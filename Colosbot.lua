@@ -152,15 +152,16 @@ if game.PlaceId == 99995671928896 then
 	end
 	game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Menu",60)
 	game:GetService("Players").LocalPlayer.PlayerGui.Menu:WaitForChild("CosmeticButton", 30)
-	local function spawnCharacter()
+	local Ending = tick()
+	repeat wait()
 		if game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Menu") and game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Menu"):FindFirstChild("CosmeticButton") then
-			task.wait(1.5)
+			task.wait(2)
 			if game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Menu") and game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Menu"):FindFirstChild("CosmeticButton") then
 				game:GetService("Players").LocalPlayer.ClientNetwork.MenuOptions:FireServer({
 					["config"] = "start_screen"
 				})
 			end
-			task.wait(1.5)
+			task.wait(2)
 			if game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Menu") and game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Menu"):FindFirstChild("CosmeticButton") then
 				game:GetService("Players").LocalPlayer.ClientNetwork.MenuOptions:FireServer({
 					["slot"] = "Slot_1",
@@ -168,20 +169,9 @@ if game.PlaceId == 99995671928896 then
 				})
 			end
 		end
-	end
-
-	local beforeTick = tick()
-	while not game:GetService("Players").LocalPlayer.Character do
-		spawnCharacter()
-		local waitfor = tick()
-		repeat wait() until (tick() - waitfor) >= 5 or game:GetService("Players").LocalPlayer.Character ~= nil
-		if game:GetService("Players").LocalPlayer.Character or (tick() - beforeTick) >= 15 then
-			if game:GetService("Players").LocalPlayer.Character ~= nil then
-				break
-			else
-				return shop("1")
-			end
-		end
+	until game.Players.LocalPlayer.Character ~= nil or tick() - Ending >= 15
+	if tick() - Ending >= 15 then
+		shop()
 	end
 	repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart"
 	repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild"CharacterHandler"
