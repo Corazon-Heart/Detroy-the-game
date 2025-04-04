@@ -41,14 +41,20 @@ for i,v in pairs(workspace:GetDescendants()) do
 end
 
 pcall(function()
+	function TP(Object) -- Object = part teleporting to.
+		local tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new((game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Object).magnitude/100,Enum.EasingStyle.Linear,Enum.EasingDirection.In,0,false,0)
+		local tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = CFrame.new(Object + Vector3.new(0,0,0))})
+		tween:Play()
+		tween.Completed:Wait()
+	end
 	local UserInputService = game:GetService("UserInputService")
 	local RunService = game:GetService("RunService")
 	local teleporting = false
 
 	local function getNearestEntity()
 		local closestEntity = nil
-		local shortestDistance = 50
-
+		local shortestDistance = 500
+		local instantDistance = 30
 		for _, entity in pairs(workspace.Alive:GetChildren()) do
 			if entity:IsA("Model") and entity ~= game.Players.LocalPlayer.Character then
 				local rootPart = entity:FindFirstChild("HumanoidRootPart")
@@ -81,13 +87,19 @@ pcall(function()
 				if target and target.Parent ~= nil and Pla ~= nil and game.Players:FindFirstChild(tostring(target.Parent.Name)) then return end
 				if target and not target.Parent:FindFirstChild("Grabbing") and not target.Parent:FindFirstChild"IFrames" then
 					if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = target.CFrame * CFrame.new(0, 0, 7)
+						TP(target.Position)
+						if (game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Position - target.Position).magnitude < instantDistance then
+							game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = target.CFrame * CFrame.new(0, 0, 7)
+						end
 					end
 				elseif target and target.Parent:FindFirstChild("Grabbing") and not target.Parent:FindFirstChild"IFrames" then
 					local A = target.Parent:FindFirstChild("Grabbing")
-					if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = target.CFrame * CFrame.new(0, 10, 7)
-						repeat wait() until A.Parent == nil
+					TP(target.Position)
+					if (game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Position - target.Position).magnitude < instantDistance then
+						if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+							game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = target.CFrame * CFrame.new(0, 10, 7)
+							repeat wait() until A.Parent == nil
+						end
 					end
 				end
 			end)
