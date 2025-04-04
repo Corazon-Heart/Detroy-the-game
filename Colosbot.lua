@@ -153,15 +153,15 @@ pcall(function()
 		game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Menu",60)
 		game:GetService("Players").LocalPlayer.PlayerGui.Menu:WaitForChild("CosmeticButton", 30)
 		local function spawnCharacter()
-			if game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Menu") then
+			if game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Menu") and game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Menu"):FindFirstChild("CosmeticButton") then
 				task.wait(1.5)
-				if game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Menu") then
+				if game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Menu") and game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Menu"):FindFirstChild("CosmeticButton") then
 					game:GetService("Players").LocalPlayer.ClientNetwork.MenuOptions:FireServer({
 						["config"] = "start_screen"
 					})
 				end
 				task.wait(1.5)
-				if game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Menu") then
+				if game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Menu") and game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Menu"):FindFirstChild("CosmeticButton") then
 					game:GetService("Players").LocalPlayer.ClientNetwork.MenuOptions:FireServer({
 						["slot"] = "Slot_1",
 						["config"] = "slots"
