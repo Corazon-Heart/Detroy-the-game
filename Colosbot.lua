@@ -146,8 +146,9 @@ pcall(function()
 				warn("No valid servers found.")
 			end
 		end
-		local shop = function()
+		local shop = function(Step)
 			wait(.5)
+			print(Step)
 			game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
 		end
 		game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Menu",60)
@@ -179,7 +180,7 @@ pcall(function()
 				if game:GetService("Players").LocalPlayer.Character ~= nil then
 					break
 				else
-					return shop()
+					return shop("1")
 				end
 			end
 		end
@@ -200,7 +201,7 @@ pcall(function()
 					if v:IsDescendantOf(game.Players) and v and v:GetRankInGroup(15431531) >= 1 then
 						CurrentCheck = CurrentCheck + 1
 						wait()
-						shop()
+						shop("2")
 					else
 						CurrentCheck = CurrentCheck + 1
 					end
@@ -213,7 +214,7 @@ pcall(function()
 		game.Players.PlayerAdded:Connect(function(v)
 			wait()
 			if v:IsDescendantOf(game.Players) and v and v:GetRankInGroup(15431531) >= 1 then
-				shop()
+				shop("3")
 			end
 		end)
 
@@ -252,7 +253,7 @@ pcall(function()
 					local playerPosition = player.Character.HumanoidRootPart.Position
 					local distance = (playerPosition - Vector3.new(1013.8218383789062, -239.08447265625, 1572.6201171875)).magnitude
 					if distance <= 500 then
-						shop()
+						shop("Found Player")
 					end
 				end
 			end
@@ -276,31 +277,31 @@ pcall(function()
 
 							if not gui then
 								warn("InfoOverlays not found")
-								return shop()
+								return shop("5")
 							end
 
 							local confirmFrame = gui:WaitForChild("ConfirmFrame", 5)
 							if not confirmFrame then
 								warn("ConfirmFrame not found")
-								return shop()
+								return shop("6")
 							end
 
 							local mainFrame = confirmFrame:WaitForChild("MainFrame", 5)
 							if not mainFrame then
 								warn("MainFrame not found")
-								return shop()
+								return shop("7")
 							end
 
 							local buttonFrame = mainFrame:WaitForChild("ButtonFrame", 5)
 							if not buttonFrame then
 								warn("ButtonFrame not found")
-								return shop()
+								return shop("8")
 							end
 
 							local confirmButton = buttonFrame:WaitForChild("ConfirmButton", 5)
 							if not confirmButton then
 								warn("ConfirmButton not found")
-								return shop()
+								return shop("9")
 							end
 
 							repeat
@@ -341,7 +342,7 @@ pcall(function()
 				if v.Name:find"Lycanthar" or v.Name:find"Drogar" then
 					if v:FindFirstChild"Humanoid" then
 						if v.Humanoid.Health >= v.Humanoid.MaxHealth*0.95 then
-							shop()
+							shop("10")
 						end
 					end
 				end
@@ -352,6 +353,28 @@ pcall(function()
 				tween:Play()
 				tween.Completed:Wait()
 			end
+			function TPNormal(Object)
+				local player = game.Players.LocalPlayer
+				local hrp = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+
+				if not hrp then return end
+
+				local tweenService = game:GetService("TweenService")
+				local tweenInfo = TweenInfo.new((hrp.Position - Object).magnitude / 110, Enum.EasingStyle.Linear, Enum.EasingDirection.In, 0, false, 0)
+
+				local tween = tweenService:Create(hrp, tweenInfo, {CFrame = CFrame.new(Object)})
+				local running = true
+
+				tween.Completed:Connect(function()
+					running = false
+				end)
+				tween:Play()
+				while running and hrp do
+					hrp.Velocity = Vector3.zero
+					task.wait()
+				end
+			end
+
 			game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
 			fireproximityprompt(workspace.InvisibleParts.ColosseumEntrance.InteractPrompt)
 
@@ -373,31 +396,31 @@ pcall(function()
 
 									if not gui then
 										warn("InfoOverlays not found")
-										return shop()
+										return shop("11")
 									end
 
 									local confirmFrame = gui:WaitForChild("ConfirmFrame", 5)
 									if not confirmFrame then
 										warn("ConfirmFrame not found")
-										return shop()
+										return shop("12")
 									end
 
 									local mainFrame = confirmFrame:WaitForChild("MainFrame", 5)
 									if not mainFrame then
 										warn("MainFrame not found")
-										return shop()
+										return shop("13")
 									end
 
 									local buttonFrame = mainFrame:WaitForChild("ButtonFrame", 5)
 									if not buttonFrame then
 										warn("ButtonFrame not found")
-										return shop()
+										return shop("14")
 									end
 
 									local confirmButton = buttonFrame:WaitForChild("ConfirmButton", 5)
 									if not confirmButton then
 										warn("ConfirmButton not found")
-										return shop()
+										return shop("15")
 									end
 
 									repeat
@@ -428,7 +451,7 @@ pcall(function()
 				end
 				wait(0.1)
 			end
-			for i = 1,10 do
+			for i = 1,15 do
 				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(937.6810913085938, -217.88751220703125, 1686.1224365234375)
 				task.wait()
 			end
@@ -487,31 +510,31 @@ pcall(function()
 
 										if not gui then
 											warn("InfoOverlays not found")
-											return shop()
+											return shop("16")
 										end
 
 										local confirmFrame = gui:WaitForChild("ConfirmFrame", 5)
 										if not confirmFrame then
 											warn("ConfirmFrame not found")
-											return shop()
+											return shop("17")
 										end
 
 										local mainFrame = confirmFrame:WaitForChild("MainFrame", 5)
 										if not mainFrame then
 											warn("MainFrame not found")
-											return shop()
+											return shop("18")
 										end
 
 										local buttonFrame = mainFrame:WaitForChild("ButtonFrame", 5)
 										if not buttonFrame then
 											warn("ButtonFrame not found")
-											return shop()
+											return shop("19")
 										end
 
 										local confirmButton = buttonFrame:WaitForChild("ConfirmButton", 5)
 										if not confirmButton then
 											warn("ConfirmButton not found")
-											return shop()
+											return shop("20")
 										end
 
 										repeat
@@ -582,7 +605,7 @@ pcall(function()
 						if v.Name == "Drogar's Vest" and tonumber(Rs) <= 5 then
 							sellEvent:FireServer(v, nil, true)
 							wait(.2)
-						elseif v.Name == "Edge Wing" and tonumber(Rs) <= 2 then
+						elseif v.Name == "Edge Wing" and tonumber(Rs) <= 3 then
 							sellEvent:FireServer(v, nil, true)
 							wait(.2)
 						end
@@ -611,31 +634,31 @@ pcall(function()
 
 										if not gui then
 											warn("InfoOverlays not found")
-											return shop()
+											return shop("21")
 										end
 
 										local confirmFrame = gui:WaitForChild("ConfirmFrame", 5)
 										if not confirmFrame then
 											warn("ConfirmFrame not found")
-											return shop()
+											return shop("22")
 										end
 
 										local mainFrame = confirmFrame:WaitForChild("MainFrame", 5)
 										if not mainFrame then
 											warn("MainFrame not found")
-											return shop()
+											return shop("23")
 										end
 
 										local buttonFrame = mainFrame:WaitForChild("ButtonFrame", 5)
 										if not buttonFrame then
 											warn("ButtonFrame not found")
-											return shop()
+											return shop("24")
 										end
 
 										local confirmButton = buttonFrame:WaitForChild("ConfirmButton", 5)
 										if not confirmButton then
 											warn("ConfirmButton not found")
-											return shop()
+											return shop("25")
 										end
 
 										repeat
@@ -665,7 +688,7 @@ pcall(function()
 					end
 					wait(0.1)
 				end
-				for i = 1,10 do
+				for i = 1,15 do
 					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(937.6810913085938, -217.88751220703125, 1686.1224365234375)
 					task.wait()
 				end
@@ -676,69 +699,61 @@ pcall(function()
 			local starttime = tick()
 			local Drogar = nil
 			local Detected = false
-			local NameDro = nil
 			local waitdrogartick = tick()
 			checkAndTeleport()
+			repeat
+				wait()
+				local found = false
+				for _, model in ipairs(game.Workspace.Alive:GetChildren()) do
+					if model:IsA("Model") and model.Name:find("Drogar") then
+						found = true
+						break
+					end
+				end
+			until not found
 			while Drogar == nil do
 				for i,v in pairs(workspace.Alive:GetChildren()) do
 					if v.Name:find"Drogar" then
 						Drogar = v
-						NameDro = tostring(v.Name)
 					end
 				end
 				task.wait()
 				if Drogar == nil then
 					game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.D, false, game)
-					task.wait(0.05)
+					task.wait(.05)
 					game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode.D, false, game)
-
-					if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart" then
-						local rootPartPos = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Position
-						local dist1 = (rootPartPos - Vector3.new(937.6811, -217.8875, 1686.1224)).magnitude
-						local dist2 = (rootPartPos - Vector3.new(1022.8796, -239.4728, 1610.6086)).magnitude
-						if dist1 > 10 and dist2 > 10 then
-							TP(Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375));
-						elseif dist2 < 10 and game.Players.LocalPlayer.Character.BoolValues.CombatTag.Value >= 1 then
-							break
-						end
-					end
-					repeat task.wait()
-						for _, obj in pairs(game.Workspace.Alive:GetChildren()) do
-							if obj and obj.Name:find("Drogar") then
-								Detected = true
+					task.wait(.15)
+					TPNormal(Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375))
+					local maintain = tick()
+					local found = false
+					repeat
+						local check = tick()
+						local got = false
+						fireproximityprompt(workspace.Effects.NPCS.Drakonar.InteractPrompt)
+						repeat wait() 
+							if game.Players.LocalPlayer.PlayerGui.ChatGui.MainFrame.Visible == true then
+								got = true
 							end
-							local args = {
-								[1] = {
-									["player"] = game:GetService("Players").LocalPlayer,
-									["Object"] = workspace.Effects.NPCS:FindFirstChild("Drakonar"),
-									["Action"] = "NPC"
-								}
-							}
-
-							game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.Interact:FireServer(unpack(args))
+						until got == true or tick()-check >= 0.5
+						if got == true then
+							game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.One, false, game)
+							task.wait(.25)
+							game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode.One, false, game)
+							local double = tick()
+							repeat wait() until (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(1022.8796, -239.4728, 1610.6086)).magnitude < 10 or tick()-double >= 3
 						end
-						local args = {
-							[1] = {
-								["player"] = game:GetService("Players").LocalPlayer,
-								["Object"] = workspace.Effects.NPCS:FindFirstChild("Drakonar"),
-								["Action"] = "NPC"
-							}
-						}
-
-						game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.Interact:FireServer(unpack(args))
-					until game.Players.LocalPlayer.PlayerGui.ChatGui.MainFrame.Visible == true or Detected == true
-					if Detected == false then
-						for i = 1,30 do
-							local args = {
-								[1] = "Challenge The Demon Claw, Drogar."
-							}
-
-							game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.DialogueEvent:FireServer(unpack(args))
+						for _, model in ipairs(game.Workspace.Alive:GetChildren()) do
+							if model:IsA("Model") and model.Name:find("Drogar") then
+								found = true
+								break
+							end
 						end
-					end
+						task.wait()
+					until found or tick() - maintain >= 0.5
+
 				end
 				if tick() - waitdrogartick >= 30 then
-					shop()
+					shop("26")
 				end
 			end
 			game:GetService("Players").LocalPlayer.Character.CharacterHandler.Input.Events.DialogueEvent:FireServer()
@@ -753,16 +768,16 @@ pcall(function()
 
 			netModule.connect("MasterEvent", "FireServer", plr.Character, tradeData)
 			if Drogar == nil then
-				return shop()
+				return shop("27")
 			end
 			if Drogar.Parent == nil then
-				return shop()
+				return shop("28")
 			end
 			Drogar:WaitForChild("HumanoidRootPart",10)
 			if Drogar:FindFirstChild"HumanoidRootPart" then
 				TP(Drogar.HumanoidRootPart.Position)
 			else
-				return shop()
+				return shop("29")
 			end
 			local killtime = tick()
 			repeat
@@ -819,31 +834,31 @@ pcall(function()
 
 			if not gui then
 				warn("InfoOverlays not found")
-				return shop()
+				return shop("30")
 			end
 
 			local confirmFrame = gui:WaitForChild("ConfirmFrame", 5)
 			if not confirmFrame then
 				warn("ConfirmFrame not found")
-				return shop()
+				return shop("31")
 			end
 
 			local mainFrame = confirmFrame:WaitForChild("MainFrame", 5)
 			if not mainFrame then
 				warn("MainFrame not found")
-				return shop()
+				return shop("32")
 			end
 
 			local buttonFrame = mainFrame:WaitForChild("ButtonFrame", 5)
 			if not buttonFrame then
 				warn("ButtonFrame not found")
-				return shop()
+				return shop("33")
 			end
 
 			local confirmButton = buttonFrame:WaitForChild("ConfirmButton", 5)
 			if not confirmButton then
 				warn("ConfirmButton not found")
-				return shop()
+				return shop("34")
 			end
 
 			repeat
@@ -885,7 +900,7 @@ pcall(function()
 									game.Players.LocalPlayer.Character.Humanoid.Health = 0
 								until game.Players.LocalPlayer.Character.Humanoid.Health == 0
 							end
-							repeat wait() until not game.Workspace.Alive:FindFirstChild(NameDro)
+
 							local VirtualInputManager = game:GetService("VirtualInputManager")
 							local Players = game:GetService("Players")
 
@@ -894,31 +909,31 @@ pcall(function()
 
 							if not gui then
 								warn("InfoOverlays not found")
-								return shop()
+								return shop("35")
 							end
 
 							local confirmFrame = gui:WaitForChild("ConfirmFrame", 5)
 							if not confirmFrame then
 								warn("ConfirmFrame not found")
-								return shop()
+								return shop("36")
 							end
 
 							local mainFrame = confirmFrame:WaitForChild("MainFrame", 5)
 							if not mainFrame then
 								warn("MainFrame not found")
-								return shop()
+								return shop("37")
 							end
 
 							local buttonFrame = mainFrame:WaitForChild("ButtonFrame", 5)
 							if not buttonFrame then
 								warn("ButtonFrame not found")
-								return shop()
+								return shop("38")
 							end
 
 							local confirmButton = buttonFrame:WaitForChild("ConfirmButton", 5)
 							if not confirmButton then
 								warn("ConfirmButton not found")
-								return shop()
+								return shop("39")
 							end
 
 							repeat
