@@ -676,12 +676,14 @@ pcall(function()
 			local starttime = tick()
 			local Drogar = nil
 			local Detected = false
+			local NameDro = nil
 			local waitdrogartick = tick()
 			checkAndTeleport()
 			while Drogar == nil do
 				for i,v in pairs(workspace.Alive:GetChildren()) do
 					if v.Name:find"Drogar" then
 						Drogar = v
+						NameDro = tostring(v.Name)
 					end
 				end
 				task.wait()
@@ -883,6 +885,7 @@ pcall(function()
 									game.Players.LocalPlayer.Character.Humanoid.Health = 0
 								until game.Players.LocalPlayer.Character.Humanoid.Health == 0
 							end
+							repeat wait() until not game.Workspace.Alive:FindFirstChild(NameDro)
 							local VirtualInputManager = game:GetService("VirtualInputManager")
 							local Players = game:GetService("Players")
 
@@ -935,7 +938,6 @@ pcall(function()
 
 							repeat wait() until game.Players.LocalPlayer.Character:IsDescendantOf(game.Workspace.Alive)
 							game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart",15)
-							repeat wait() until Drogar.Parent == nil
 							_G.Botting()
 						end
 					end
