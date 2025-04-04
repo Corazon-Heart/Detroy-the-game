@@ -935,7 +935,7 @@ pcall(function()
 
 							repeat wait() until game.Players.LocalPlayer.Character:IsDescendantOf(game.Workspace.Alive)
 							game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart",15)
-							wait(0.3)
+							repeat wait() until Drogar.Parent == nil
 							_G.Botting()
 						end
 					end
