@@ -525,7 +525,7 @@ if game.PlaceId == 99995671928896 then
 		end
 	end)
 
-	Test1.CreateButton("Auto Instant Heal", function()
+	Test1.CreateButton("Auto Respawn", function()
 		spawn(function()
 			while wait(.5) do
 				game.Players.LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("InfoOverlays")
