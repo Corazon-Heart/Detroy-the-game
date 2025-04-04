@@ -54,7 +54,6 @@ pcall(function()
 	local function getNearestEntity()
 		local closestEntity = nil
 		local shortestDistance = 300
-		local instantDistance = 30
 		for _, entity in pairs(workspace.Alive:GetChildren()) do
 			if entity:IsA("Model") and entity ~= game.Players.LocalPlayer.Character then
 				local rootPart = entity:FindFirstChild("HumanoidRootPart")
@@ -72,6 +71,7 @@ pcall(function()
 	end
 
 	local function toggleTeleport()
+		local instantDistance = 30
 		teleporting = not teleporting
 
 		if teleporting then
