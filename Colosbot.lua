@@ -327,7 +327,6 @@ if game.PlaceId == 99995671928896 then
 		repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild("BoolValues")
 		repeat wait() until game.Players.LocalPlayer.Character.BoolValues:FindFirstChild"CombatTag"
 		repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild"Humanoid"
-		repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild"Humanoid".Health > 0
 		checkAndTeleport()
 		for i,v in pairs(game.Workspace.Alive:GetChildren()) do
 			if v.Name:find"Lycanthar" or v.Name:find"Drogar" then
