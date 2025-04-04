@@ -174,17 +174,20 @@ pcall(function()
 end)
 
 spawn(function()
+	for i,v in pairs(game.Lighting:GetChildren()) do
+		if v.Parent == game.Lighting then
+			v:Destroy()
+		end
+	end
+	local Fake = Instance.new("ColorCorrectionEffect")
+	Fake.Parent = game.Lighting
+	Fake.Name = "underwater"
 	while wait() do
 		game.Lighting.Brightness = 0.7
 		game.Lighting.GlobalShadows = false
 		game.Lighting.Ambient = Color3.new(1,1,1)
 		game.Lighting.FogStart = 0
 		game.Lighting.FogEnd = 100000
-		for i,v in pairs(game.Lighting:GetChildren()) do
-			if v.Parent == game.Lighting then
-				v:Destroy()
-			end
-		end
 	end
 end)
 --Instant Kill
