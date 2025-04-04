@@ -174,7 +174,7 @@ pcall(function()
 		while not game:GetService("Players").LocalPlayer.Character do
 			spawnCharacter()
 			wait(2)
-			if game:GetService("Players").LocalPlayer.Character or (tick() - beforeTick) >= 7.5 then
+			if game:GetService("Players").LocalPlayer.Character or (tick() - beforeTick) >= 15 then
 				if game:GetService("Players").LocalPlayer.Character ~= nil then
 					break
 				else
