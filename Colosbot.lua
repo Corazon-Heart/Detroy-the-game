@@ -775,9 +775,9 @@ pcall(function()
 			end
 			local killtime = tick()
 			repeat
-				if game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart" and Drogar:FindFirstChild"HumanoidRootPart" and not Drogar:FindFirstChild"Grabbing" and (game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart".Position - Drogar:FindFirstChild"HumanoidRootPart").Position).magnitude < 20 then
+				if game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart" and Drogar:FindFirstChild"HumanoidRootPart" and not Drogar:FindFirstChild"Grabbing" and (game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart".Position - Drogar:FindFirstChild"HumanoidRootPart".Position).magnitude < 20 then
 					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Drogar.HumanoidRootPart.CFrame*CFrame.new(0,-6,7)
-				elseif game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart" and Drogar:FindFirstChild"HumanoidRootPart" and (game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart".Position - Drogar:FindFirstChild"HumanoidRootPart").Position).magnitude > 20 and not Drogar:FindFirstChild"Grabbing" then
+				elseif game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart" and Drogar:FindFirstChild"HumanoidRootPart" and (game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart".Position - Drogar:FindFirstChild"HumanoidRootPart".Position).magnitude > 20 and not Drogar:FindFirstChild"Grabbing" then
 					TP(Drogar.HumanoidRootPart.Position)
 				end
 				wait()
