@@ -41,136 +41,136 @@ for i,v in pairs(workspace:GetDescendants()) do
 end
 
 pcall(function()
-    function TP(Object) -- Object = part teleporting to.
-        local tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new((game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Object).magnitude/130, Enum.EasingStyle.Linear, Enum.EasingDirection.In, 0, false, 0)
-        local tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = CFrame.new(Object + Vector3.new(0,0,0))})
-        tween:Play()
-        tween.Completed:Wait()
-    end
+	function TP(Object) -- Object = part teleporting to.
+		local tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new((game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Object).magnitude/130, Enum.EasingStyle.Linear, Enum.EasingDirection.In, 0, false, 0)
+		local tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = CFrame.new(Object + Vector3.new(0,0,0))})
+		tween:Play()
+		tween.Completed:Wait()
+	end
 
-    local UserInputService = game:GetService("UserInputService")
-    local RunService = game:GetService("RunService")
-    local teleporting = false
+	local UserInputService = game:GetService("UserInputService")
+	local RunService = game:GetService("RunService")
+	local teleporting = false
 
-local function getNearestEntity()
-	local player = game.Players.LocalPlayer
-	local char = player.Character
-	local hrp = char and char:FindFirstChild("HumanoidRootPart")
-	if not hrp then return nil end
+	local function getNearestEntity()
+		local player = game.Players.LocalPlayer
+		local char = player.Character
+		local hrp = char and char:FindFirstChild("HumanoidRootPart")
+		if not hrp then return nil end
 
-	local priorityTargets = {}
-	local others = {}
+		local priorityTargets = {}
+		local others = {}
 
-	for _, entity in pairs(workspace.Alive:GetChildren()) do
-		if entity:IsA("Model") and entity ~= char and not game.Players:GetPlayerFromCharacter(entity) then
-			local rootPart = entity:FindFirstChild("HumanoidRootPart")
-			if rootPart then
-				if entity.Name:find("Gralthar") or entity.Name:find("Braelor") then
-					table.insert(priorityTargets, rootPart)
-				else
-					table.insert(others, rootPart)
+		for _, entity in pairs(workspace.Alive:GetChildren()) do
+			if entity:IsA("Model") and entity ~= char and not game.Players:GetPlayerFromCharacter(entity) then
+				local rootPart = entity:FindFirstChild("HumanoidRootPart")
+				if rootPart then
+					if entity.Name:find("Gralthar") or entity.Name:find("Braelor") then
+						table.insert(priorityTargets, rootPart)
+					else
+						table.insert(others, rootPart)
+					end
 				end
 			end
 		end
-	end
 
-	-- Function to find the nearest entity from a list
-	local function findClosest(list)
-		local closest, shortestDistance = nil, math.huge
-		for _, rootPart in pairs(list) do
-			local distance = (hrp.Position - rootPart.Position).Magnitude
-			if distance < shortestDistance then
-				shortestDistance = distance
-				closest = rootPart
+		-- Function to find the nearest entity from a list
+		local function findClosest(list)
+			local closest, shortestDistance = nil, math.huge
+			for _, rootPart in pairs(list) do
+				local distance = (hrp.Position - rootPart.Position).Magnitude
+				if distance < shortestDistance then
+					shortestDistance = distance
+					closest = rootPart
+				end
 			end
+			return closest
 		end
-		return closest
+
+		-- Try to get closest priority target first
+		local closestPriority = findClosest(priorityTargets)
+		if closestPriority then return closestPriority end
+
+		-- Otherwise fallback to closest other target
+		return findClosest(others)
 	end
 
-	-- Try to get closest priority target first
-	local closestPriority = findClosest(priorityTargets)
-	if closestPriority then return closestPriority end
+	local function toggleTeleport()
+		local instantDistance = 15
+		teleporting = not teleporting
 
-	-- Otherwise fallback to closest other target
-	return findClosest(others)
-end
+		if teleporting then
+			local renderConnection
+			renderConnection = RunService.RenderStepped:Connect(function()
+				if not teleporting then
+					renderConnection:Disconnect()
+					return
+				end
 
-    local function toggleTeleport()
-        local instantDistance = 15
-        teleporting = not teleporting
+				local target = getNearestEntity()
+				if not target then return end
+				local adjustValues = {
+					Braelor = {10, 11},
+					Gralthar = {10, 11},
+					Banshee = {5, 0}
+				}
 
-        if teleporting then
-            local renderConnection
-            renderConnection = RunService.RenderStepped:Connect(function()
-                if not teleporting then
-                    renderConnection:Disconnect()
-                    return
-                end
+				local adjust, adjustY = 7, 0
+				for name, values in pairs(adjustValues) do
+					if target.Name:find(name) then
+						adjust, adjustY = values[1], values[2]
+						break
+					end
+				end
 
-                local target = getNearestEntity()
-                if not target then return end
-                local adjustValues = {
-                    Braelor = {10, 11},
-                    Gralthar = {10, 11},
-                    Banshee = {5, 0}
-                }
+				local player = game.Players.LocalPlayer
+				local char = player.Character
+				local hrp = char and char:FindFirstChild("HumanoidRootPart")
 
-                local adjust, adjustY = 7, 0
-                for name, values in pairs(adjustValues) do
-                    if target.Name:find(name) then
-                        adjust, adjustY = values[1], values[2]
-                        break
-                    end
-                end
+				if not hrp then return end
 
-                local player = game.Players.LocalPlayer
-                local char = player.Character
-                local hrp = char and char:FindFirstChild("HumanoidRootPart")
+				local targetPos = target.Position
+				local dist = (hrp.Position - targetPos).magnitude
 
-                if not hrp then return end
+				if target and not target.Parent:FindFirstChild("Grabbing") and not target.Parent:FindFirstChild("IFrames") then
+					if dist < instantDistance then
+						hrp.CFrame = target.CFrame * CFrame.new(0, adjustY, adjust)
+					else
+						TP(targetPos + Vector3.new(0, 0, 7))
+					end
+				elseif target and target.Parent:FindFirstChild("Grabbing") and not target.Parent:FindFirstChild("IFrames") then
+					local A = target.Parent:FindFirstChild("Grabbing")
+					if dist < instantDistance then
+						hrp.CFrame = target.CFrame * CFrame.new(0, adjustY + 10, adjust)
+						local timeout = 5
+						while A.Parent and timeout > 0 do
+							wait()
+							timeout = timeout - wait()
+						end
+					else
+						TP(targetPos + Vector3.new(0, 0, 7))
+					end
+				end
+			end)
 
-                local targetPos = target.Position
-                local dist = (hrp.Position - targetPos).magnitude
+			task.spawn(function()
+				local netModule = require(game.ReplicatedStorage.Modules.Network)
+				while teleporting do
+					netModule.connect("MasterEvent", "FireServer", game.Players.LocalPlayer.Character, { Config = "Button1Down" })
+					task.wait(0.05)
+					netModule.connect("MasterEvent", "FireServer", game.Players.LocalPlayer.Character, { Config = "Button1Up" })
+					task.wait(0.05)
+				end
+			end)
+		end
+	end
 
-                if target and not target.Parent:FindFirstChild("Grabbing") and not target.Parent:FindFirstChild("IFrames") then
-                    if dist < instantDistance then
-                        hrp.CFrame = target.CFrame * CFrame.new(0, adjustY, adjust)
-                    else
-                        TP(targetPos + Vector3.new(0, 0, 7))
-                    end
-                elseif target and target.Parent:FindFirstChild("Grabbing") and not target.Parent:FindFirstChild("IFrames") then
-                    local A = target.Parent:FindFirstChild("Grabbing")
-                    if dist < instantDistance then
-                        hrp.CFrame = target.CFrame * CFrame.new(0, adjustY + 10, adjust)
-                        local timeout = 5
-                        while A.Parent and timeout > 0 do
-                            wait()
-                            timeout = timeout - wait()
-                        end
-                    else
-                        TP(targetPos + Vector3.new(0, 0, 7))
-                    end
-                end
-            end)
-
-            task.spawn(function()
-                local netModule = require(game.ReplicatedStorage.Modules.Network)
-                while teleporting do
-                    netModule.connect("MasterEvent", "FireServer", game.Players.LocalPlayer.Character, { Config = "Button1Down" })
-                    task.wait(0.05)
-                    netModule.connect("MasterEvent", "FireServer", game.Players.LocalPlayer.Character, { Config = "Button1Up" })
-                    task.wait(0.05)
-                end
-            end)
-        end
-    end
-
-    UserInputService.InputBegan:Connect(function(input, gameProcessed)
-        if gameProcessed then return end
-        if input.KeyCode == Enum.KeyCode.G then
-            toggleTeleport()
-        end
-    end)
+	UserInputService.InputBegan:Connect(function(input, gameProcessed)
+		if gameProcessed then return end
+		if input.KeyCode == Enum.KeyCode.G then
+			toggleTeleport()
+		end
+	end)
 end)
 
 spawn(function()
