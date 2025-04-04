@@ -1088,9 +1088,9 @@ pcall(function()
 				game:GetService("TeleportService"):TeleportToPlaceInstance(99995671928896, tostring(A), game.Players.LocalPlayer)
 				table.remove(_table, B)
 				WriteSettings(filename, _table)
-				for i = 1,30 do
+				for i = 1,15 do
 					game.GuiService:ClearError()
-					wait(.1)
+					wait(.2)
 				end
 			end
 		end
