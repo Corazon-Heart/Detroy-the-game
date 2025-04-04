@@ -435,7 +435,6 @@ Test1.CreateButton("Auto Instant Heal", function()
 			game.Players.LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("InfoOverlays")
 			if game.Players.LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("InfoOverlays"):FindFirstChild"ConfirmFrame" then
 				local Last = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-				game.Players.LocalPlayer.Character.Humanoid.Health = 0
 				local VirtualInputManager = game:GetService("VirtualInputManager")
 				game.Players.LocalPlayer.PlayerGui.InfoOverlays:WaitForChild"ConfirmFrame"
 				game.Players.LocalPlayer.PlayerGui.InfoOverlays:WaitForChild"ConfirmFrame":WaitForChild"MainFrame"
@@ -475,6 +474,7 @@ Test1.CreateButton("Auto Instant Heal", function()
 					Config = "EquipWeapon",
 				}
 				netModule.connect("MasterEvent", "FireServer", plr.Character, tradeData)
+				wait(5)
 			end
 		end
 	end)
