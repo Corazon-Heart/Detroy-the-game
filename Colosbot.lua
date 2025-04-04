@@ -687,10 +687,10 @@ pcall(function()
 				task.wait()
 				if Drogar == nil then
 					game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.D, false, game)
-					wait(0.05)
+					task.wait(0.05)
 					game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode.D, false, game)
 
-					if game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart" then
+					if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart" then
 						local rootPartPos = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Position
 						local dist1 = (rootPartPos - Vector3.new(937.6811, -217.8875, 1686.1224)).magnitude
 						local dist2 = (rootPartPos - Vector3.new(1022.8796, -239.4728, 1610.6086)).magnitude
@@ -700,7 +700,7 @@ pcall(function()
 							break
 						end
 					end
-					repeat wait()
+					repeat task.wait()
 						for _, obj in pairs(game.Workspace.Alive:GetChildren()) do
 							if obj and obj.Name:find("Drogar") then
 								Detected = true
