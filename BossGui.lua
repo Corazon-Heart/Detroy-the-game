@@ -52,23 +52,48 @@ pcall(function()
     local RunService = game:GetService("RunService")
     local teleporting = false
 
-    local function getNearestEntity()
-        local closestEntity = nil
-        local shortestDistance = 500
-        for _, entity in pairs(workspace.Alive:GetChildren()) do
-            if entity:IsA("Model") and entity ~= game.Players.LocalPlayer.Character and not game.Players:GetPlayerFromCharacter(entity) then
-                local rootPart = entity:FindFirstChild("HumanoidRootPart")
-                if rootPart then
-                    local distance = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - rootPart.Position).Magnitude
-                    if distance < shortestDistance then
-                        shortestDistance = distance
-                        closestEntity = rootPart
-                    end
-                end
-            end
-        end
-        return closestEntity
-    end
+local function getNearestEntity()
+	local player = game.Players.LocalPlayer
+	local char = player.Character
+	local hrp = char and char:FindFirstChild("HumanoidRootPart")
+	if not hrp then return nil end
+
+	local priorityTargets = {}
+	local others = {}
+
+	for _, entity in pairs(workspace.Alive:GetChildren()) do
+		if entity:IsA("Model") and entity ~= char and not game.Players:GetPlayerFromCharacter(entity) then
+			local rootPart = entity:FindFirstChild("HumanoidRootPart")
+			if rootPart then
+				if entity.Name:find("Gralthar") or entity.Name:find("Braelor") then
+					table.insert(priorityTargets, rootPart)
+				else
+					table.insert(others, rootPart)
+				end
+			end
+		end
+	end
+
+	-- Function to find the nearest entity from a list
+	local function findClosest(list)
+		local closest, shortestDistance = nil, math.huge
+		for _, rootPart in pairs(list) do
+			local distance = (hrp.Position - rootPart.Position).Magnitude
+			if distance < shortestDistance then
+				shortestDistance = distance
+				closest = rootPart
+			end
+		end
+		return closest
+	end
+
+	-- Try to get closest priority target first
+	local closestPriority = findClosest(priorityTargets)
+	if closestPriority then return closestPriority end
+
+	-- Otherwise fallback to closest other target
+	return findClosest(others)
+end
 
     local function toggleTeleport()
         local instantDistance = 15
@@ -85,9 +110,9 @@ pcall(function()
                 local target = getNearestEntity()
                 if not target then return end
                 local adjustValues = {
-                    Braelor = {10, 10},
-                    Gralthar = {10, 10},
-                    Banshee = {6, 0}
+                    Braelor = {10, 11},
+                    Gralthar = {10, 11},
+                    Banshee = {5, 0}
                 }
 
                 local adjust, adjustY = 7, 0
