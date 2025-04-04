@@ -347,27 +347,6 @@ pcall(function()
 					end
 				end
 			end
-			function TPNormal(Object) -- Object = part teleporting to.
-				local tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new((game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Object).magnitude/90,Enum.EasingStyle.Linear,Enum.EasingDirection.In,0,false,0)
-				local tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = CFrame.new(Object + Vector3.new(0,0,0))})
-				tween:Play()
-				spawn(function()
-					local Stoptween = false
-					while tween.PlaybackState == Enum.PlaybackState.Playing do
-						for i,v in pairs(workspace.Alive:GetChildren()) do
-							if v.Name:find"Drogar" then
-								Stoptween = true
-							end
-						end
-						if Stoptween == true then
-							tween:Cancel()
-							break
-						end
-						task.wait()
-					end
-				end)
-				tween.Completed:Wait()
-			end
 			function TP(Object) -- Object = part teleporting to.
 				local tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new((game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Object).magnitude/90,Enum.EasingStyle.Linear,Enum.EasingDirection.In,0,false,0)
 				local tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = CFrame.new(Object + Vector3.new(0,0,0))})
@@ -713,7 +692,7 @@ pcall(function()
 					game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode.D, false, game)
 					if game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart" and (game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart".Position - Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375)).magnitude > 10 and not (game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart".Position - Vector3.new(1022.8795776367188, -239.4728240966797, 1610.608642578125)).magnitude < 10 then
 						if game.Players.LocalPlayer.Character.BoolValues:FindFirstChild"CombatTag" and game.Players.LocalPlayer.Character.BoolValues:FindFirstChild"CombatTag".Value < 1 then
-							TPNormal(Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375));
+							TP(Vector3.new(937.6810913085938, -217.88751220703125, 1686.1224365234375));
 						end
 					end
 					repeat wait()
@@ -770,15 +749,15 @@ pcall(function()
 				return shop()
 			end
 			Drogar:WaitForChild("HumanoidRootPart",10)
-			if not Drogar:FindFirstChild"HumanoidRootPart" then
+			if Drogar:FindFirstChild"HumanoidRootPart" then
+				TP(Drogar.HumanoidRootPart.Position)
+			else
 				return shop()
 			end
 			local killtime = tick()
 			repeat
-				if game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart" and Drogar:FindFirstChild"HumanoidRootPart" and not Drogar:FindFirstChild"Grabbing" and (game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart".Position - Drogar:FindFirstChild"HumanoidRootPart".Position).magnitude < 20 then
+				if game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart" and Drogar:FindFirstChild"HumanoidRootPart" and not Drogar:FindFirstChild"Grabbing" then
 					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Drogar.HumanoidRootPart.CFrame*CFrame.new(0,-6,7)
-				elseif game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart" and Drogar:FindFirstChild"HumanoidRootPart" and (game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart".Position - Drogar:FindFirstChild"HumanoidRootPart".Position).magnitude > 20 and not Drogar:FindFirstChild"Grabbing" then
-					TP(Drogar.HumanoidRootPart.Position)
 				end
 				wait()
 				local rs = game:GetService("ReplicatedStorage")
