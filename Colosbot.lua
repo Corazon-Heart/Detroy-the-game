@@ -169,7 +169,7 @@ pcall(function()
 		local beforeTick = tick()
 		while not game:GetService("Players").LocalPlayer.Character do
 			spawnCharacter()
-
+			wait()
 			if game:GetService("Players").LocalPlayer.Character or (tick() - beforeTick) >= 7.5 then
 				return shop()
 			end
