@@ -42,7 +42,7 @@ end
 
 pcall(function()
 	function TP(Object) -- Object = part teleporting to.
-		local tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new((game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Object).magnitude/150, Enum.EasingStyle.Linear, Enum.EasingDirection.In, 0, false, 0)
+		local tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new((game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Object).magnitude/140, Enum.EasingStyle.Linear, Enum.EasingDirection.In, 0, false, 0)
 		local tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = CFrame.new(Object + Vector3.new(0,0,0))})
 		tween:Play()
 		tween.Completed:Wait()
