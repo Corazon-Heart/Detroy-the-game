@@ -86,15 +86,15 @@ pcall(function()
 				if not target then return end
 				local adjust = 7
 				if target.Name:find"Braelor" or target.Name:find"Gralthar" then
-					adjust = 8.5
+					adjust = 9
 				elseif target.Name:find"Banshee" then
-					adjust = 6.5
+					adjust = 6
 				end
 				if target and target.Parent ~= nil and Pla ~= nil and game.Players:FindFirstChild(tostring(target.Parent.Name)) then return end
 				if target and not target.Parent:FindFirstChild("Grabbing") and not target.Parent:FindFirstChild"IFrames" then
 					if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
 						if (game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Position - target.Position).magnitude < instantDistance then
-							game.Players.LocalPlayer.Character:PivotTo(target.CFrame * CFrame.new(0, 0, adjust))
+							game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = target.CFrame * CFrame.new(0, 0, adjust)
 						else
 							TP(target.Position+Vector3.new(0,0,7))
 						end
@@ -103,7 +103,7 @@ pcall(function()
 					local A = target.Parent:FindFirstChild("Grabbing")
 					if (game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Position - target.Position).magnitude < instantDistance then
 						if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-							game.Players.LocalPlayer.Character:PivotTo(target.CFrame * CFrame.new(0, 10, adjust))
+							game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = target.CFrame * CFrame.new(0, 0, adjust)
 							repeat wait() until A.Parent == nil
 						else
 							TP(target.Position+Vector3.new(0,0,7))
