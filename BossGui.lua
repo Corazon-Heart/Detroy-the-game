@@ -75,8 +75,8 @@ if game.PlaceId == 99995671928896 then
 	end
 
 	pcall(function()
-		function TP(Object) -- Object = part teleporting to.
-			local tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new((game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Object).magnitude/170, Enum.EasingStyle.Linear, Enum.EasingDirection.In, 0, false, 0)
+		function TPNEW(Object) -- Object = part teleporting to.
+			local tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new((game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Object).magnitude/140, Enum.EasingStyle.Linear, Enum.EasingDirection.In, 0, false, 0)
 			local tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = CFrame.new(Object + Vector3.new(0,0,0))})
 			tween:Play()
 			tween.Completed:Wait()
@@ -170,7 +170,7 @@ if game.PlaceId == 99995671928896 then
 						if dist < instantDistance then
 							hrp.CFrame = target.CFrame * CFrame.new(0, adjustY, adjust)
 						else
-							TP(targetPos + Vector3.new(0, 0, 7))
+							TPNEW(targetPos + Vector3.new(0, 0, 7))
 						end
 					elseif target and target.Parent:FindFirstChild("Grabbing") and not target.Parent:FindFirstChild("IFrames") then
 						local A = target.Parent:FindFirstChild("Grabbing")
@@ -182,7 +182,7 @@ if game.PlaceId == 99995671928896 then
 								timeout = timeout - wait()
 							end
 						else
-							TP(targetPos + Vector3.new(0, 0, 7))
+							TPNEW(targetPos + Vector3.new(0, 0, 7))
 						end
 					end
 				end)
