@@ -175,7 +175,11 @@ pcall(function()
 			spawnCharacter()
 			wait(2)
 			if game:GetService("Players").LocalPlayer.Character or (tick() - beforeTick) >= 7.5 then
-				return shop()
+				if game:GetService("Players").LocalPlayer.Character ~= nil then
+					return break
+				else
+					return shop()
+				end
 			end
 		end
 		repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild"HumanoidRootPart"
