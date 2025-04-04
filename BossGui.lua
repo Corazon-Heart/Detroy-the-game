@@ -117,7 +117,7 @@ pcall(function()
 
 				local adjust, adjustY = 7, 0
 				for name, values in pairs(adjustValues) do
-					if target.Name:find(name) then
+					if target.Parent.Name:find(name) then
 						adjust, adjustY = values[1], values[2]
 						break
 					end
