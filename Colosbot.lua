@@ -345,26 +345,11 @@ pcall(function()
 				tween:Play()
 				tween.Completed:Wait()
 			end
-			function TPNormal(Object)
-				local player = game.Players.LocalPlayer
-				local hrp = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
-
-				if not hrp then return end
-
-				local tweenService = game:GetService("TweenService")
-				local tweenInfo = TweenInfo.new((hrp.Position - Object).magnitude / 110, Enum.EasingStyle.Linear, Enum.EasingDirection.In, 0, false, 0)
-
-				local tween = tweenService:Create(hrp, tweenInfo, {CFrame = CFrame.new(Object)})
-				local running = true
-
-				tween.Completed:Connect(function()
-					running = false
-				end)
+			function TPNormal(Object) -- Object = part teleporting to.
+				local tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new((game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Object).magnitude/100,Enum.EasingStyle.Linear,Enum.EasingDirection.In,0,false,0)
+				local tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = CFrame.new(Object + Vector3.new(0,0,0))})
 				tween:Play()
-				while running and hrp do
-					hrp.Velocity = Vector3.zero
-					task.wait()
-				end
+				tween.Completed:Wait()
 			end
 
 			game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
