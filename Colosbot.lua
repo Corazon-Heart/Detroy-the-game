@@ -56,7 +56,7 @@ pcall(function()
 					print("Attempting to fetch server list... Attempt " .. attempt)
 
 					local response = req({
-						Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true", PlaceId),
+						Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=25&excludeFullGames=true", PlaceId),
 						Method = "GET"
 					})
 
@@ -113,7 +113,7 @@ pcall(function()
 				print("Attempting to fetch server list... Attempt " .. attempt)
 
 				local response = req({
-					Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true", PlaceId),
+					Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=25&excludeFullGames=true", PlaceId),
 					Method = "GET"
 				})
 
@@ -1007,7 +1007,7 @@ pcall(function()
 					print("Attempting to fetch server list... Attempt " .. attempt)
 
 					local response = req({
-						Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true", PlaceId),
+						Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=25&excludeFullGames=true", PlaceId),
 						Method = "GET"
 					})
 
@@ -1065,7 +1065,7 @@ pcall(function()
 				print("Attempting to fetch server list... Attempt " .. attempt)
 
 				local response = req({
-					Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true", PlaceId),
+					Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=25&excludeFullGames=true", PlaceId),
 					Method = "GET"
 				})
 
