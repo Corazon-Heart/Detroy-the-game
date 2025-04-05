@@ -769,7 +769,7 @@ pcall(function()
 			_G.teleport = true
 			_G.checkplayer = true
 			spawn(function()
-				while _G.checkplayer == true then
+				while _G.checkplayer == true do
 					checkAndTeleport()
 					wait()
 					if _G.checkplayer == false then
