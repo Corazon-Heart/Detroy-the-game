@@ -3,6 +3,25 @@ spawn(function()
 	game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
 end)
 pcall(function()
+	spawn(function()
+		repeat wait() until game:GetService("GuiService")
+		local GuiService = game:GetService("GuiService")
+		GuiService.ErrorMessageChanged:Connect(function()
+			local errorMessage = GuiService:GetErrorMessage()
+			if errorMessage == "" then return end
+			if errorMessage:find"Failed to connect" or errorMessage:find"Lost connection" or errorMessage:find"another device" then
+				print(errorMessage)
+				game:Shutdown()
+			end
+		end)
+		local errorshow = GuiService:GetErrorMessage()
+		if tostring(errorshow) ~= "" then
+			if errorshow:find"Failed to connect" or errorshow:find"Lost connection" or errorshow:find"another device" then
+				print(errorshow)
+				game:Shutdown()
+			end
+		end
+	end)
 	repeat
 		wait()
 	until game:IsLoaded()
