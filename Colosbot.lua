@@ -15,7 +15,7 @@ pcall(function()
 			end
 		end)
 		local errorshow = GuiService:GetErrorMessage()
-		if tostring(errorshow) ~= "" then
+		if errorshow ~= "" then
 			if errorshow:find"Failed to connect" or errorshow:find"Lost connection" or errorshow:find"another device" then
 				print(errorshow)
 				game:Shutdown()
