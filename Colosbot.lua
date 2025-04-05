@@ -772,6 +772,9 @@ pcall(function()
 				while _G.checkplayer == true then
 					checkAndTeleport()
 					wait()
+					if _G.checkplayer == false then
+						break
+					end
 				end
 			end)
 			spawn(function()
