@@ -166,7 +166,7 @@ pcall(function()
 		end
 		local shop = function(Step)
 			wait(.5)
-			print(Step)
+			--print(Step)
 			game:GetService("TeleportService"):Teleport(10290054819, game.Players.LocalPlayer)
 		end
 		repeat wait() until game:GetService("Players").LocalPlayer:FindFirstChild"PlayerGui"
