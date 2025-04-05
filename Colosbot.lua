@@ -767,6 +767,13 @@ pcall(function()
 			_G.respawn = false
 			_G.attack = true
 			_G.teleport = true
+			_G.checkplayer = true
+			spawn(function()
+				while _G.checkplayer == true then
+					checkAndTeleport()
+					wait()
+				end
+			end)
 			spawn(function()
 				while _G.attack == true do
 					local rs = game:GetService("ReplicatedStorage")
@@ -819,6 +826,7 @@ pcall(function()
 				task.wait()
 			until Drogar.Parent == nil or tick() - killtime >= 30 or _G.respawn == true
 			_G.attack = false
+			_G.checkplayer = false
 			_G.teleport = false
 			if _G.respawn == true or game.Players.LocalPlayer.PlayerGui.InfoOverlays:FindFirstChild"ConfirmFrame" then
 				local VirtualInputManager = game:GetService("VirtualInputManager")
