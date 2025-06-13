@@ -65,7 +65,7 @@ function Lib.Window(Title)
 	--Properties:
 
 	UiLib.Name = "UiLib"
-	UiLib.Parent = game.CoreGui
+	UiLib.Parent = gethui()
 	UiLib.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
   	UiLib.ResetOnSpawn = false
 
